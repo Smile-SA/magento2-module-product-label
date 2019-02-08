@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+  ~
+  ~ @author    Houda EL RHOZLANE <hoelr@smile.fr>
+  ~ @copyright 2019 Smile
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Smile_ProductLabel::attributes" title="Attributs" translate="title" module="Smile_ProductLabel" sortOrder="30" parent="Magento_Backend::content_elements" action="smile_productlabel/index" resource="Smile_ProductLabel::manage"/>
+    </menu>
+</config>
