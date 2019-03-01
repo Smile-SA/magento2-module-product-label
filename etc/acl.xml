@@ -9,13 +9,7 @@
         <resources>
             <resource id="Magento_Backend::admin">
                 <resource id="Magento_Backend::marketing">
-                    <resource id="Magento_Backend::marketing_smile_productlabel" title="Smile Pictos/Labels" translate="title" sortOrder="35">
-                        <resource id="Smile_ProductLabel::manage" title="Attributs" translate="title"/>
-                        <resource id="Smile_ProductLabel::page" title="Pages" translate="title" sortOrder="10">
-                            <resource id="Smile_ProductLabel::save" title="Save Page" translate="title" sortOrder="10" />
-                            <resource id="Smile_ProductLabel::page_delete" title="Delete Page" translate="title" sortOrder="20" />
-                        </resource>
-                    </resource>
+                    <resource id="Smile_ProductLabel::manage" title="Smile Pictos/Labels" translate="title" sortOrder="35"/>
                 </resource>
             </resource>
         </resources>

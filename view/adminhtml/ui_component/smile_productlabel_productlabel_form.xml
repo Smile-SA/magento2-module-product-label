@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~
+  ~ @author    Houda EL RHOZLANE <hoelr@smile.fr>
+  ~ @copyright 2019 Smile
+  -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">smile_productlabel_productlabel_form.smile_productlabel_productlabel_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Product Label Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="back" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\BackButton" />
+            <button name="delete" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\DeleteButton" />
+            <button name="reset" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\ResetButton" />
+            <button name="save_and_continue" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\SaveAndContinueButton" />
+            <button name="save" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\SaveButton" />
+        </buttons>
+        <namespace>smile_productlabel_productlabel_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>smile_productlabel_productlabel_form.smile_productlabel_productlabel_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="smile_productlabel_productlabel_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="smile_productlabel/productlabel/save"/>
+        </settings>
+        <aclResource>Smile_ProductLabel::manage</aclResource>
+        <dataProvider class="Smile\ProductLabel\Ui\Component\ProductLabel\Form\ProductLabelDataProvider" name="smile_productlabel_productlabel_form_data_source">
+            <settings>
+                <requestFieldName>product_label_id</requestFieldName>
+                <primaryFieldName>product_label_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string"/>
+            </item>
+        </argument>
+
+        <field name="is_active" formElement="checkbox" sortOrder="5">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">productlabel</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable Product Label</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+        <field name="name" formElement="input" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">name</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Name</label>
+                <visible>true</visible>
+                <dataScope>name</dataScope>
+            </settings>
+        </field>
+
+        <field name="identifier" formElement="input" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">smile_productlabel</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Identifier</label>
+                <dataScope>identifier</dataScope>
+            </settings>
+        </field>
+
+        <field name="attribute_id" formElement="select" component="Smile_ProductLabel/js/form/element/select-option" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Attribute\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="source" xsi:type="string">smile_productlabel</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Attribute</label>
+                <dataScope>attribute_id</dataScope>
+                <componentType>field</componentType>
+            </settings>
+        </field>
+
+        <field name="option_id" formElement="select" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Option\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="source" xsi:type="string">smile_productlabel</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+                 <!--Value of option_id field is filtered by the value of attribute_id attribute -->
+                <!--<item name="filterBy" xsi:type="array">-->
+                    <!--<item name="target" xsi:type="string"><![CDATA[${ $.provider }:${ $.parentScope }.attribute_id]]></item>-->
+                    <!--<item name="field" xsi:type="string">attribute_id</item>-->
+                <!--</item>-->
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Option</label>
+                <dataScope>option_id</dataScope>
+                <componentType>field</componentType>
+            </settings>
+        </field>
+
+        <field name="image" formElement="imageUploader" sortOrder="50">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">smile_productlabel</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Product Label Image</label>
+                <visible>true</visible>
+                <dataScope>image</dataScope>
+                <componentType>imageUploader</componentType>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">smile_productlabel/imagelabel/image</param>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                        <openDialogTitle>Media Gallery</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>smile_productlabel/imagelabel</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <!--<field name="image" sortOrder="50" formElement="imageUploader">-->
+            <!--<argument name="data" xsi:type="array">-->
+                <!--<item name="config" xsi:type="array">-->
+                    <!--<item name="source" xsi:type="string">smile_productlabel</item>-->
+                <!--</item>-->
+            <!--</argument>-->
+            <!--<settings>-->
+                <!--<elementTmpl>ui/form/element/uploader/image</elementTmpl>-->
+                <!--<dataType>string</dataType>-->
+                <!--<label translate="true">Logo Image</label>-->
+                <!--<visible>true</visible>-->
+                <!--<required>true</required>-->
+            <!--</settings>-->
+            <!--<formElements>-->
+                <!--<imageUploader>-->
+                    <!--<settings>-->
+                        <!--<required>true</required>-->
+                        <!--<uploaderConfig>-->
+                            <!--<param xsi:type="url" name="url" path="smile_productlabel/imagelabel/image"/>-->
+                        <!--</uploaderConfig>-->
+                        <!--<previewTmpl>Magento_Catalog/image-preview</previewTmpl>-->
+                        <!--<openDialogTitle>Media Gallery</openDialogTitle>-->
+                        <!--<initialMediaGalleryOpenSubpath>catalog/category</initialMediaGalleryOpenSubpath>-->
+                        <!--<allowedExtensions>jpg jpeg gif png</allowedExtensions>-->
+                        <!--<maxFileSize>4194304</maxFileSize>-->
+                    <!--</settings>-->
+                <!--</imageUploader>-->
+            <!--</formElements>-->
+        <!--</field>-->
+
+        <field name="position_category_list" formElement="select" sortOrder="60">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Image location in thumbnail mode</label>
+                <dataScope>position_category_list</dataScope>
+                <componentType>field</componentType>
+            </settings>
+        </field>
+
+        <field name="position_product_view" formElement="select" sortOrder="70">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Location of the image on product view</label>
+                <dataScope>position_product_view</dataScope>
+                <componentType>field</componentType>
+            </settings>
+        </field>
+
+        <field name="display_on" formElement="multiselect" sortOrder="80">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location\View</item>
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Display on</label>
+                <dataScope>display_on</dataScope>
+                <componentType>field</componentType>
+            </settings>
+        </field>
+
+    </fieldset>
+
+</form>

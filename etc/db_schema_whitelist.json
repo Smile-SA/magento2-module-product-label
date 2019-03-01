@@ -2,12 +2,14 @@
     "smile_productlabel": {
         "column": {
             "product_label_id": true,
+            "identifier": true,
             "name": true,
             "attribute_id": true,
             "option_id": true,
             "image": true,
             "position_category_list": true,
-            "position_product_view": true
+            "position_product_view": true,
+            "display_on": true
         },
         "index": {
             "SMILE_PRODUCTLABEL_PRODUCT_LABEL_ID": true,
@@ -15,6 +17,8 @@
             "SMILE_PRODUCTLABEL_OPTION_ID": true
         },
         "constraint": {
+            "PRIMARY": true,
+            "SMILE_PRODUCTLABEL_ATTRIBUTE_ID_OPTION_ID": true,
             "SMILE_PRODUCTLABEL_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID": true,
             "SMILE_PRODUCTLABEL_OPTION_ID_EAV_ATTRIBUTE_OPTION_OPTION_ID": true
         }

@@ -2,7 +2,8 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="smile_productlabel" resource="default" engine="innodb" comment="Smile Product Label Table">
-        <column xsi:type="smallint" name="product_label_id" padding="6" unsigned="false" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="int" name="product_label_id" padding="6" unsigned="false" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="varchar" name="identifier" nullable="false" comment="Product Label Identifier"/>
         <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Product Label Name"/>
         <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false" default="0"
                 comment="Attribute ID"/>
@@ -10,6 +11,14 @@
         <column xsi:type="blob" name="image" nullable="true" comment="Image of Attribute or Option of Attribute"/>
         <column xsi:type="varchar" name="position_category_list" nullable="true" comment="Position of Image on Category List"/>
         <column xsi:type="varchar" name="position_product_view" nullable="true" comment="Position of Image on Product View"/>
+        <column xsi:type="varchar" name="display_on" nullable="true" default="" comment="Display on"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="product_label_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="SMILE_PRODUCTLABEL_ATTRIBUTEID_OPTIONID">
+            <column name="attribute_id"/>
+            <column name="option_id"/>
+        </constraint>
         <constraint xsi:type="foreign" referenceId="SMILE_PRODUCTLABEL_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID" table="smile_productlabel"
                     column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE"/>
         <constraint xsi:type="foreign" referenceId="SMILE_PRODUCTLABEL_OPTION_ID_EAV_ATTRIBUTE_OPTION_OPTION_ID" table="smile_productlabel"
