@@ -13,39 +13,44 @@
         </item>
         <item name="label" xsi:type="string" translate="true">Product Label Information</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">smile_productlabel_productlabel_form</item>
+        </item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
     </argument>
 
     <settings>
+        <reloadItem>general.attribute_id:value</reloadItem>
         <buttons>
-            <button name="back" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\BackButton" />
-            <button name="delete" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\DeleteButton" />
-            <button name="reset" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\ResetButton" />
-            <button name="save_and_continue" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\SaveAndContinueButton" />
-            <button name="save" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\SaveButton" />
+            <button name="back" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\BackButton" />
+            <button name="delete" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\DeleteButton" />
+            <button name="reset" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\ResetButton" />
+            <button name="save_and_continue" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\SaveAndContinueButton" />
+            <button name="save" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\SaveButton" />
         </buttons>
-        <namespace>smile_productlabel_productlabel_form</namespace>
-        <dataScope>data</dataScope>
         <deps>
             <dep>smile_productlabel_productlabel_form.smile_productlabel_productlabel_form_data_source</dep>
         </deps>
     </settings>
 
     <dataSource name="smile_productlabel_productlabel_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\ProductLabelDataProvider</argument>
+            <argument name="name" xsi:type="string">smile_productlabel_productlabel_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">product_label_id</argument>
+            <argument name="requestFieldName" xsi:type="string">product_label_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="smile_productlabel/productlabel/save"/>
+                </item>
+            </argument>
+        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
             </item>
         </argument>
-        <settings>
-            <submitUrl path="smile_productlabel/productlabel/save"/>
-        </settings>
-        <aclResource>Smile_ProductLabel::manage</aclResource>
-        <dataProvider class="Smile\ProductLabel\Ui\Component\ProductLabel\Form\ProductLabelDataProvider" name="smile_productlabel_productlabel_form_data_source">
-            <settings>
-                <requestFieldName>product_label_id</requestFieldName>
-                <primaryFieldName>product_label_id</primaryFieldName>
-            </settings>
-        </dataProvider>
     </dataSource>
 
     <fieldset name="general">
@@ -54,6 +59,10 @@
                 <item name="label" xsi:type="string"/>
             </item>
         </argument>
+
+        <settings>
+            <label translate="true">Product Label Information</label>
+        </settings>
 
         <field name="is_active" formElement="checkbox" sortOrder="5">
             <argument name="data" xsi:type="array">
@@ -90,7 +99,7 @@
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
-                <dataType>int</dataType>
+                <dataType>text</dataType>
                 <label translate="true">Name</label>
                 <visible>true</visible>
                 <dataScope>name</dataScope>
@@ -100,7 +109,7 @@
         <field name="identifier" formElement="input" sortOrder="20">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">smile_productlabel</item>
+                    <item name="source" xsi:type="string">productlabel</item>
                 </item>
             </argument>
             <settings>
@@ -113,12 +122,57 @@
             </settings>
         </field>
 
-        <field name="attribute_id" formElement="select" component="Smile_ProductLabel/js/form/element/select-option" sortOrder="30">
+        <field name="attribute_id" formElement="select" component="Magento_Ui/js/form/element/ui-select" sortOrder="30">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Attribute\Options</item>
                 <item name="config" xsi:type="array">
                     <item name="filterOptions" xsi:type="boolean">true</item>
-                    <item name="source" xsi:type="string">smile_productlabel</item>
+                    <item name="showCheckbox" xsi:type="boolean">false</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <imports>
+                    <link name="visible">true</link>
+                </imports>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Attribute</label>
+                <dataScope>attribute_id</dataScope>
+                <componentType>field</componentType>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
+            </settings>
+        </field>
+
+        <field name="attribute_label" formElement="select" sortOrder="31">
+            <settings>
+                <disabled>true</disabled>
+                <imports>
+                    <link name="visible">true</link>
+                </imports>
+                <dataType>int</dataType>
+                <label translate="true">Attribute</label>
+                <componentType>field</componentType>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Smile\ProductLabel\Ui\Component\ProductLabel\Source\Attribute\Options"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <field name="option_id" formElement="select" component="Magento_Ui/js/form/element/ui-select" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="showCheckbox" xsi:type="boolean">false</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
                     <item name="multiple" xsi:type="boolean">false</item>
                     <item name="levelsVisibility" xsi:type="number">1</item>
                 </item>
@@ -128,31 +182,16 @@
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>int</dataType>
-                <label translate="true">Attribute</label>
-                <dataScope>attribute_id</dataScope>
+                <label translate="true">Option</label>
+                <dataScope>option_id</dataScope>
                 <componentType>field</componentType>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
             </settings>
         </field>
 
-        <field name="option_id" formElement="select" sortOrder="40">
-            <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Option\Options</item>
-                <item name="config" xsi:type="array">
-                    <item name="filterOptions" xsi:type="boolean">true</item>
-                    <item name="source" xsi:type="string">smile_productlabel</item>
-                    <item name="multiple" xsi:type="boolean">false</item>
-                    <item name="levelsVisibility" xsi:type="number">1</item>
-                </item>
-                 <!--Value of option_id field is filtered by the value of attribute_id attribute -->
-                <!--<item name="filterBy" xsi:type="array">-->
-                    <!--<item name="target" xsi:type="string"><![CDATA[${ $.provider }:${ $.parentScope }.attribute_id]]></item>-->
-                    <!--<item name="field" xsi:type="string">attribute_id</item>-->
-                <!--</item>-->
-            </argument>
+        <field name="option_label" formElement="select" sortOrder="41">
             <settings>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
+                <disabled>true</disabled>
                 <dataType>int</dataType>
                 <label translate="true">Option</label>
                 <dataScope>option_id</dataScope>
@@ -163,7 +202,7 @@
         <field name="image" formElement="imageUploader" sortOrder="50">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">smile_productlabel</item>
+                    <item name="source" xsi:type="string">productlabel</item>
                 </item>
             </argument>
             <settings>
@@ -192,35 +231,6 @@
                 </imageUploader>
             </formElements>
         </field>
-        <!--<field name="image" sortOrder="50" formElement="imageUploader">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="source" xsi:type="string">smile_productlabel</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-            <!--<settings>-->
-                <!--<elementTmpl>ui/form/element/uploader/image</elementTmpl>-->
-                <!--<dataType>string</dataType>-->
-                <!--<label translate="true">Logo Image</label>-->
-                <!--<visible>true</visible>-->
-                <!--<required>true</required>-->
-            <!--</settings>-->
-            <!--<formElements>-->
-                <!--<imageUploader>-->
-                    <!--<settings>-->
-                        <!--<required>true</required>-->
-                        <!--<uploaderConfig>-->
-                            <!--<param xsi:type="url" name="url" path="smile_productlabel/imagelabel/image"/>-->
-                        <!--</uploaderConfig>-->
-                        <!--<previewTmpl>Magento_Catalog/image-preview</previewTmpl>-->
-                        <!--<openDialogTitle>Media Gallery</openDialogTitle>-->
-                        <!--<initialMediaGalleryOpenSubpath>catalog/category</initialMediaGalleryOpenSubpath>-->
-                        <!--<allowedExtensions>jpg jpeg gif png</allowedExtensions>-->
-                        <!--<maxFileSize>4194304</maxFileSize>-->
-                    <!--</settings>-->
-                <!--</imageUploader>-->
-            <!--</formElements>-->
-        <!--</field>-->
 
         <field name="position_category_list" formElement="select" sortOrder="60">
             <argument name="data" xsi:type="array">
@@ -264,22 +274,26 @@
 
         <field name="display_on" formElement="multiselect" sortOrder="80">
             <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location\View</item>
                 <item name="config" xsi:type="array">
-                    <item name="filterOptions" xsi:type="boolean">true</item>
-                    <item name="multiple" xsi:type="boolean">false</item>
-                    <item name="levelsVisibility" xsi:type="number">1</item>
+                    <item name="source" xsi:type="string">productlabel</item>
+                    <item name="default" xsi:type="number">0</item>
                 </item>
             </argument>
             <settings>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
-                <dataType>int</dataType>
+                <dataType>text</dataType>
                 <label translate="true">Display on</label>
                 <dataScope>display_on</dataScope>
-                <componentType>field</componentType>
             </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location\View"/>
+                    </settings>
+                </multiselect>
+            </formElements>
         </field>
 
     </fieldset>

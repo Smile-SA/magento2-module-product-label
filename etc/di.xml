@@ -23,7 +23,7 @@
             <argument name="extensionActions" xsi:type="array">
                 <item name="Magento\Catalog\Api\Data\ProductInterface" xsi:type="array">
                     <item name="read" xsi:type="array">
-                        <item name="productlabelsReader" xsi:type="string">Smile\ProductLabel\Model\Product\ProductLabel\ReadHandler</item>
+                        <item name="productlabelsReader" xsi:type="string">Smile\ProductLabel\Model\ProductLabel\ReadHandler</item>
                     </item>
                 </item>
             </argument>
@@ -48,6 +48,7 @@
             </argument>
         </arguments>
     </type>
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
@@ -56,6 +57,7 @@
             </argument>
         </arguments>
     </type>
+
     <type name="Smile\ProductLabel\Model\ResourceModel\ProductLabel\Grid\Collection">
         <arguments>
             <argument name="mainTable" xsi:type="string">smile_productlabel</argument>
@@ -64,12 +66,13 @@
             <argument name="resourceModel" xsi:type="string">Smile\ProductLabel\Model\ResourceModel\ProductLabel</argument>
         </arguments>
     </type>
-    <type name="Smile\ProductLabel\Controller\Adminhtml\ImageLabel\AbstractUpload">
+
+    <type name="Smile\ProductLabel\Controller\Adminhtml\ImageLabel\Image">
         <arguments>
-            <argument name="imageUploader" xsi:type="object">Smile\ProductLabel\Model\ImageUpload</argument>
+            <argument name="imageUploader" xsi:type="object">Smile\ProductLabel\ImageLabelUpload</argument>
         </arguments>
     </type>
-    <virtualType name="Smile\ProductLabel\Model\ImageUpload" type="Magento\Catalog\Model\ImageUploader">
+    <virtualType name="Smile\ProductLabel\ImageLabelUpload" type="Magento\Catalog\Model\ImageUploader">
         <arguments>
             <argument name="baseTmpPath" xsi:type="string">smile_productlabel/tmp/imagelabel</argument>
             <argument name="basePath" xsi:type="string">smile_productlabel/imagelabel</argument>
@@ -81,4 +84,5 @@
             </argument>
         </arguments>
     </virtualType>
+
 </config>

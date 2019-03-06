@@ -1,6 +1,6 @@
 <?php
 
-namespace Smile\ProductLabel\Model\Product\ProductLabel;
+namespace Smile\ProductLabel\Model\ProductLabel;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\EntityManager\Operation\ExtensionInterface;

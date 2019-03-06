@@ -45,9 +45,9 @@ class InlineEdit extends AbstractAction
         foreach (array_keys($postItems) as $modelId) {
             try {
                 // Load the ProductLabel
-                $model = $this->modelRepository->getId((int) $modelId);
+                $model = $this->modelRepository->getById((int) $modelId);
 
-                /** @var ProductLabel $model */
+                /** @var \Smile\ProductLabel\Model\ProductLabel $model */
                 $model->populateFromArray($postItems[$modelId]);
 
                 // Save the ProductLabel

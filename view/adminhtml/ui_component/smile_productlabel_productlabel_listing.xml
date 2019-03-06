@@ -16,7 +16,7 @@
     <settings>
         <buttons>
             <button name="add">
-                <url path="*/*/edit"/>
+                <url path="*/*/create"/>
                 <class>primary</class>
                 <label translate="true">Add New Attribute</label>
             </button>
@@ -30,7 +30,7 @@
     <dataSource name="smile_productlabel_productlabel_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
             <storageConfig>
-                <param name="indexField" xsi:type="string">product_label_id</param>
+                <param name="indexField" xsi:type="string">id</param>
             </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
@@ -39,7 +39,7 @@
                 class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"
                 name="smile_productlabel_productlabel_listing_data_source">
             <settings>
-                <requestFieldName>id</requestFieldName>
+                <requestFieldName>product_label_id</requestFieldName>
                 <primaryFieldName>product_label_id</primaryFieldName>
             </settings>
         </dataProvider>
@@ -49,15 +49,75 @@
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
         <filters name="listing_filters"/>
+
+        <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions">
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected items?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="*/*/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+            <action name="status">
+                <settings>
+                    <type>status</type>
+                    <label translate="true">Change status</label>
+                    <actions>
+                        <action name="0">
+                            <type>enable</type>
+                            <label translate="true">Active</label>
+                            <url path="*/*/massStatus">
+                                <param name="is_active">1</param>
+                            </url>
+                        </action>
+                        <action name="1">
+                            <type>disable</type>
+                            <label translate="true">Inactive</label>
+                            <url path="*/*/massStatus">
+                                <param name="is_active">0</param>
+                            </url>
+                        </action>
+                    </actions>
+                </settings>
+            </action>
+        </massaction>
+
         <paging name="listing_paging"/>
+
     </listingToolbar>
 
     <columns name="smile_productlabel_productlabel_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="childDefaults" xsi:type="array">
+                    <item name="fieldAction" xsi:type="array">
+                        <item name="provider" xsi:type="string">smile_productlabel_productlabel_listing.smile_productlabel_productlabel_listing.smile_productlabel_productlabel_columns.actions</item>
+                        <item name="target" xsi:type="string">applyAction</item>
+                        <item name="params" xsi:type="array">
+                            <item name="0" xsi:type="string">edit</item>
+                            <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
+                        </item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>product_label_id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>50</resizeDefaultWidth>
+            </settings>
+        </selectionsColumn>
         <column name="product_label_id" sortOrder="10">
             <settings>
                 <filter>textRange</filter>
                 <label translate="true">ID</label>
                 <sorting>asc</sorting>
+                <resizeDefaultWidth>100</resizeDefaultWidth>
             </settings>
         </column>
         <column name="image" sortOrder="20" class="Smile\ProductLabel\Ui\Component\ProductLabel\Listing\Column\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail">
@@ -71,12 +131,14 @@
                 <hasPreview>1</hasPreview>
                 <label translate="true">Image</label>
                 <sortable>false</sortable>
+                <resizeDefaultWidth>150</resizeDefaultWidth>
             </settings>
         </column>
         <column name="identifier" sortOrder="30">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Identifier</label>
+                <resizeDefaultWidth>100</resizeDefaultWidth>
             </settings>
         </column>
         <column name="name" sortOrder="40">
@@ -85,8 +147,10 @@
                 <label translate="true">Name</label>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Smile\ProductLabel\Ui\Component\ProductLabel\Listing\Column\AttributeActions">
+        <actionsColumn name="actions" class="Smile\ProductLabel\Ui\Component\ProductLabel\Listing\Column\AttributeActions" sortOrder="50">
             <settings>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>100</resizeDefaultWidth>
                 <indexField>product_label_id</indexField>
             </settings>
         </actionsColumn>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+  ~
+  ~ @category  Smile
+  ~ @package   Smile\ProductLabel
+  ~ @author    Houda EL RHOZLANE <hoelr@smile.fr>
+  ~ @copyright 2019 Smile
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface" type="Smile\ProductLabel\Model\ProductLabel\Locator\RegistryLocator" />
+
+    <virtualType name="Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="system" xsi:type="array">
+                    <item name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\System</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+                <item name="attribute" xsi:type="array">
+                    <item name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\Attribute</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+                <item name="attribute_options" xsi:type="array">
+                    <item name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\AttributeOptions</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Smile\ProductLabel\Ui\Component\ProductLabel\Form\ProductLabelDataProvider">
+        <arguments>
+            <argument name="modifierPool" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\Pool</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav">
+        <plugin name="productLabelTooltip" type="Smile\ProductLabel\Plugin\Catalog\Ui\DataProvider\Product\Form\Modifier\EavPlugin" />
+    </type>
+
+</config>

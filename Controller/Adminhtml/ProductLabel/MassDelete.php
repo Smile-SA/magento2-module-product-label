@@ -41,7 +41,7 @@ class MassDelete extends AbstractAction
             foreach ($productlabelIds as $productlabelId) {
                 $this->modelRepository->deleteById((int) $productlabelId);
             }
-            $this->messageManager->addSuccessMessage(__('Total of %1 ProductLabel(s) were deleted.', count($productlabelIds)));
+            $this->messageManager->addSuccessMessage(__('Total of %1 product label(s) were deleted.', count($productlabelIds)));
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }

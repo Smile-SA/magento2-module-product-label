@@ -1,6 +1,13 @@
 <?php
+/**
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <hoelr@smile.fr>
+ * @copyright 2019 Smile
+ */
 
-namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
+namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel;
 
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\Exception\NoSuchEntityException;

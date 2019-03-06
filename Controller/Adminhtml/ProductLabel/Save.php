@@ -23,24 +23,6 @@ use Smile\ProductLabel\Model\ProductLabel;
 class Save extends AbstractAction
 {
     /**
-     * @var DataPersistorInterface
-     */
-    protected $dataPersistor;
-
-    
-    public function __construct(
-        Context $context,
-        Registry $coreRegistry,
-        ProductLabelFactory $modelFactory,
-        ProductLabelRepository $modelRepository,
-        DataPersistorInterface $dataPersistor
-    ) {
-        parent::__construct($context, $coreRegistry, $modelFactory, $modelRepository);
-
-        $this->dataPersistor = $dataPersistor;
-    }
-
-    /**
      * @inheritdoc
      */
     public function execute()
@@ -57,21 +39,18 @@ class Save extends AbstractAction
         }
         $this->dataPersistor->set('smile_productlabel_productlabel', $data);
 
-        // Get the productlabel id (if edit)
+        // Get the product label id (if edit)
         $productlabelId = null;
         if (!empty($data['product_label_id'])) {
             $productlabelId = (int)$data['product_label_id'];
         }
 
-        // Load the productlabel
+        // Load the product label
         $model = $this->initModel($productlabelId);
 
-        // By default, redirect to the edit page of the productlabel
+        // By default, redirect to the edit page of the product label
         $resultRedirect->setPath('*/*/edit', ['product_label_id' => $productlabelId]);
 
-//        var_dump($data);
-//        var_dump($model->getData());
-//        die('toto');
         /** @var ProductLabel $model */
         $model->populateFromArray($data);
 

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+  ~
+  ~ @category  Smile
+  ~ @package   Smile\ProductLabel
+  ~ @author    Houda EL RHOZLANE <hoelr@smile.fr>
+  ~ @copyright 2019 Smile
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="smile_productlabel_api_data_productlabelinterface_save_after">
+        <observer name="move_images_from_tmp" instance="Magento\Framework\EntityManager\Observer\AfterEntitySave" />
+    </event>
+</config>

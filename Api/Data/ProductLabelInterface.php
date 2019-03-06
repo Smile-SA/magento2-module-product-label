@@ -17,6 +17,10 @@ interface ProductLabelInterface
      */
     const TABLE_NAME = 'smile_productlabel';
     /**
+     * Constant for field is_active
+     */
+    const IS_ACTIVE = 'is_active';
+    /**
      * Constant for field product_label_id
      */
     const PRODUCTLABEL_ID = 'product_label_id';
@@ -49,21 +53,32 @@ interface ProductLabelInterface
      */
     const PRODUCTLABEL_POSITION_PRODUCT_VIEW = 'position_product_view';
     /**
-     * Get ID
-     *
-     * @return int|null
+     * Constant for field display_on
      */
-    public function getId();
+    const PRODUCTLABEL_DISPLAY_ON = 'display_on';
+
     /**
-     * Get field: identifier.
+     * Get product label status
+     *
+     * @return bool
+     */
+    public function isActive();
+    /**
+     * Get product label Id
+     *
+     * @return int
+     */
+    public function getProductLabelId();
+    /**
+     * Get Identifier.
      *
      * @return string
      */
     public function getIdentifier();
     /**
-     * Get NAME
+     * Get Name
      *
-     * @return string|null
+     * @return string
      */
     public function getName();
     /**
@@ -71,13 +86,13 @@ interface ProductLabelInterface
      *
      * @return int
      */
-    public function getAttributeId();
+    public function getAttributeId() : int;
     /**
      * Get option Id
      *
      * @return int
      */
-    public function getOptionId();
+    public function getOptionId() : int;
     /**
      * Get image
      *
@@ -97,67 +112,81 @@ interface ProductLabelInterface
      */
     public function getPositionProductView();
     /**
-     * Set id
+     * Get display_on
      *
-     * @param int $productlabelId .
+     * @return array $value
+     */
+    public function getDisplayOn();
+
+    /**
+     * Set product label status
+     *
+     * @param bool $status The product label status
      *
      * @return ProductLabelInterface
      */
-    public function setId($productlabelId);
+    public function setIsActive(bool $status);
     /**
-     * Set identifier.
+     * Set product label Id
+     *
+     * @param int $value.
+     *
+     * @return ProductLabelInterface
+     */
+    public function setProductLabelId($value);
+    /**
+     * Set Identifier.
      *
      * @param string $value
      * @return $this
      */
     public function setIdentifier($value);
     /**
-     * Set name
+     * Set Name
      *
-     * @param string $productlabelName .
+     * @param string $value.
      *
      * @return ProductLabelInterface
      */
-    public function setName($productlabelName);
+    public function setName($value);
     /**
-     * Set attribute_id.
+     * Set attribute Id.
      *
-     * @param int $attributeId The attribute Id
+     * @param int $value The attribute Id
      *
      * @return ProductLabelInterface
      */
-    public function setAttributeId($attributeId);
+    public function setAttributeId(int $value);
     /**
-     * Set option_id.
+     * Set option Id.
      *
-     * @param int $optionId The option Id
+     * @param int $value The option Id
      *
      * @return ProductLabelInterface
      */
-    public function setOptionId($optionId);
+    public function setOptionId(int $value);
     /**
-     * Set image.
+     * Set Image.
      *
-     * @param string $image The product label Image
+     * @param string $value The product label Image
      *
      * @return ProductLabelInterface
      */
-    public function setImage($image);
+    public function setImage($value);
     /**
      * Set position_category_list.
      *
-     * @param int $positionCategoryList The option Id
+     * @param int $value The option Id
      *
      * @return ProductLabelInterface
      */
-    public function setPositionCategoryList($positionCategoryList);
+    public function setPositionCategoryList($value);
     /**
      * Set position_product_view.
      *
-     * @param int $positionProductView The position product view
+     * @param int $value The position product view
      *
      * @return ProductLabelInterface
      */
-    public function setPositionProductView($positionProductView);
-
+    public function setPositionProductView($value);
 }

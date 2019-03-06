@@ -16,10 +16,12 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
      * @var array
      */
     private $defaultAvailableFrontendInputs = ['select', 'multiselect'];
+
     /**
      * @var array
      */
     private $availableFrontendInputs = [];
+
     /**
      * Collection constructor.
      *
@@ -45,6 +47,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
         $availableFrontendInputs = []
     ) {
         $this->availableFrontendInputs = array_merge($this->defaultAvailableFrontendInputs, $availableFrontendInputs);
+
         parent::__construct(
             $entityFactory,
             $logger,
@@ -56,6 +59,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
             $resource
         );
     }
+
     /**
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      *
@@ -64,7 +68,9 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
     protected function _initSelect()
     {
         parent::_initSelect();
+
         $this->getSelect()->where($this->_getConditionSql('frontend_input', ['in' => $this->availableFrontendInputs]));
+
         return $this;
     }
 }

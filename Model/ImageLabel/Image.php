@@ -2,8 +2,6 @@
 namespace Smile\ProductLabel\Model\ImageLabel;
 
 use Magento\Framework\UrlInterface;
-use Magento\Framework\Filesystem;
-
 /**
  *
  * @category  Smile
@@ -11,7 +9,7 @@ use Magento\Framework\Filesystem;
  * @author    Houda EL RHOZLANE <hoelr@smile.fr>
  * @copyright 2019 Smile
  */
-class Image
+class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
 {
     /**
      * media sub folder
@@ -26,16 +24,6 @@ class Image
      */
     protected $urlBuilder;
     /**
-     * @var \Magento\Framework\Filesystem
-     */
-    protected $fileSystem;
-    /**
-     * @var \Psr\Log\LoggerInterface
-     *
-     * @deprecated 101.0.0
-     */
-    protected $_logger;
-    /**
      * @var \Magento\Catalog\Model\ImageUploader
      */
     protected $imageUploader;
@@ -49,17 +37,17 @@ class Image
      * @var \Magento\Eav\Model\Entity\Attribute\AbstractAttribute
      */
     protected $_attribute;
+
     /**
-     * @param UrlInterface $urlBuilder
-     * @param Filesystem $fileSystem
+     * @param \Magento\Framework\App\Helper\Context $context
+     * @param UrlInterface                          $urlBuilder
      */
     public function __construct(
-        UrlInterface $urlBuilder,
-        Filesystem $fileSystem
+        \Magento\Framework\App\Helper\Context $context,
+        UrlInterface $urlBuilder
     )
     {
         $this->urlBuilder = $urlBuilder;
-        $this->fileSystem = $fileSystem;
     }
     /**
      * get images base url

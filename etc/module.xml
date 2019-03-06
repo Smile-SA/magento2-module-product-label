@@ -3,6 +3,7 @@
         <sequence>
             <module name="Magento_Eav"/>
             <module name="Magento_Catalog"/>
+            <module name="Magento_CatalogRule"/>
         </sequence>
     </module>
 </config>

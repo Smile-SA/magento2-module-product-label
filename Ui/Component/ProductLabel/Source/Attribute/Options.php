@@ -17,10 +17,12 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
      * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory
      */
     private $attributesCollectionFactory;
+
     /**
      * @var array|null
      */
     private $attributesList;
+
     /**
      * Options constructor.
      *
@@ -30,6 +32,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     {
         $this->attributesCollectionFactory = $attributesCollectionFactory;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -37,6 +40,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     {
         return $this->getAttributesList();
     }
+
     /**
      * Retrieve list of attributes that can be used to define virtual attributes rules.
      *
@@ -46,7 +50,9 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     {
         if (null === $this->attributesList) {
             $this->attributesList = [];
+
             $collection = $this->attributesCollectionFactory->create();
+
             foreach ($collection as $attribute) {
                 $this->attributesList[$attribute->getId()] = [
                     'value' => $attribute->getId(),
@@ -54,6 +60,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
                 ];
             }
         }
+
         return $this->attributesList;
     }
 }
