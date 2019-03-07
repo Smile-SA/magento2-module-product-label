@@ -46,11 +46,25 @@
     </dataSource>
 
     <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
-        <filters name="listing_filters"/>
-
-        <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions">
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters">
+            <settings>
+                <templates>
+                    <filters>
+                        <select>
+                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
+                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
+                        </select>
+                    </filters>
+                </templates>
+            </settings>
+        </filters>
+        <massaction name="listing_massaction">
             <action name="delete">
                 <settings>
                     <confirm>
@@ -85,9 +99,7 @@
                 </settings>
             </action>
         </massaction>
-
         <paging name="listing_paging"/>
-
     </listingToolbar>
 
     <columns name="smile_productlabel_productlabel_columns">
@@ -117,10 +129,9 @@
                 <filter>textRange</filter>
                 <label translate="true">ID</label>
                 <sorting>asc</sorting>
-                <resizeDefaultWidth>100</resizeDefaultWidth>
             </settings>
         </column>
-        <column name="image" sortOrder="20" class="Smile\ProductLabel\Ui\Component\Listing\Column\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail">
+        <column name="image" class="Smile\ProductLabel\Ui\Component\Listing\Column\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="align" xsi:type="string">left</item>
@@ -134,23 +145,33 @@
                 <resizeDefaultWidth>150</resizeDefaultWidth>
             </settings>
         </column>
-        <column name="identifier" sortOrder="30">
+        <column name="identifier">
             <settings>
                 <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                        <rule name="validate-xml-identifier" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
                 <label translate="true">Identifier</label>
-                <resizeDefaultWidth>100</resizeDefaultWidth>
             </settings>
         </column>
-        <column name="name" sortOrder="40">
+        <column name="name">
             <settings>
                 <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
                 <label translate="true">Name</label>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Smile\ProductLabel\Ui\Component\Listing\Column\AttributeActions" sortOrder="50">
+        <actionsColumn name="actions" class="Smile\ProductLabel\Ui\Component\Listing\Column\AttributeActions">
             <settings>
-                <resizeEnabled>false</resizeEnabled>
-                <resizeDefaultWidth>100</resizeDefaultWidth>
                 <indexField>product_label_id</indexField>
             </settings>
         </actionsColumn>

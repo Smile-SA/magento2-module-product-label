@@ -2,6 +2,7 @@
 namespace Smile\ProductLabel\Model\ImageLabel;
 
 use Magento\Framework\UrlInterface;
+use Magento\Framework\App\Filesystem\DirectoryList;
 /**
  *
  * @category  Smile
@@ -16,7 +17,6 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
      * @var string
      */
     protected $subDir = 'smile_productlabel/tmp/imagelabel';
-
     /**
      * url builder
      *
@@ -39,6 +39,8 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     protected $_attribute;
 
     /**
+     * Image constructor.
+     *
      * @param \Magento\Framework\App\Helper\Context $context
      * @param UrlInterface                          $urlBuilder
      */
@@ -80,7 +82,6 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
         if (is_array($value) && isset($value[0]['name'])) {
             return $value[0]['name'];
         }
-
         return '';
     }
     /**
@@ -93,6 +94,7 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     {
         return $this->_attribute;
     }
+
     /**
      * Save uploaded file and set its name to category
      *

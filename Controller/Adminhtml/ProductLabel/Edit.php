@@ -32,6 +32,10 @@ class Edit extends AbstractAction
         /** @var ResultPage $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
+//
+//        var_dump($model->getProductLabelId());
+//        die('3iw');
+
         $breadcrumbTitle = $model->getProductLabelId() ? __('Edit Product Label') : __('New Product Label');
         $resultPage
             ->setActiveMenu('Smile_ProductLabel::manage')

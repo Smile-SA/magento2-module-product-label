@@ -50,14 +50,14 @@ class Reload extends Action
     /**
      * @var \Smile\ProductLabel\Api\ProductLabelRepositoryInterface
      */
-    protected $sellerRepository;
+    protected $productLabelRepository;
 
     /**
      * Rule Factory
      *
      * @var \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory
      */
-    protected $sellerFactory;
+    protected $productLabelFactory;
 
     /**
      * Reload constructor.
@@ -67,8 +67,8 @@ class Reload extends Action
      * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
      * @param \Magento\Ui\Component\MassAction\Filter $filter
      * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
-     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface $sellerRepository
-     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory $sellerFactory
+     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface $productLabelRepository
+     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory $productLabelFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -77,18 +77,18 @@ class Reload extends Action
         \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
         \Magento\Ui\Component\MassAction\Filter $filter,
         \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory,
-        \Smile\ProductLabel\Api\ProductLabelRepositoryInterface $sellerRepository,
-        \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory $sellerFactory
+        \Smile\ProductLabel\Api\ProductLabelRepositoryInterface $productLabelRepository,
+        \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory $productLabelFactory
     ) {
         parent::__construct($context);
 
-        $this->resultPageFactory   = $resultPageFactory;
-        $this->coreRegistry        = $coreRegistry;
-        $this->dataPersistor       = $dataPersistor;
-        $this->filter              = $filter;
-        $this->collectionFactory   = $collectionFactory;
-        $this->sellerRepository    = $sellerRepository;
-        $this->sellerFactory       = $sellerFactory;
+        $this->resultPageFactory         = $resultPageFactory;
+        $this->coreRegistry              = $coreRegistry;
+        $this->dataPersistor             = $dataPersistor;
+        $this->filter                    = $filter;
+        $this->collectionFactory         = $collectionFactory;
+        $this->productLabelRepository    = $productLabelRepository;
+        $this->productLabelFactory       = $productLabelFactory;
     }
 
     /**
@@ -116,10 +116,10 @@ class Reload extends Action
         }
 
         $identifier = $this->getRequest()->getParam('product_label_id');
-        $model      = $this->sellerFactory->create();
+        $model      = $this->productLabelFactory->create();
 
         if ($identifier) {
-            $model = $this->sellerRepository->getById($identifier);
+            $model = $this->productLabelRepository->getById($identifier);
         }
 
         $model->setAttributeId((int) $this->getRequest()->getParam('set'));

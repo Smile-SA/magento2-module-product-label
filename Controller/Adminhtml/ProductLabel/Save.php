@@ -61,7 +61,6 @@ class Save extends AbstractAction
         if (empty($data)) {
             return $resultRedirect;
         }
-        $this->dataPersistor->set('smile_productlabel_productlabel', $data);
 
         // Get the product label id (if edit)
         $productlabelId = null;
@@ -87,7 +86,7 @@ class Save extends AbstractAction
 
             // Display success message
             $this->messageManager->addSuccessMessage(__('The product label has been saved.'));
-            $this->dataPersistor->clear('smile_productlabel_productlabel');
+            $this->dataPersistor->clear('smile_productlabel');
 
             // If requested => redirect to the list
             if (!$this->getRequest()->getParam('back')) {
@@ -95,11 +94,13 @@ class Save extends AbstractAction
             }
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
+            $this->dataPersistor->set('smile_productlabel', $data);
         } catch (\Exception $e) {
             $this->messageManager->addExceptionMessage(
                 $e,
                 __('Something went wrong while saving the product label. "%1"', $e->getMessage())
             );
+            $this->dataPersistor->set('smile_productlabel', $data);
         }
 
         return $resultRedirect;

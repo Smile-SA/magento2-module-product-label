@@ -1,9 +1,14 @@
 <?php
+/**
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <hoelr@smile.fr>
+ * @copyright 2019 Smile
+ */
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ImageLabel;
-
 use Magento\Framework\Controller\ResultFactory;
-
 /**
  * Class AbstractUpload
  *
@@ -20,8 +25,6 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
      * @var \Magento\Catalog\Model\ImageUploader
      */
     protected $imageUploader;
-
-
     /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Catalog\Model\ImageUploader $imageUploader
@@ -33,12 +36,10 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
         parent::__construct($context);
         $this->imageUploader = $imageUploader;
     }
-
     /**
      * @return string
      */
     abstract protected function getFileId();
-
     /**
      * Upload file controller action
      *
@@ -48,7 +49,6 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
     {
         try {
             $result = $this->imageUploader->saveFileToTmpDir($this->getFileId());
-
             $result['cookie'] = [
                 'name' => $this->_getSession()->getName(),
                 'value' => $this->_getSession()->getSessionId(),

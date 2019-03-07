@@ -275,7 +275,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
         $this->setData(self::PRODUCTLABEL_NAME, (string) $values['name']);
         $this->setData(self::ATTRIBUTE_ID, (int) $values['attribute_id']);
         $this->setData(self::OPTION_ID, (int) $values['option_id']);
-        $this->setData(self::PRODUCTLABEL_IMAGE, $values['image'][0]['file']);
+
+        $this->setData(self::PRODUCTLABEL_IMAGE, $values['image'][0]['name']);
         $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, (string) $values['position_category_list']);
         $this->setData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW, (string) $values['position_product_view']);
         $this->setData(self::PRODUCTLABEL_DISPLAY_ON, (string) implode(';',$values['display_on']));
@@ -315,5 +316,4 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
         }
         return $url;
     }
-
 }
