@@ -9,9 +9,103 @@
  */
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
+use Magento\Backend\App\Action;
 
-class Reload extends AbstractAction
+class Reload extends Action
 {
+    /**
+     * Authorization level of a basic admin session
+     *
+     * @see _isAllowed()
+     */
+    const ADMIN_RESOURCE = 'Smile_ProductLabel::manage';
+
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory|null
+     */
+    protected $resultPageFactory = null;
+
+    /**
+     * Core registry
+     *
+     * @var \Magento\Framework\Registry
+     */
+    protected $coreRegistry;
+
+    /**
+     * @var \Magento\Framework\App\Request\DataPersistorInterface
+     */
+    protected $dataPersistor;
+
+    /**
+     * @var \Magento\Ui\Component\MassAction\Filter
+     */
+    protected $filter;
+
+    /**
+     * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory
+     */
+    protected $collectionFactory;
+
+    /**
+     * @var \Smile\ProductLabel\Api\ProductLabelRepositoryInterface
+     */
+    protected $sellerRepository;
+
+    /**
+     * Rule Factory
+     *
+     * @var \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory
+     */
+    protected $sellerFactory;
+
+    /**
+     * Reload constructor.
+     * @param Action\Context $context
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Framework\Registry $coreRegistry
+     * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
+     * @param \Magento\Ui\Component\MassAction\Filter $filter
+     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
+     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface $sellerRepository
+     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory $sellerFactory
+     */
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+        \Magento\Framework\Registry $coreRegistry,
+        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
+        \Magento\Ui\Component\MassAction\Filter $filter,
+        \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory,
+        \Smile\ProductLabel\Api\ProductLabelRepositoryInterface $sellerRepository,
+        \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory $sellerFactory
+    ) {
+        parent::__construct($context);
+
+        $this->resultPageFactory   = $resultPageFactory;
+        $this->coreRegistry        = $coreRegistry;
+        $this->dataPersistor       = $dataPersistor;
+        $this->filter              = $filter;
+        $this->collectionFactory   = $collectionFactory;
+        $this->sellerRepository    = $sellerRepository;
+        $this->sellerFactory       = $sellerFactory;
+    }
+
+    /**
+     * Create result page
+     *
+     * @return \Magento\Backend\Model\View\Result\Page
+     */
+    protected function createPage()
+    {
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        $resultPage = $this->resultPageFactory->create();
+
+        $resultPage->setActiveMenu('Smile_ProductLabel::rule')->addBreadcrumb(__('Product Label'), __('Product Label'));
+
+        return $resultPage;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -22,10 +116,10 @@ class Reload extends AbstractAction
         }
 
         $identifier = $this->getRequest()->getParam('product_label_id');
-        $model      = $this->modelFactory->create();
+        $model      = $this->sellerFactory->create();
 
         if ($identifier) {
-            $model = $this->modelRepository->getById($identifier);
+            $model = $this->sellerRepository->getById($identifier);
         }
 
         $model->setAttributeId((int) $this->getRequest()->getParam('set'));

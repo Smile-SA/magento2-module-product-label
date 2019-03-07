@@ -42,37 +42,22 @@ abstract class AbstractAction extends Action
     protected $coreRegistry;
 
     /**
-     * @var \Magento\Framework\View\Result\PageFactory|null
-     */
-    protected $resultPageFactory = null;
-
-    /**
-     * @var \Magento\Framework\App\Request\DataPersistorInterface
-     */
-    protected $dataPersistor;
-
-    /**
      * AbstractAction constructor.
      *
      * @param Context                $context
      * @param Registry               $coreRegistry
      * @param ProductLabelFactory    $modelFactory
      * @param ProductLabelRepository $modelRepository
-     * @param \Magento\Framework\App\Request\DataPersistorInterface                          $dataPersistor     Data persistor.
      */
     public function __construct(
         Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         Registry $coreRegistry,
-        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
         ProductLabelFactory $modelFactory,
         ProductLabelRepository $modelRepository
     ) {
-        $this->resultPageFactory = $resultPageFactory;
         $this->modelFactory = $modelFactory;
         $this->modelRepository = $modelRepository;
         $this->coreRegistry = $coreRegistry;
-        $this->dataPersistor     = $dataPersistor;
 
         parent::__construct($context);
     }
@@ -102,21 +87,6 @@ abstract class AbstractAction extends Action
         $this->coreRegistry->register('current_productlabel', $model);
 
         return $model;
-    }
-
-    /**
-     * Create result page
-     *
-     * @return \Magento\Backend\Model\View\Result\Page
-     */
-    protected function createPage()
-    {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
-
-        $resultPage->setActiveMenu('Smile_ProductLabel::productlabel')->addBreadcrumb(__('Product Label'), __('Product Label'));
-
-        return $resultPage;
     }
 
 }

@@ -7,9 +7,7 @@
  * @copyright 2019 Smile
  */
 
-namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel;
-
-use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
 
 /**
  * Adminhtml block: Button Back
@@ -20,7 +18,7 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
  * @copyright 2019 Smile
  */
 
-class BackButton extends AbstractButton implements ButtonProviderInterface
+class BackButton extends AbstractButton
 {
     /**
      * @inheritdoc

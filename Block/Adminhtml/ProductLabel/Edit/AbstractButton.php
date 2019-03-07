@@ -7,10 +7,11 @@
  * @copyright 2019 Smile
  */
 
-namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel;
+namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
 
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
 
 /**
@@ -21,7 +22,7 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
  * @author    Houda EL RHOZLANE <hoelr@smile.fr>
  * @copyright 2019 Smile
  */
-abstract class AbstractButton
+abstract class AbstractButton  implements ButtonProviderInterface
 {
     /**
      * @var Context
@@ -46,6 +47,11 @@ abstract class AbstractButton
     }
 
     /**
+     * @return mixed
+     */
+    abstract public function getButtonData();
+
+    /**
      * Return object ID.
      *
      * @return int|null
@@ -58,7 +64,7 @@ abstract class AbstractButton
             /** @var \Smile\ProductLabel\Api\Data\ProductLabelInterface $model */
             $model = $this->repository->getById($modelId);
 
-            return $model->getId();
+            return $model->getProductLabelId();
         } catch (NoSuchEntityException $e) {
         }
         return null;

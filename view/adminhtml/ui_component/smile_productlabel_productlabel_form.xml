@@ -13,6 +13,7 @@
         </item>
         <item name="label" xsi:type="string" translate="true">Product Label Information</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
+
         <item name="config" xsi:type="array">
             <item name="dataScope" xsi:type="string">data</item>
             <item name="namespace" xsi:type="string">smile_productlabel_productlabel_form</item>
@@ -23,11 +24,11 @@
     <settings>
         <reloadItem>general.attribute_id:value</reloadItem>
         <buttons>
-            <button name="back" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\BackButton" />
-            <button name="delete" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\DeleteButton" />
-            <button name="reset" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\ResetButton" />
-            <button name="save_and_continue" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\SaveAndContinueButton" />
-            <button name="save" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\SaveButton" />
+            <button name="back" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\BackButton" />
+            <button name="delete" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\DeleteButton" />
+            <button name="reset" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\ResetButton" />
+            <button name="save_and_continue" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\SaveAndContinueButton" />
+            <button name="save" class="Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit\SaveButton" />
         </buttons>
         <deps>
             <dep>smile_productlabel_productlabel_form.smile_productlabel_productlabel_form_data_source</dep>
@@ -36,7 +37,7 @@
 
     <dataSource name="smile_productlabel_productlabel_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\ProductLabelDataProvider</argument>
+            <argument name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\DataProvider</argument>
             <argument name="name" xsi:type="string">smile_productlabel_productlabel_form_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">product_label_id</argument>
             <argument name="requestFieldName" xsi:type="string">product_label_id</argument>
@@ -63,6 +64,19 @@
         <settings>
             <label translate="true">Product Label Information</label>
         </settings>
+
+        <field name="product_label_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">product_label</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>product_label_id</dataScope>
+            </settings>
+        </field>
 
         <field name="is_active" formElement="checkbox" sortOrder="5">
             <argument name="data" xsi:type="array">
@@ -124,7 +138,6 @@
 
         <field name="attribute_id" formElement="select" component="Magento_Ui/js/form/element/ui-select" sortOrder="30">
             <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Attribute\Options</item>
                 <item name="config" xsi:type="array">
                     <item name="filterOptions" xsi:type="boolean">true</item>
                     <item name="showCheckbox" xsi:type="boolean">false</item>
@@ -146,6 +159,13 @@
                 <componentType>field</componentType>
                 <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
             </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Smile\ProductLabel\Ui\Component\Source\Attribute\Options"/>
+                    </settings>
+                </select>
+            </formElements>
         </field>
 
         <field name="attribute_label" formElement="select" sortOrder="31">
@@ -161,7 +181,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="Smile\ProductLabel\Ui\Component\ProductLabel\Source\Attribute\Options"/>
+                        <options class="Smile\ProductLabel\Ui\Component\Source\Attribute\Options"/>
                     </settings>
                 </select>
             </formElements>
@@ -234,7 +254,7 @@
 
         <field name="position_category_list" formElement="select" sortOrder="60">
             <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location\Options</item>
+                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\Source\Location\Options</item>
                 <item name="config" xsi:type="array">
                     <item name="filterOptions" xsi:type="boolean">true</item>
                     <item name="multiple" xsi:type="boolean">false</item>
@@ -254,7 +274,7 @@
 
         <field name="position_product_view" formElement="select" sortOrder="70">
             <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location\Options</item>
+                <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\Source\Location\Options</item>
                 <item name="config" xsi:type="array">
                     <item name="filterOptions" xsi:type="boolean">true</item>
                     <item name="multiple" xsi:type="boolean">false</item>
@@ -290,7 +310,7 @@
             <formElements>
                 <multiselect>
                     <settings>
-                        <options class="Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location\View"/>
+                        <options class="Smile\ProductLabel\Ui\Component\Source\Location\View"/>
                     </settings>
                 </multiselect>
             </formElements>

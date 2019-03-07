@@ -30,7 +30,7 @@
         </arguments>
     </virtualType>
 
-    <type name="Smile\ProductLabel\Ui\Component\ProductLabel\Form\ProductLabelDataProvider">
+    <type name="Smile\ProductLabel\Ui\Component\ProductLabel\Form\DataProvider">
         <arguments>
             <argument name="modifierPool" xsi:type="object">Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\Pool</argument>
         </arguments>

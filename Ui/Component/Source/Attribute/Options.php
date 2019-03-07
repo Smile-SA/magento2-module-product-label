@@ -1,5 +1,5 @@
 <?php
-namespace Smile\ProductLabel\Ui\Component\ProductLabel\Source\Attribute;
+namespace Smile\ProductLabel\Ui\Component\Source\Attribute;
 
 use \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory;
 

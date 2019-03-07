@@ -1,6 +1,6 @@
 <?php
 
-namespace Smile\ProductLabel\Ui\Component\ProductLabel\Listing\Column;
+namespace Smile\ProductLabel\Ui\Component\Listing\Column;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;

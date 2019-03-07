@@ -1,6 +1,6 @@
 <?php
 
-namespace Smile\ProductLabel\Ui\Component\ProductLabel\Source\Location;
+namespace Smile\ProductLabel\Ui\Component\Source\Location;
 
 /**
  * Locations values for product label edit form.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form;
+namespace Smile\ProductLabel\Ui\Component\Form;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
@@ -28,25 +28,19 @@ class ProductLabelDataProvider extends AbstractDataProvider
     protected $dataPersistor;
 
     /**
+     * @var \Magento\Framework\App\RequestInterface
+     * @since 101.0.0
+     */
+    protected $request;
+    /**
      * @var array
      */
     protected $loadedData;
 
     /**
-     * @var \Magento\Framework\App\RequestInterface
-     * @since 101.0.0
-     */
-    protected $request;
-
-    /**
      * @var \Smile\ProductLabel\Model\ImageLabel\FileInfo
      */
     protected $fileInfo;
-
-    /**
-     * @var \Magento\Ui\DataProvider\Modifier\PoolInterface
-     */
-    private $modifierPool;
 
     /**
      * ProductLabelDataProvider constructor.
@@ -58,7 +52,6 @@ class ProductLabelDataProvider extends AbstractDataProvider
      * @param DataPersistorInterface                          $dataPersistor
      * @param \Magento\Framework\App\RequestInterface         $request
      * @param \Smile\ProductLabel\Model\ImageLabel\FileInfo   $fileInfo
-     * @param \Magento\Ui\DataProvider\Modifier\PoolInterface $modifierPool
      * @param DataPersistorInterface                          $dataPersistor
      * @param array                                           $meta
      * @param array                                           $data
@@ -71,7 +64,6 @@ class ProductLabelDataProvider extends AbstractDataProvider
         DataPersistorInterface $dataPersistor,
         \Magento\Framework\App\RequestInterface $request,
         \Smile\ProductLabel\Model\ImageLabel\FileInfo $fileInfo,
-        \Magento\Ui\DataProvider\Modifier\PoolInterface $modifierPool,
         array $meta = [],
         array $data = []
     ) {
@@ -79,7 +71,6 @@ class ProductLabelDataProvider extends AbstractDataProvider
         $this->dataPersistor = $dataPersistor;
         $this->fileInfo = $fileInfo;
         $this->request = $request;
-        $this->modifierPool  = $modifierPool;
 
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
@@ -92,47 +83,48 @@ class ProductLabelDataProvider extends AbstractDataProvider
 //        if (isset($this->loadedData)) {
 //            return $this->loadedData;
 //        }
-//
-//        $requestId = $this->request->getParam($this->requestFieldName);
-//        $productLabel = $this->collection->addFieldToFilter($this->requestFieldName, $requestId)->getFirstItem();
-//
-//        if ($productLabel->getId()) {
-//            $data = $this->convertValues($productLabel, $productLabel->getData());
-//
-//            $this->loadedData[$productLabel->getId()] = $data;
+//        $items = $this->collection->getItems();
+//        /** @var \Training\Seller\Model\Seller $model */
+//        foreach ($items as $model) {
+//            $this->loadedData[$model->getId()] = $model->getData();
 //        }
-//        /** @var \Magento\Ui\DataProvider\Modifier\ModifierInterface $modifier */
-//        foreach ($this->modifierPool->getModifiersInstances() as $modifier) {
-//            $this->loadedData = $modifier->modifyData($this->loadedData);
+//
+//        $data = $this->dataPersistor->get('smile_productlabel_productlabel');
+//        if (!empty($data)) {
+//            $model = $this->collection->getNewEmptyItem();
+//            $data = $this->convertValues($model, $data);
+//            $model->setData($data);
+//            $this->loadedData[$model->getId()] = $model->getData();
+//            $this->dataPersistor->clear('smile_productlabel_productlabel');
 //        }
 //
 //        return $this->loadedData;
 //    }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getData()
     {
-        foreach ($this->getCollection()->getItems() as $itemId => $item) {
-            $this->data[$itemId] = $item->toArray();
+        if (isset($this->loadedData)) {
+            return $this->loadedData;
+        }
+        $items = $this->collection->getItems();
+        /** @var \Smile\ProductLabel\Model\ProductLabel $model */
+        foreach ($items as $model) {
+            $this->loadedData[$model->getId()] = $model->getData();
         }
 
         $data = $this->dataPersistor->get('smile_productlabel_productlabel');
         if (!empty($data)) {
-            $productLabel = $this->collection->getNewEmptyItem();
-            $data = $this->convertValues($productLabel, $data);
-            $productLabel->setData($data);
-            $this->data[$productLabel->getId()] = $productLabel->getData();
+            $model = $this->collection->getNewEmptyItem();
+            $data = $this->convertValues($model, $data);
+            $model->setData($data);
+            $this->loadedData[$model->getId()] = $model->getData();
             $this->dataPersistor->clear('smile_productlabel_productlabel');
         }
 
-        /** @var \Magento\Ui\DataProvider\Modifier\ModifierInterface $modifier */
-        foreach ($this->modifierPool->getModifiersInstances() as $modifier) {
-            $this->data = $modifier->modifyData($this->data);
-        }
-
-        return $this->data;
+        return $this->loadedData;
     }
 
 
@@ -165,18 +157,5 @@ class ProductLabelDataProvider extends AbstractDataProvider
 
         return $data;
     }
-    /**
-     * {@inheritdoc}
-     */
-    public function getMeta()
-    {
-        $this->meta = parent::getMeta();
 
-        /** @var \Magento\Ui\DataProvider\Modifier\ModifierInterface $modifier */
-        foreach ($this->modifierPool->getModifiersInstances() as $modifier) {
-            $this->meta = $modifier->modifyMeta($this->meta);
-        }
-
-        return $this->meta;
-    }
 }

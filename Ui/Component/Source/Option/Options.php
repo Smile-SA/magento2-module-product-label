@@ -1,6 +1,6 @@
 <?php
 
-namespace Smile\ProductLabel\Ui\Component\ProductLabel\Source\Option;
+namespace Smile\ProductLabel\Ui\Component\Source\Option;
 
 use Magento\Catalog\Model\Product\Attribute\Repository;
 use \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory;

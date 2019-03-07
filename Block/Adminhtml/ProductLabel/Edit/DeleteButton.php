@@ -7,9 +7,7 @@
  * @copyright 2019 Smile
  */
 
-namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel;
-
-use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
 
 /**
  * Adminhtml block: Button Delete
@@ -19,7 +17,7 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
  * @author    Houda EL RHOZLANE <hoelr@smile.fr>
  * @copyright 2019 Smile
  */
-class DeleteButton extends AbstractButton implements ButtonProviderInterface
+class DeleteButton extends AbstractButton
 {
     /**
      * @inheritdoc

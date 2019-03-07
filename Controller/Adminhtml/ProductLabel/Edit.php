@@ -4,7 +4,6 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\Model\View\Result\Page as ResultPage;
-use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Admin Action: productlabel/edit
@@ -33,9 +32,7 @@ class Edit extends AbstractAction
         /** @var ResultPage $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        $this->coreRegistry->register('current_productLabel', $model);
-
-        $breadcrumbTitle = $model->getId() ? __('Edit Product Label') : __('New Product Label');
+        $breadcrumbTitle = $model->getProductLabelId() ? __('Edit Product Label') : __('New Product Label');
         $resultPage
             ->setActiveMenu('Smile_ProductLabel::manage')
             ->addBreadcrumb(__('Smile Product Label'), __('Smile Product Label'))
@@ -43,7 +40,7 @@ class Edit extends AbstractAction
 
         $resultPage->getConfig()->getTitle()->prepend(__('Manage Smile_ProductLabel'));
         $resultPage->getConfig()->getTitle()->prepend(
-            $model->getId()
+            $model->getProductLabelId()
                 ? __("Edit product label #%1", $model->getIdentifier())
                 : __('New product label')
         );

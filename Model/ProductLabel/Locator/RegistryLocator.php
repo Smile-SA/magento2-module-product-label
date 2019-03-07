@@ -42,7 +42,7 @@ class RegistryLocator implements LocatorInterface
             return $this->productLabel;
         }
 
-        if ($productLabel = $this->registry->registry('current_productLabel')) {
+        if ($productLabel = $this->registry->registry('current_productlabel')) {
             return $this->productLabel = $productLabel;
         }
 

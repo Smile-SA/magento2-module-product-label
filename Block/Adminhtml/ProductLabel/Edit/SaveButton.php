@@ -7,19 +7,17 @@
  * @copyright 2019 Smile
  */
 
-namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel;
-
-use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
 
 /**
- * Adminhtml block: Button Save and Continue
+ * Adminhtml block: Button Save
  *
  * @category  Smile
  * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <hoelr@smile.fr>
  * @copyright 2019 Smile
  */
-class SaveAndContinueButton extends AbstractButton implements ButtonProviderInterface
+class SaveButton extends AbstractButton
 {
     /**
      * @inheritdoc
@@ -27,13 +25,13 @@ class SaveAndContinueButton extends AbstractButton implements ButtonProviderInte
     public function getButtonData()
     {
         return [
-            'label' => __('Save and Continue Edit'),
-            'class' => 'save',
+            'label' => __('Save Product Label'),
+            'class' => 'save primary',
             'data_attribute' => [
-                'mage-init' => ['button' => ['event' => 'saveAndContinueEdit']],
+                'mage-init' => ['button' => ['event' => 'save']],
                 'form-role' => 'save',
             ],
-            'sort_order' => 80,
+            'sort_order' => 90,
         ];
     }
 }

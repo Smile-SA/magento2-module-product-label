@@ -16,7 +16,7 @@
     <settings>
         <buttons>
             <button name="add">
-                <url path="*/*/create"/>
+                <url path="*/*/edit"/>
                 <class>primary</class>
                 <label translate="true">Add New Attribute</label>
             </button>
@@ -120,7 +120,7 @@
                 <resizeDefaultWidth>100</resizeDefaultWidth>
             </settings>
         </column>
-        <column name="image" sortOrder="20" class="Smile\ProductLabel\Ui\Component\ProductLabel\Listing\Column\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail">
+        <column name="image" sortOrder="20" class="Smile\ProductLabel\Ui\Component\Listing\Column\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="align" xsi:type="string">left</item>
@@ -147,7 +147,7 @@
                 <label translate="true">Name</label>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Smile\ProductLabel\Ui\Component\ProductLabel\Listing\Column\AttributeActions" sortOrder="50">
+        <actionsColumn name="actions" class="Smile\ProductLabel\Ui\Component\Listing\Column\AttributeActions" sortOrder="50">
             <settings>
                 <resizeEnabled>false</resizeEnabled>
                 <resizeDefaultWidth>100</resizeDefaultWidth>

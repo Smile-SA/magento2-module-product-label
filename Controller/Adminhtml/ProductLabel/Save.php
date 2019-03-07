@@ -23,6 +23,30 @@ use Smile\ProductLabel\Model\ProductLabel;
 class Save extends AbstractAction
 {
     /**
+     * @var DataPersistorInterface
+     */
+    protected $dataPersistor;
+
+    /**
+     * @param Context $context
+     * @param Registry $coreRegistry
+     * @param ProductLabelFactory $modelFactory
+     * @param ProductLabelRepository $modelRepository
+     * @param DataPersistorInterface $dataPersistor
+     */
+    public function __construct(
+        Context $context,
+        Registry $coreRegistry,
+        ProductLabelFactory $modelFactory,
+        ProductLabelRepository $modelRepository,
+        DataPersistorInterface $dataPersistor
+    ) {
+        parent::__construct($context, $coreRegistry, $modelFactory, $modelRepository);
+
+        $this->dataPersistor = $dataPersistor;
+    }
+
+    /**
      * @inheritdoc
      */
     public function execute()
