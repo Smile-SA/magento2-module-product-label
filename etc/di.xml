@@ -69,10 +69,10 @@
 
     <type name="Smile\ProductLabel\Controller\Adminhtml\ImageLabel\Image">
         <arguments>
-            <argument name="imageUploader" xsi:type="object">Smile\ProductLabel\ImageLabelUpload</argument>
+            <argument name="imageUploader" xsi:type="object">Magento\Catalog\CategoryImageUpload</argument>
         </arguments>
     </type>
-    <virtualType name="Smile\ProductLabel\ImageLabelUpload" type="Magento\Catalog\Model\ImageUploader">
+    <virtualType name="Magento\Catalog\CategoryImageUpload" type="Magento\Catalog\Model\ImageUploader">
         <arguments>
             <argument name="baseTmpPath" xsi:type="string">smile_productlabel/tmp/imagelabel</argument>
             <argument name="basePath" xsi:type="string">smile_productlabel/imagelabel</argument>

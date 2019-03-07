@@ -17,26 +17,13 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
      * @var string
      */
     protected $subDir = 'smile_productlabel/tmp/imagelabel';
+
     /**
      * url builder
      *
      * @var \Magento\Framework\UrlInterface
      */
     protected $urlBuilder;
-    /**
-     * @var \Magento\Catalog\Model\ImageUploader
-     */
-    protected $imageUploader;
-    /**
-     * @var string
-     */
-    protected $additionalData = '_additional_data_';
-    /**
-     * Reference to the attribute instance
-     *
-     * @var \Magento\Eav\Model\Entity\Attribute\AbstractAttribute
-     */
-    protected $_attribute;
 
     /**
      * Image constructor.
@@ -51,6 +38,7 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     {
         $this->urlBuilder = $urlBuilder;
     }
+
     /**
      * get images base url
      *
@@ -60,6 +48,7 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     {
         return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]).$this->subDir;
     }
+
     /**
      * Check if temporary file is available for new image upload.
      *
@@ -70,42 +59,5 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     {
         return is_array($value) && isset($value[0]['tmp_name']);
     }
-    /**
-     * Gets image name from $value array.
-     * Will return empty string in a case when $value is not an array
-     *
-     * @param array $value Attribute value
-     * @return string
-     */
-    public function getUploadedImageName($value)
-    {
-        if (is_array($value) && isset($value[0]['name'])) {
-            return $value[0]['name'];
-        }
-        return '';
-    }
-    /**
-     * Get attribute instance
-     *
-     * @return \Magento\Eav\Model\Entity\Attribute\AbstractAttribute
-     * @codeCoverageIgnore
-     */
-    public function getAttribute()
-    {
-        return $this->_attribute;
-    }
 
-    /**
-     * Save uploaded file and set its name to category
-     *
-     * @param \Magento\Framework\DataObject $object
-     * @return \Smile\ProductLabel\Model\ImageLabel\Image
-     */
-    public function afterSave($object)
-    {
-        $value = $object->getData($this->additionalData . $this->getAttribute()->getName());
-        $imageName = $this->getUploadedImageName($value);
-        $this->imageUploader->moveFileFromTmp($imageName);
-        return $this;
-    }
 }

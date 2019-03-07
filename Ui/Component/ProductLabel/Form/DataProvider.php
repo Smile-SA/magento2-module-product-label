@@ -74,10 +74,6 @@ class DataProvider extends AbstractDataProvider
      */
     public function getData()
     {
-        if (isset($this->loadedData)) {
-            return $this->loadedData;
-        }
-
         $requestId = $this->request->getParam($this->requestFieldName);
         /** @var \Smile\ProductLabel\Model\ProductLabel $productLabel */
         $productLabel = $this->collection->addFieldToFilter($this->requestFieldName, $requestId)->getFirstItem();
@@ -85,14 +81,14 @@ class DataProvider extends AbstractDataProvider
         if ($productLabel->getId()) {
             $data = $this->convertValues($productLabel, $productLabel->getData());
 
-            $this->loadedData[$productLabel->getId()] = $data;
-        }
-        /** @var \Magento\Ui\DataProvider\Modifier\ModifierInterface $modifier */
-        foreach ($this->modifierPool->getModifiersInstances() as $modifier) {
-            $this->loadedData = $modifier->modifyData($this->loadedData);
+            $this->data[$productLabel->getId()] = $data;
         }
 
-        return $this->loadedData;
+        /** @var \Magento\Ui\DataProvider\Modifier\ModifierInterface $modifier */
+        foreach ($this->modifierPool->getModifiersInstances() as $modifier) {
+            $this->data = $modifier->modifyData($this->data);
+        }
+        return $this->data;
     }
 
     /**
