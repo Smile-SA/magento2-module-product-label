@@ -189,4 +189,12 @@ interface ProductLabelInterface
      * @return ProductLabelInterface
      */
     public function setPositionProductView($value);
+    /**
+     * Set position_product_view.
+     *
+     * @param array $value The position product view
+     *
+     * @return ProductLabelInterface
+     */
+    public function setDisplayOn($value);
 }

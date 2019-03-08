@@ -268,6 +268,12 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
         return $this->setData(self::PRODUCTLABEL_IMAGE, $value);
     }
 
+    /**
+     * Set field: display_on.
+     *
+     * @param array $value
+     * @return $this
+     */
     public function setDisplayOn($value)
     {
         return $this->setData(self::PRODUCTLABEL_DISPLAY_ON, $value);
@@ -284,7 +290,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
         $this->setData(self::PRODUCTLABEL_IMAGE, $values['image'][0]['name']);
         $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, (string) $values['position_category_list']);
         $this->setData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW, (string) $values['position_product_view']);
-        $this->setData(self::PRODUCTLABEL_DISPLAY_ON, (string) implode(';',$values['display_on']));
+        $this->setData(self::PRODUCTLABEL_DISPLAY_ON, implode(',',$values['display_on']));
     }
 
     /**
@@ -313,10 +319,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
                         . '/'
                         . $image;
                 }
-            } else {
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __('Something went wrong while getting the image url.')
-                );
             }
         }
         return $url;
