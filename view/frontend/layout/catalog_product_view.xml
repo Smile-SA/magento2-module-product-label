@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<!--
+  ~
+  ~ @category  Smile
+  ~ @package   Smile\ProductLabel
+  ~ @author    Houda EL RHOZLANE <hoelr@smile.fr>
+  ~ @copyright 2019 Smile
+  -->
+
+<page
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.info.details">
+            <block
+                    class="Smile\Seller\Block\Product\Sellers"
+                    group="detailed_info"
+                    name="product.info.details.seller"
+                    template="Smile_Seller::product/sellers.phtml">
+                <arguments>
+                    <argument name="title" xsi:type="string" translate="true">Sellers</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

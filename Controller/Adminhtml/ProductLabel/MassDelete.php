@@ -26,25 +26,18 @@ class MassDelete extends AbstractAction
      */
     public function execute()
     {
-        /** @var ResultRedirect $resultRedirect */
-        $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        $resultRedirect->setPath('*/*/index');
+        $collection     = $this->filter->getCollection($this->collectionFactory->create());
+        $collectionSize = $collection->getSize();
 
-        $productlabelIds = $this->getRequest()->getParam('selected', []);
-
-        if (!is_array($productlabelIds) || count($productlabelIds) < 1) {
-            $this->messageManager->addErrorMessage(__('Please select product labels.'));
-            return $resultRedirect;
+        foreach ($collection as $productLabel) {
+            $this->modelRepository->deleteById($productLabel->getId());
         }
 
-        try {
-            foreach ($productlabelIds as $productlabelId) {
-                $this->modelRepository->deleteById((int) $productlabelId);
-            }
-            $this->messageManager->addSuccessMessage(__('Total of %1 product label(s) were deleted.', count($productlabelIds)));
-        } catch (\Exception $e) {
-            $this->messageManager->addErrorMessage($e->getMessage());
-        }
+        $this->messageManager->addSuccessMessage(__('A total of %1 product label(s) have been deleted.', $collectionSize));
+
+        $resultRedirect = $this->resultRedirectFactory->create();
+
+        return $resultRedirect->setPath('*/*/');
 
         return $resultRedirect;
     }
