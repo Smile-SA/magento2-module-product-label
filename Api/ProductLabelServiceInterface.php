@@ -31,7 +31,7 @@ interface ProductLabelServiceInterface
     public function scheduleRefreshByAttributeSetIds($attributeSetIds);
 
     /**
-     * Process appliance of all rules set to be refreshed.
+     * Process appliance of all product labels set to be refreshed.
      *
      * @return void
      */

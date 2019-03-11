@@ -63,12 +63,14 @@ class Manager
     protected $cacheByIdentifier = [];
 
     /**
-     * @param CollectionProcessor $collectionProcessor
-     * @param mixed $objectFactory
+     * Manager constructor.
+     *
+     * @param CollectionProcessor   $collectionProcessor
+     * @param                       $objectFactory
      * @param AbstractResourceModel $objectResource
-     * @param mixed $objectCollectionFactory
-     * @param mixed $objectSearchResultsFactory
-     * @param string|null $identifierFieldName
+     * @param                       $objectCollectionFactory
+     * @param                       $objectSearchResultsFactory
+     * @param null                  $identifierFieldName
      */
     public function __construct(
         CollectionProcessor $collectionProcessor,

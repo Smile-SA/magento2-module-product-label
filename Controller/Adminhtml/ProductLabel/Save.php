@@ -28,20 +28,26 @@ class Save extends AbstractAction
     protected $dataPersistor;
 
     /**
-     * @param Context $context
-     * @param Registry $coreRegistry
-     * @param ProductLabelFactory $modelFactory
-     * @param ProductLabelRepository $modelRepository
-     * @param DataPersistorInterface $dataPersistor
+     * Save constructor.
+     *
+     * @param Context                                                                $context
+     * @param Registry                                                               $coreRegistry
+     * @param ProductLabelFactory                                                    $modelFactory
+     * @param ProductLabelRepository                                                 $modelRepository
+     * @param DataPersistorInterface                                                 $dataPersistor
+     * @param \Magento\Ui\Component\MassAction\Filter                                $filter
+     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
      */
     public function __construct(
         Context $context,
         Registry $coreRegistry,
         ProductLabelFactory $modelFactory,
         ProductLabelRepository $modelRepository,
-        DataPersistorInterface $dataPersistor
+        DataPersistorInterface $dataPersistor,
+        \Magento\Ui\Component\MassAction\Filter $filter,
+        \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
     ) {
-        parent::__construct($context, $coreRegistry, $modelFactory, $modelRepository);
+        parent::__construct($context, $coreRegistry, $modelFactory, $modelRepository, $filter, $collectionFactory);
 
         $this->dataPersistor = $dataPersistor;
     }
@@ -70,6 +76,8 @@ class Save extends AbstractAction
 
         // Load the product label
         $model = $this->initModel($productlabelId);
+
+
 
         // By default, redirect to the edit page of the product label
         $resultRedirect->setPath('*/*/edit', ['product_label_id' => $productlabelId]);

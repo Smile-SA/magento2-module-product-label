@@ -45,11 +45,12 @@ class Data extends AbstractHelper
 
     /**
      * Data constructor.
-     * @param Context $context
+     *
+     * @param Context                         $context
      * @param ProductLabelRepositoryInterface $plabelRepository
-     * @param FilterBuilder $filterBuilder
-     * @param SortOrderBuilder $sortOrderBuilder
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param FilterBuilder                   $filterBuilder
+     * @param SortOrderBuilder                $sortOrderBuilder
+     * @param SearchCriteriaBuilder           $searchCriteriaBuilder
      */
     public function __construct(
         Context $context,

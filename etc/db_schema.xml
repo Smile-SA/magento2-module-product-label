@@ -3,6 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="smile_productlabel" resource="default" engine="innodb" comment="Smile Product Label Table">
         <column xsi:type="int" name="product_label_id" padding="6" unsigned="false" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="boolean" name="is_active" nullable="false" default="1" comment="Product Label Is Active"/>
         <column xsi:type="varchar" name="identifier" nullable="false" comment="Product Label Identifier"/>
         <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Product Label Name"/>
         <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false" default="0"

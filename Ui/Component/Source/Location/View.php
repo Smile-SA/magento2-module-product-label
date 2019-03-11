@@ -27,7 +27,7 @@ class View implements \Magento\Framework\Data\OptionSourceInterface
     }
 
     /**
-     * Retrieve list of attributes that can be used to define virtual attributes rules.
+     * Retrieve list of attributes that can be used to define product labels.
      *
      * @return array
      */

@@ -42,22 +42,38 @@ abstract class AbstractAction extends Action
     protected $coreRegistry;
 
     /**
+     * @var \Magento\Ui\Component\MassAction\Filter
+     */
+    protected $filter;
+
+    /**
+     * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory
+     */
+    protected $collectionFactory;
+
+    /**
      * AbstractAction constructor.
      *
-     * @param Context                $context
-     * @param Registry               $coreRegistry
-     * @param ProductLabelFactory    $modelFactory
-     * @param ProductLabelRepository $modelRepository
+     * @param Context                                                                $context
+     * @param Registry                                                               $coreRegistry
+     * @param ProductLabelFactory                                                    $modelFactory
+     * @param ProductLabelRepository                                                 $modelRepository
+     * @param \Magento\Ui\Component\MassAction\Filter                                $filter
+     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
      */
     public function __construct(
         Context $context,
         Registry $coreRegistry,
         ProductLabelFactory $modelFactory,
-        ProductLabelRepository $modelRepository
+        ProductLabelRepository $modelRepository,
+        \Magento\Ui\Component\MassAction\Filter $filter,
+        \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
     ) {
         $this->modelFactory = $modelFactory;
         $this->modelRepository = $modelRepository;
         $this->coreRegistry = $coreRegistry;
+        $this->filter            = $filter;
+        $this->collectionFactory = $collectionFactory;
 
         parent::__construct($context);
     }

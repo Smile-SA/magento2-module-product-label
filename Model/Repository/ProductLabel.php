@@ -29,10 +29,11 @@ class ProductLabel implements ProductLabelRepositoryInterface {
 
     /**
      * ProductLabel constructor.
-     * @param RepositoryManagerFactory $repositoryManagerFactory
-     * @param ProductLabelInterfaceFactory $objectFactory
-     * @param ProductLabelResourceModel $objectResource
-     * @param ProductLabelCollectionFactory $objectCollectionFactory
+     *
+     * @param ManagerFactory                            $repositoryManagerFactory
+     * @param ProductLabelInterfaceFactory              $objectFactory
+     * @param ProductLabelResourceModel                 $objectResource
+     * @param ProductLabelCollectionFactory             $objectCollectionFactory
      * @param ProductLabelSearchResultsInterfaceFactory $objectSearchResultsFactory
      */
     public function __construct(

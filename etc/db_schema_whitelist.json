@@ -9,7 +9,8 @@
             "image": true,
             "position_category_list": true,
             "position_product_view": true,
-            "display_on": true
+            "display_on": true,
+            "is_active": true
         },
         "index": {
             "SMILE_PRODUCTLABEL_PRODUCT_LABEL_ID": true,

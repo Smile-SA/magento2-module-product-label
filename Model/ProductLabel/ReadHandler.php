@@ -23,6 +23,7 @@ class ReadHandler implements ExtensionInterface
 
     /**
      * ReadHandler constructor.
+     *
      * @param DataHelper $dataHelper
      */
     public function __construct(DataHelper $dataHelper)
@@ -34,7 +35,6 @@ class ReadHandler implements ExtensionInterface
     /**
      * Perform action on relation/extension attribute
      *
-     *
      * @param $product
      * @param array $arguments
      * @return ProductInterface|object
@@ -44,8 +44,9 @@ class ReadHandler implements ExtensionInterface
         /** @var ProductInterface $product */
         $extension = $product->getExtensionAttributes();
 
-        if ($extension->getProductLabels() !== null)
+        if ($extension->getProductLabels() !== null) {
             return $product;
+        }
 
         $productlabels = $this->dataHelper->getProductProductLabels($product);
 
@@ -54,7 +55,5 @@ class ReadHandler implements ExtensionInterface
         $product->setExtensionAttributes($extension);
 
         return $product;
-
-
     }
 }

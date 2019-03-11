@@ -35,12 +35,14 @@ class AttributeActions extends Column
     protected $escaper;
 
     /**
-     * @param ContextInterface $context
+     * AttributeActions constructor.
+     *
+     * @param ContextInterface   $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param UrlInterface $urlBuilder
-     * @param Escaper $escaper
-     * @param array $components
-     * @param array $data
+     * @param UrlInterface       $urlBuilder
+     * @param Escaper            $escaper
+     * @param array              $components
+     * @param array              $data
      */
     public function __construct(
         ContextInterface $context,

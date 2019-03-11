@@ -1,5 +1,7 @@
 <?php
+
 namespace Smile\ProductLabel\Controller\Adminhtml\ImageLabel;
+
 /**
  * Class Image
  *
@@ -17,6 +19,5 @@ class Image extends AbstractUpload
     {
         return 'image';
     }
-
 
 }

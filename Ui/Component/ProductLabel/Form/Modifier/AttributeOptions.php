@@ -1,8 +1,8 @@
 <?php
 /**
- * Smile Elastic Suite Virtual Attribute rule edit form data provider modifier :
+ * Smile Product Label edit form data provider modifier :
  *
- * Used to populate "option_id" field according to current value of "attribute_id" for current rule.
+ * Used to populate "option_id" field according to current value of "attribute_id" for current product label.
  *
  */
 
@@ -24,8 +24,8 @@ class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInte
     /**
      * AttributeOptions constructor.
      *
-     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator             Rule Locator
-     * @param \Magento\Catalog\Api\ProductAttributeRepositoryInterface                $attributeRepository Attribute Repository
+     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator
+     * @param \Magento\Catalog\Api\ProductAttributeRepositoryInterface        $attributeRepository
      */
     public function __construct(
         \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator,

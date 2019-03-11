@@ -31,10 +31,10 @@ class EavPlugin
     private $plabelCollectionFactory;
 
     /**
-     * Constructor.
+     * EavPlugin constructor.
      *
-     * @param \Magento\Framework\Stdlib\ArrayManager $arrayManager          Array manager util.
-     * @param ProductLabelCollectionFactory                  $plabelCollectionFactory Rule Collection Factory
+     * @param \Magento\Framework\Stdlib\ArrayManager $arrayManager
+     * @param ProductLabelCollectionFactory          $plabelCollectionFactory
      */
     public function __construct(
         \Magento\Framework\Stdlib\ArrayManager $arrayManager,
@@ -69,8 +69,8 @@ class EavPlugin
 
             $fieldConfig = [
                 'tooltip' => [
-                    'description' => __("This attribute has values that can be automatically set by virtual attribute rules. "
-                        . "Modifying it could lead to potential data loss on next occurence of rules calculation."),
+                    'description' => __("This attribute has values that can be automatically set by product labels. "
+                        . "Modifying it could lead to potential data loss on next occurence of product labels calculation."),
                 ],
                 'tooltipTpl' => self::TOOLTIP_TEMPLATE,
             ];
@@ -82,7 +82,7 @@ class EavPlugin
     }
 
     /**
-     * Check if an attribute has calculated values. (true if it has rules based on this attribute).
+     * Check if an attribute has calculated values. (true if it has product labels based on this attribute).
      *
      * @param \Magento\Catalog\Api\Data\ProductAttributeInterface $attribute Attribute
      *
@@ -93,10 +93,10 @@ class EavPlugin
         $result = false;
 
         if ($attribute->getAttributeId()) {
-            $ruleCollection = $this->plabelCollectionFactory->create();
-            $ruleCollection->addAttributeFilter($attribute);
+            $productLabelCollection = $this->plabelCollectionFactory->create();
+            $productLabelCollection->addAttributeFilter($attribute);
 
-            $result = $ruleCollection->getSize() > 0;
+            $result = $productLabelCollection->getSize() > 0;
         }
 
         return $result;

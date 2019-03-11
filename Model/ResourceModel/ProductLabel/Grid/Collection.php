@@ -92,12 +92,6 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
             ['frontend_label']
         );
 
-//        $this->getSelect()->joinLeft(
-//            ['eaov' => $this->getTable('eav_attribute_option')],
-//            'eaov.option_id = main_table.option_id',
-//            ['option_label' => 'value']
-//        );
-
         return $this;
     }
 }

@@ -46,8 +46,10 @@ class FileInfo
     private $baseDirectory;
 
     /**
+     * FileInfo constructor.
+     *
      * @param Filesystem $filesystem
-     * @param Mime $mime
+     * @param Mime       $mime
      */
     public function __construct(
         Filesystem $filesystem,

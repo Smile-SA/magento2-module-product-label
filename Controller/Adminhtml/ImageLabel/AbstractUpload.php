@@ -8,14 +8,11 @@
  */
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ImageLabel;
+
 use Magento\Framework\Controller\ResultFactory;
+
 /**
  * Class AbstractUpload
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
  */
 abstract class AbstractUpload extends \Magento\Backend\App\Action
 {
@@ -25,8 +22,11 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
      * @var \Magento\Catalog\Model\ImageUploader
      */
     protected $imageUploader;
+
     /**
-     * @param \Magento\Backend\App\Action\Context $context
+     * AbstractUpload constructor.
+     *
+     * @param \Magento\Backend\App\Action\Context  $context
      * @param \Magento\Catalog\Model\ImageUploader $imageUploader
      */
     public function __construct(
@@ -36,10 +36,12 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
         parent::__construct($context);
         $this->imageUploader = $imageUploader;
     }
+
     /**
      * @return string
      */
     abstract protected function getFileId();
+
     /**
      * Upload file controller action
      *

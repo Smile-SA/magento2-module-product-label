@@ -35,7 +35,9 @@ abstract class AbstractButton  implements ButtonProviderInterface
     protected $repository;
 
     /**
-     * @param Context $context
+     * AbstractButton constructor.
+     *
+     * @param Context                         $context
      * @param ProductLabelRepositoryInterface $repository
      */
     public function __construct(

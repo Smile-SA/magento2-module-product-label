@@ -26,7 +26,7 @@ class RegistryLocator implements LocatorInterface
     /**
      * RegistryLocator constructor.
      *
-     * @param \Magento\Framework\Registry $registry The registry
+     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(\Magento\Framework\Registry $registry)
     {

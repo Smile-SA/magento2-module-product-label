@@ -278,11 +278,13 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return $this->setData(self::PRODUCTLABEL_DISPLAY_ON, $value);
     }
+
     /**
      * @param array $values
      */
     public function populateFromArray(array $values)
     {
+        $this->setData(self::IS_ACTIVE, (bool) $values['is_active']);
         $this->setData(self::PRODUCTLABEL_IDENTIFIER, (string) $values['identifier']);
         $this->setData(self::PRODUCTLABEL_NAME, (string) $values['name']);
         $this->setData(self::ATTRIBUTE_ID, (int) $values['attribute_id']);
@@ -326,8 +328,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
 
     /**
      * @return \Magento\Catalog\Model\ImageUploader
-     *
-     * @deprecated 101.0.0
      */
     private function getImageUploader()
     {
@@ -345,7 +345,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     public function afterSave()
     {
         $imageName = $this->getData('image');
-        $this->getImageUploader()->moveFileFromTmp($imageName);
+        if (file_exists($imageName)) {
+            $this->getImageUploader()->moveFileFromTmp($imageName);
+        }
         return parent::afterSave();
     }
 }

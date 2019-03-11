@@ -12,7 +12,7 @@ namespace Smile\ProductLabel\Model\ProductLabel\Locator;
 interface LocatorInterface
 {
     /**
-     * Retrieve current rule.
+     * Retrieve current product label.
      *
      * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface
      */

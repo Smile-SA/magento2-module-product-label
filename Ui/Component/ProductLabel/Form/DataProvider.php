@@ -80,7 +80,6 @@ class DataProvider extends AbstractDataProvider
 
         if ($productLabel->getId()) {
             $data = $this->convertValues($productLabel, $productLabel->getData());
-
             $this->data[$productLabel->getId()] = $data;
         }
 
@@ -88,6 +87,7 @@ class DataProvider extends AbstractDataProvider
         foreach ($this->modifierPool->getModifiersInstances() as $modifier) {
             $this->data = $modifier->modifyData($this->data);
         }
+
         return $this->data;
     }
 

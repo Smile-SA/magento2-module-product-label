@@ -61,14 +61,15 @@ class Reload extends Action
 
     /**
      * Reload constructor.
-     * @param Action\Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
-     * @param \Magento\Ui\Component\MassAction\Filter $filter
+     *
+     * @param Action\Context                                                         $context
+     * @param \Magento\Framework\View\Result\PageFactory                             $resultPageFactory
+     * @param \Magento\Framework\Registry                                            $coreRegistry
+     * @param \Magento\Framework\App\Request\DataPersistorInterface                  $dataPersistor
+     * @param \Magento\Ui\Component\MassAction\Filter                                $filter
      * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
-     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface $productLabelRepository
-     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory $productLabelFactory
+     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface                $productLabelRepository
+     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory              $productLabelFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,

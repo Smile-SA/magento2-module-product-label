@@ -1,8 +1,8 @@
 <?php
 /**
- * Smile Elastic Suite Virtual Attribute rule edit form data provider modifier :
+ * Smile Product Label edit form data provider modifier :
  *
- * Used to set "attribute_id" field to disabled in case of already existing rule.
+ * Used to set "attribute_id" field to disabled in case of already existing product label.
  *
  * @category  Smile
  * @package   Smile\ProductLabel
@@ -21,9 +21,9 @@ class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     private $locator;
 
     /**
-     * AttributeOptions constructor.
+     * Attribute constructor.
      *
-     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator Rule Locator
+     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator
      */
     public function __construct(
         \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator

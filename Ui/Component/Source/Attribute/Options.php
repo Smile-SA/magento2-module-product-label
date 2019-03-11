@@ -26,7 +26,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     /**
      * Options constructor.
      *
-     * @param CollectionFactory $attributesCollectionFactory Attributes Collection
+     * @param CollectionFactory $attributesCollectionFactory
      */
     public function __construct(CollectionFactory $attributesCollectionFactory)
     {
@@ -42,7 +42,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     }
 
     /**
-     * Retrieve list of attributes that can be used to define virtual attributes rules.
+     * Retrieve list of attributes that can be used to define product labels.
      *
      * @return array
      */
