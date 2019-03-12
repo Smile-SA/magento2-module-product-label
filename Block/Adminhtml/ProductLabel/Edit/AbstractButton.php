@@ -1,10 +1,15 @@
 <?php
 /**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
  */
 
 namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
@@ -19,8 +24,7 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 abstract class AbstractButton  implements ButtonProviderInterface
 {
@@ -37,8 +41,8 @@ abstract class AbstractButton  implements ButtonProviderInterface
     /**
      * AbstractButton constructor.
      *
-     * @param Context                         $context
-     * @param ProductLabelRepositoryInterface $repository
+     * @param Context                         $context      UI Component context
+     * @param ProductLabelRepositoryInterface $repository   Product Label Repository
      */
     public function __construct(
         Context $context,

@@ -1,4 +1,16 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
 
 namespace Smile\ProductLabel\Api;
 
@@ -7,58 +19,65 @@ namespace Smile\ProductLabel\Api;
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 interface ProductLabelRepositoryInterface
 {
     /**
-     * Retrieve a productlabel by its id
+     * Retrieve a product label by its id
      *
-     * @param int $objectId
+     * @param int $objectId Id of the product label
+     *
      * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getById($objectId);
+
     /**
-     * Retrieve a productlabel by its identifier.
+     * Retrieve a product label by its identifier.
      *
-     * @param string $objectIdentifier
+     * @param string $objectIdentifier Identifier of the product label
+     *
      * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getByIdentifier($objectIdentifier);
+
     /**
-     * Retrieve list of productlabel
+     * Retrieve list of product label
      *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria Search criteria
      *
      * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
+
     /**
-     * Save a productlabel
+     * Save a product label
      *
-     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterface $plabel productlabel
+     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterface $plabel product label
      *
      * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function save(\Smile\ProductLabel\Api\Data\ProductLabelInterface $plabel);
+
     /**
-     * Delete a productlabel by given ID
+     * Delete a product label by given ID
      *
-     * @param int $plabelId Id of the productlabel.
+     * @param int $plabelId Id of the product label.
      *
      * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
     public function deleteById($plabelId);
+
     /**
-     * Delete a productlabel by its identifier.
+     * Delete a product label by its identifier.
      *
-     * @param string $plabel
+     * @param string $plabel Identifier of the product label
+     *
      * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\CouldNotDeleteException

@@ -1,18 +1,30 @@
 <?php
 /**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
+
+use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+
+/**
  * Smile Product Label edit form data provider modifier :
  *
  * Used to set "attribute_id" field to disabled in case of already existing product label.
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
-
-use Smile\ProductLabel\Api\Data\ProductLabelInterface;
-
 class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
     /**

@@ -1,4 +1,16 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
 
 namespace Smile\ProductLabel\Model;
 
@@ -11,8 +23,7 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class ProductLabel extends AbstractModel implements IdentityInterface,ProductLabelInterface
 {
@@ -33,7 +44,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
      */
     private $imageUploader;
 
-
     /**
      * @inheritdoc
      */
@@ -43,6 +53,18 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     }
 
     /**
+     * @var \Smile\ProductLabel\Model\ImageLabel\FileInfo
+     */
+    protected $fileInfo;
+
+    /**
+     * Media directory object (writable).
+     *
+     * @var \Magento\Framework\Filesystem\Directory\WriteInterface
+     */
+    protected $mediaDirectory;
+
+    /**
      * ProductLabel constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -50,6 +72,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
      * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
+     * @param \Magento\Framework\Filesystem                                $filesystem
      * @param array                                                        $data
      */
     public function __construct(
@@ -58,10 +81,12 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Filesystem $filesystem,
         array $data = []
     ) {
 
         $this->storeManager = $storeManager;
+        $this->mediaDirectory = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
         parent::__construct(
             $context,
             $registry,
@@ -333,7 +358,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         if ($this->imageUploader === null) {
             $this->imageUploader = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\CategoryImageUpload::class);
+                ->get(\Smile\ProductLabel\ProductLabelImageUpload::class);
         }
 
         return $this->imageUploader;
@@ -345,7 +370,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     public function afterSave()
     {
         $imageName = $this->getData('image');
-        if (file_exists($imageName)) {
+        $path = $this->getImageUploader()->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
+
+        if ($this->mediaDirectory->isExist($path)) {
             $this->getImageUploader()->moveFileFromTmp($imageName);
         }
         return parent::afterSave();

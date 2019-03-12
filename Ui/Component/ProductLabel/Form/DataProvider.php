@@ -1,4 +1,16 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
 
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form;
 
@@ -11,8 +23,7 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class DataProvider extends AbstractDataProvider
 {
@@ -124,10 +135,9 @@ class DataProvider extends AbstractDataProvider
             unset($data['image']);
             $data['image'][0]['name'] = basename($fileName);
 
+            $data['image'][0]['url'] = $productLabel->getImageUrl();
             if ($this->fileInfo->isBeginsWithMediaDirectoryPath($fileName)) {
                 $data['image'][0]['url'] = $fileName;
-            } else {
-                $data['image'][0]['url'] = $productLabel->getImageUrl();
             }
 
             $data['image'][0]['size'] = isset($stat) ? $stat['size'] : 0;

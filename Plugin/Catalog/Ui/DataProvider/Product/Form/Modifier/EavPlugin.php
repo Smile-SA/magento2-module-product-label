@@ -1,18 +1,29 @@
 <?php
 /**
- * Smile Elastic Suite Virtual Attribute product form Ui component plugin.
- * Used to add a tooltip around virtual attributes.
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
  */
 
 namespace Smile\ProductLabel\Plugin\Catalog\Ui\DataProvider\Product\Form\Modifier;
 
 use \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as ProductLabelCollectionFactory;
 
+/**
+ * Smile Product Label form Ui component plugin.
+ * Used to add a tooltip around virtual attributes.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ */
 class EavPlugin
 {
     /**
@@ -69,8 +80,7 @@ class EavPlugin
 
             $fieldConfig = [
                 'tooltip' => [
-                    'description' => __("This attribute has values that can be automatically set by product labels. "
-                        . "Modifying it could lead to potential data loss on next occurence of product labels calculation."),
+                    'description' => __("This attribute is linked to a product label."),
                 ],
                 'tooltipTpl' => self::TOOLTIP_TEMPLATE,
             ];

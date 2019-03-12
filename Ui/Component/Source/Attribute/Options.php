@@ -1,4 +1,16 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
 namespace Smile\ProductLabel\Ui\Component\Source\Attribute;
 
 use \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory;
@@ -8,8 +20,7 @@ use \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFa
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Options implements \Magento\Framework\Data\OptionSourceInterface
 {

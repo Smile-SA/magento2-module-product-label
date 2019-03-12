@@ -1,4 +1,16 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
@@ -16,8 +28,7 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface as ProductLabelReposi
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 abstract class AbstractAction extends Action
 {
@@ -54,12 +65,12 @@ abstract class AbstractAction extends Action
     /**
      * AbstractAction constructor.
      *
-     * @param Context                                                                $context
-     * @param Registry                                                               $coreRegistry
-     * @param ProductLabelFactory                                                    $modelFactory
-     * @param ProductLabelRepository                                                 $modelRepository
-     * @param \Magento\Ui\Component\MassAction\Filter                                $filter
-     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
+     * @param Context                                                                $context           UI Component context
+     * @param Registry                                                               $coreRegistry      Core Registry
+     * @param ProductLabelFactory                                                    $modelFactory      Product Label Factory
+     * @param ProductLabelRepository                                                 $modelRepository   Product Label Repository
+     * @param \Magento\Ui\Component\MassAction\Filter                                $filter            Action Filter
+     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory Product Label Collection Factory
      */
     public function __construct(
         Context $context,
@@ -81,19 +92,20 @@ abstract class AbstractAction extends Action
     /**
      * Init the current model.
      *
-     * @param int|null $modelId
+     * @param int|null $Id Product Label ID
+     *
      * @return ProductLabel
      * @throws NotFoundException
      */
-    protected function initModel($modelId)
+    protected function initModel($Id)
     {
         /** @var \Smile\ProductLabel\Model\ProductLabel $model */
         $model = $this->modelFactory->create();
 
         // Initial checking
-        if ($modelId) {
+        if ($Id) {
             try {
-                $model = $this->modelRepository->getById($modelId);
+                $model = $this->modelRepository->getById($Id);
             } catch (NoSuchEntityException $e) {
                 throw new NotFoundException(__('This product label does not exist.'));
             }

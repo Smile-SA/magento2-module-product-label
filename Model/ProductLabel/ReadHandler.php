@@ -1,4 +1,16 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
 
 namespace Smile\ProductLabel\Model\ProductLabel;
 
@@ -7,6 +19,7 @@ use Magento\Framework\EntityManager\Operation\ExtensionInterface;
 use Smile\ProductLabel\Helper\Data as DataHelper;
 
 /**
+ * Class ReadHandler
  *
  * @category  Smile
  * @package   Smile\ProductLabel
@@ -15,7 +28,6 @@ use Smile\ProductLabel\Helper\Data as DataHelper;
  */
 class ReadHandler implements ExtensionInterface
 {
-
     /**
      * @var DataHelper
      */
@@ -31,12 +43,12 @@ class ReadHandler implements ExtensionInterface
         $this->dataHelper = $dataHelper;
     }
 
-
     /**
      * Perform action on relation/extension attribute
      *
-     * @param $product
-     * @param array $arguments
+     * @param ProductInterface  $product   Catalog Product Object
+     * @param array             $arguments Array of Arguments
+     *
      * @return ProductInterface|object
      */
     public function execute($product, $arguments = [])
@@ -44,16 +56,16 @@ class ReadHandler implements ExtensionInterface
         /** @var ProductInterface $product */
         $extension = $product->getExtensionAttributes();
 
-        if ($extension->getProductLabels() !== null) {
+        if ($extension->getProductLabels() !== null)
             return $product;
-        }
 
-        $productlabels = $this->dataHelper->getProductProductLabels($product);
+        $productLabels = $this->dataHelper->getProductPLabels($product);
 
-        $extension->setProductLabels($productlabels);
+        $extension->setProductLabels($productLabels);
 
         $product->setExtensionAttributes($extension);
 
         return $product;
+
     }
 }

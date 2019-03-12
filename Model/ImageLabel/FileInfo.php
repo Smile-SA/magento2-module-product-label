@@ -1,4 +1,17 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
 namespace Smile\ProductLabel\Model\ImageLabel;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
@@ -14,8 +27,7 @@ use Magento\Framework\Filesystem\Directory\ReadInterface;
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 
 class FileInfo
@@ -125,6 +137,8 @@ class FileInfo
     {
         $filePath = $this->getFilePath($fileName);
 
+//        var_dump($filePath);
+//        die('toto');
         $result = $this->getMediaDirectory()->isExist($filePath);
         return $result;
     }

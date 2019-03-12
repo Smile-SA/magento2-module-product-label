@@ -1,4 +1,16 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
 
 namespace Smile\ProductLabel\Model\ResourceModel;
 
@@ -15,12 +27,10 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class ProductLabel extends AbstractDb
 {
-
     /**
      * @var EntityManager
      */
@@ -52,6 +62,11 @@ class ProductLabel extends AbstractDb
         $this->metadataPool = $metadataPool;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     *
+     * {@inheritDoc}
+     */
     protected function _construct()
     {
         $this->_init(
@@ -59,6 +74,9 @@ class ProductLabel extends AbstractDb
             ProductLabelInterface::PRODUCTLABEL_ID);
     }
 
+    /**
+     * @return \Magento\Framework\DB\Adapter\AdapterInterface
+     */
     public function getConnection()
     {
         $connectionName = $this->metadataPool->getMetadata(ProductLabelInterface::class)->getEntityConnectionName();
@@ -66,16 +84,13 @@ class ProductLabel extends AbstractDb
         return $this->_resources->getConnectionByName($connectionName);
     }
 
-    public function load(AbstractModel $object, $value, $field = null)
-    {
-        $objectId = $this->getObjectId($value, $field);
-
-        if ($objectId)
-            $this->entityManager->load($object, $objectId);
-
-        return $this;
-    }
-
+    /**
+     * Save Product Label
+     *
+     * @param AbstractModel $object
+     *
+     * @return $this
+     */
     public function save(AbstractModel $object)
     {
         $this->entityManager->save($object);
@@ -83,31 +98,18 @@ class ProductLabel extends AbstractDb
         return $this;
     }
 
+    /**
+     * Delete Product Label
+     *
+     * @param AbstractModel $object
+     *
+     * @return $this
+     */
     public function delete(AbstractModel $object)
     {
         $this->entityManager->delete($object);
 
         return $this;
-    }
-
-    protected function getObjectId($value, $field = null) {
-        $entityMetadata = $this->metadataPool->getMetadata(ProductLabelInterface::class);
-        if ($field === null) {
-            $field = $entityMetadata->getIdentifierField();
-        }
-        $entityId = $value;
-
-        if ($field != $entityMetadata->getIdentifierField()) {
-            $field = $this->getConnection()->quoteIdentifier(sprintf('%s.%s', $this->getMainTable(), $field));
-            $select = $this->getConnection()->select()->from($this->getMainTable())->where($field . '=?', $value);
-
-            $select->reset(Select::COLUMNS)
-                ->columns($this->getMainTable() . '.' . $entityMetadata->getIdentifierField())
-                ->limit(1);
-            $result = $this->getConnection()->fetchCol($select);
-            $entityId = count($result) ? $result[0] : false;
-        }
-        return $entityId;
     }
 
 }

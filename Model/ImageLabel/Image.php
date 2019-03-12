@@ -1,4 +1,17 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
 namespace Smile\ProductLabel\Model\ImageLabel;
 
 use Magento\Framework\UrlInterface;
@@ -7,8 +20,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
 {
@@ -16,7 +28,7 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
      * media sub folder
      * @var string
      */
-    protected $subDir = 'smile_productlabel/tmp/imagelabel';
+    protected $subDir = 'smile_productlabel/imagelabel';
 
     /**
      * url builder

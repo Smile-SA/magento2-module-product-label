@@ -1,16 +1,27 @@
 <?php
 /**
- * Reload controller for product label edition : used to refresh the form after attribute_id is chosen.
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
  *
  * @category  Smile
  * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
  */
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Backend\App\Action;
 
+/**
+ * Reload controller for product label edition : used to refresh the form after attribute_id is chosen.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ */
 class Reload extends Action
 {
     /**
@@ -62,14 +73,14 @@ class Reload extends Action
     /**
      * Reload constructor.
      *
-     * @param Action\Context                                                         $context
-     * @param \Magento\Framework\View\Result\PageFactory                             $resultPageFactory
-     * @param \Magento\Framework\Registry                                            $coreRegistry
-     * @param \Magento\Framework\App\Request\DataPersistorInterface                  $dataPersistor
-     * @param \Magento\Ui\Component\MassAction\Filter                                $filter
-     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
-     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface                $productLabelRepository
-     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory              $productLabelFactory
+     * @param Action\Context                                                         $context                   UI Component context
+     * @param \Magento\Framework\View\Result\PageFactory                             $resultPageFactory         Result Page Factory
+     * @param \Magento\Framework\Registry                                            $coreRegistry              Core Registry
+     * @param \Magento\Framework\App\Request\DataPersistorInterface                  $dataPersistor             Data Persistor
+     * @param \Magento\Ui\Component\MassAction\Filter                                $filter                    Action Filter
+     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory         Product Label Collection Factory
+     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface                $productLabelRepository    Product Label Repository
+     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory              $productLabelFactory       Product Label Factory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
