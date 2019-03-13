@@ -82,7 +82,7 @@ class Save extends AbstractAction
         // Get the product label id (if edit).
         $productlabelId = null;
         if (!empty($data['product_label_id'])) {
-            $productlabelId = (int)$data['product_label_id'];
+            $productlabelId = (int) $data['product_label_id'];
         }
 
         // Load the product label.

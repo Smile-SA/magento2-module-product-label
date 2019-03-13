@@ -45,6 +45,8 @@ class ReadHandler implements ExtensionInterface
     /**
      * Perform action on relation/extension attribute
      *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     *
      * @param ProductInterface $product   Catalog Product Object
      * @param array            $arguments Array of Arguments
      *
@@ -56,7 +58,6 @@ class ReadHandler implements ExtensionInterface
         $extension = $product->getExtensionAttributes();
 
         if ($extension->getProductLabels() !== null) {
-
             return $product;
         }
 

@@ -57,8 +57,8 @@ class FileInfo
     /**
      * FileInfo constructor.
      *
-     * @param Filesystem $filesystem
-     * @param Mime       $mime
+     * @param Filesystem $filesystem Filesystem Helper
+     * @param Mime       $mime       MIME type
      */
     public function __construct(
         Filesystem $filesystem,
@@ -132,7 +132,7 @@ class FileInfo
     /**
      * Check if the file exists
      *
-     * @param string $fileName
+     * @param string $fileName The filename
      *
      * @return bool
      */
@@ -142,6 +142,23 @@ class FileInfo
         $result   = $this->getMediaDirectory()->isExist($filePath);
 
         return $result;
+    }
+
+    /**
+     * Checks for whether $fileName string begins with media directory path
+     *
+     * @param string $fileName The filename
+     *
+     * @return bool
+     */
+    public function isBeginsWithMediaDirectoryPath($fileName)
+    {
+        $filePath = ltrim($fileName, '/');
+
+        $mediaDirectoryRelativeSubpath          = $this->getMediaDirectoryPathRelativeToBaseDirectoryPath();
+        $isFileNameBeginsWithMediaDirectoryPath = strpos($filePath, $mediaDirectoryRelativeSubpath) === 0;
+
+        return $isFileNameBeginsWithMediaDirectoryPath;
     }
 
     /**
@@ -167,23 +184,6 @@ class FileInfo
         }
 
         return $filePath;
-    }
-
-    /**
-     * Checks for whether $fileName string begins with media directory path
-     *
-     * @param string $fileName The filename
-     *
-     * @return bool
-     */
-    public function isBeginsWithMediaDirectoryPath($fileName)
-    {
-        $filePath = ltrim($fileName, '/');
-
-        $mediaDirectoryRelativeSubpath          = $this->getMediaDirectoryPathRelativeToBaseDirectoryPath();
-        $isFileNameBeginsWithMediaDirectoryPath = strpos($filePath, $mediaDirectoryRelativeSubpath) === 0;
-
-        return $isFileNameBeginsWithMediaDirectoryPath;
     }
 
     /**

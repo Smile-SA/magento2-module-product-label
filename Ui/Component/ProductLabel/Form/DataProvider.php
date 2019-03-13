@@ -50,6 +50,8 @@ class DataProvider extends AbstractDataProvider
     /**
      * DataProvider constructor.
      *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     *
      * @param string                                          $name              Component Name
      * @param string                                          $primaryFieldName  Primary Field Name
      * @param string                                          $requestFieldName  Request Field Name

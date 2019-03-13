@@ -44,7 +44,6 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
      */
     private function getLocationsList()
     {
-
         $this->locationsList[0] = [
             'value'         => 0,
             'location_id'   => 'top_right',
@@ -65,6 +64,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
             'location_id'   => 'lower_left',
             'label'         => 'Lower Left',
         ];
+
         return $this->locationsList;
     }
 }

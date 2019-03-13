@@ -55,7 +55,7 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
     /**
      * Prepare Data Source
      *
-     * @param array $dataSource
+     * @param array $dataSource Data source
      *
      * @return array
      */
@@ -64,7 +64,6 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
-
                 $item[$fieldName . '_src']      = $this->imageHelper->getBaseUrl() . '/' . $item['image'];
                 $item[$fieldName . '_alt']      = $this->getAlt($item) ?: $this->imageHelper->getLabel();
                 $item[$fieldName . '_link']     = $this->urlBuilder->getUrl(
@@ -79,7 +78,7 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
     }
 
     /**
-     * @param array $row
+     * @param array $row The row
      *
      * @return null|string
      */
@@ -89,5 +88,4 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
 
         return isset($row[$altField]) ? $row[$altField] : null;
     }
-
 }

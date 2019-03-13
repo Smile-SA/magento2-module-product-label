@@ -21,6 +21,8 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
 /**
  * Product Label Model
  *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ *
  * @category  Smile
  * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
@@ -62,21 +64,20 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * @param \Magento\Framework\Model\Context                             $context            Context
      * @param \Magento\Framework\Registry                                  $registry           Registry
      * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager       Store Manager
+     * @param \Magento\Framework\Filesystem                                $filesystem         FileSystem Helper
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource           Resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection Resource Collection
-     * @param \Magento\Framework\Filesystem                                $filesystem         FileSystem Helper
      * @param array                                                        $data               Object Data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\Filesystem $filesystem,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Filesystem $filesystem,
         array $data = []
     ) {
-
         $this->storeManager   = $storeManager;
         $this->mediaDirectory = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
         parent::__construct(
@@ -96,7 +97,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG . '_' . $this->getIdentifier()];
-
     }
 
     /**
@@ -205,7 +205,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
-     * Get field: is_active
+     * Set field: is_active
+     *
+     * @param boolean $status The status
      *
      * @return $this
      */
@@ -356,13 +358,13 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
                     \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
                 );
 
+                $url = $mediaBaseUrl
+                    . ltrim(\Smile\ProductLabel\Model\ImageLabel\FileInfo::ENTITY_MEDIA_PATH, '/')
+                    . '/'
+                    . $image;
+
                 if ($isRelativeUrl) {
                     $url = $image;
-                } else {
-                    $url = $mediaBaseUrl
-                        . ltrim(\Smile\ProductLabel\Model\ImageLabel\FileInfo::ENTITY_MEDIA_PATH, '/')
-                        . '/'
-                        . $image;
                 }
             }
         }
@@ -371,7 +373,23 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
-     * @inheritdoc
+     * @return $this
+     */
+    public function afterSave()
+    {
+        $imageName = $this->getData('image');
+        $path      = $this->getImageUploader()->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
+
+        if ($this->mediaDirectory->isExist($path)) {
+            $this->getImageUploader()->moveFileFromTmp($imageName);
+        }
+
+        return parent::afterSave();
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * {@inheritdoc}
      */
     protected function _construct()
     {
@@ -389,20 +407,5 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
         }
 
         return $this->imageUploader;
-    }
-
-    /**
-     * @return $this
-     */
-    public function afterSave()
-    {
-        $imageName = $this->getData('image');
-        $path      = $this->getImageUploader()->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
-
-        if ($this->mediaDirectory->isExist($path)) {
-            $this->getImageUploader()->moveFileFromTmp($imageName);
-        }
-
-        return parent::afterSave();
     }
 }

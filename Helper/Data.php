@@ -97,7 +97,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param int[] $plabelIds
+     * @param int[] $plabelIds Product Label ids
      *
      * @return SearchCriteria
      */
@@ -122,7 +122,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param ProductInterface $product
+     * @param ProductInterface $product The Product
      *
      * @return ProductLabelInterface[]
      */

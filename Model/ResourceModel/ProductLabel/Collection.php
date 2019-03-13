@@ -25,6 +25,7 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
     /**
+     * @SuppressWarnings(PHPMD.CamelCasePropertyName)
      * @var string
      */
     protected $_idFieldName = ProductLabelInterface::PRODUCTLABEL_ID;

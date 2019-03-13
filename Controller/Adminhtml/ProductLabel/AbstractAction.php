@@ -116,5 +116,4 @@ abstract class AbstractAction extends Action
 
         return $model;
     }
-
 }
