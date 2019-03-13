@@ -76,10 +76,10 @@ class Manager
      * Manager constructor.
      *
      * @param CollectionProcessor   $collectionProcessor        Collection Processor
-     * @param                       $objectFactory              Object Factory
+     * @param mixed                 $objectFactory              Object Factory
      * @param AbstractResourceModel $objectResource             Object Resource
-     * @param                       $objectCollectionFactory    CollectionFactory
-     * @param                       $objectSearchResultsFactory Searchresult Factory
+     * @param mixed                 $objectCollectionFactory    CollectionFactory
+     * @param mixed                 $objectSearchResultsFactory Searchresult Factory
      * @param null                  $identifierFieldName        Identifier Field Name
      */
     public function __construct(

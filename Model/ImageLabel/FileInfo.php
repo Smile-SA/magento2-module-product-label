@@ -69,34 +69,6 @@ class FileInfo
     }
 
     /**
-     * Get WriteInterface instance
-     *
-     * @return WriteInterface
-     */
-    private function getMediaDirectory()
-    {
-        if ($this->mediaDirectory === null) {
-            $this->mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
-        }
-
-        return $this->mediaDirectory;
-    }
-
-    /**
-     * Get Base Directory read instance
-     *
-     * @return ReadInterface
-     */
-    private function getBaseDirectory()
-    {
-        if (!isset($this->baseDirectory)) {
-            $this->baseDirectory = $this->filesystem->getDirectoryRead(DirectoryList::ROOT);
-        }
-
-        return $this->baseDirectory;
-    }
-
-    /**
      * Retrieve MIME type of requested file
      *
      * @param string $fileName The filename
@@ -199,5 +171,33 @@ class FileInfo
         $mediaDirectoryRelativeSubpath = substr($mediaDirectoryPath, strlen($baseDirectoryPath));
 
         return $mediaDirectoryRelativeSubpath;
+    }
+
+    /**
+     * Get WriteInterface instance
+     *
+     * @return WriteInterface
+     */
+    private function getMediaDirectory()
+    {
+        if ($this->mediaDirectory === null) {
+            $this->mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
+        }
+
+        return $this->mediaDirectory;
+    }
+
+    /**
+     * Get Base Directory read instance
+     *
+     * @return ReadInterface
+     */
+    private function getBaseDirectory()
+    {
+        if (!isset($this->baseDirectory)) {
+            $this->baseDirectory = $this->filesystem->getDirectoryRead(DirectoryList::ROOT);
+        }
+
+        return $this->baseDirectory;
     }
 }

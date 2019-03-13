@@ -325,7 +325,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
-     * @param array $values
+     * @param array $values Form values
      */
     public function populateFromArray(array $values)
     {

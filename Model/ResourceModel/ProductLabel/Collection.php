@@ -18,6 +18,8 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 /**
  * Product Label Collection
  *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ *
  * @category  Smile
  * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
@@ -25,7 +27,6 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
     /**
-     * @SuppressWarnings(PHPMD.CamelCasePropertyName)
      * @var string
      */
     protected $_idFieldName = ProductLabelInterface::PRODUCTLABEL_ID;

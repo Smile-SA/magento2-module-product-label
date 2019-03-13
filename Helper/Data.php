@@ -78,7 +78,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param ProductInterface $product
+     * @param ProductInterface $product The product
      *
      * @return int[]
      */
