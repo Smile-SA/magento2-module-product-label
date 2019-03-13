@@ -43,20 +43,23 @@ class ProductLabel extends Template implements IdentityInterface
     /**
      * ProductLabel constructor.
      *
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param Registry                                $registry
-     * @param ProductLabelOption                      $productLabelCollection
-     * @param array                                   $data
+     * @param \Magento\Backend\Block\Template\Context    $context
+     * @param Registry                                   $registry
+     * @param ProductLabelOption                         $productLabelCollection
+     * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper
+     * @param array                                      $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         ProductLabelOption $productLabelCollection,
+        \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper,
         array $data = []
     )
     {
         $this->registry = $registry;
         $this->productLabelCollection = $productLabelCollection;
+        $this->imageHelper = $imageHelper;
 
         parent::__construct($context, $data);
     }
@@ -129,6 +132,16 @@ class ProductLabel extends Template implements IdentityInterface
         return $productLabels;
     }
 
+    /**
+     * Get Image URL of product label
+     *
+     * @param $imageName
+     *
+     * @return string
+     */
+    public function getImageUrl($imageName) {
+       return $this->imageHelper->getBaseUrl().'/'.$imageName;
+    }
 
     /**
      * Return unique ID(s) for each object in system

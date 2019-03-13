@@ -21,9 +21,8 @@
 <?php $productLabels = $block->getProductLabels(); ?>
 <div class="productlabel-product-view">
     <?php foreach($productLabels as $productLabel) :?>
-        <?php echo $productLabel['position_product_view']; ?>
         <div class="<?php echo $productLabel['position_product_view']; ?>">
-            <img src="<?php echo $productLabel['image']; ?>"/>
+            <img src="<?php echo $block->getImageUrl($productLabel['image']); ?>"/>
         </div>
     <?php endforeach; ?>
 </div>

@@ -12,20 +12,22 @@
  */
 
 .productlabel-product-view {
-  img {
-    width: 10px;
-    height: 10px;
-    &.top_right {
-
+  .top_right {
+    float: right;
+    top:0;
+    img {
+      width: 60px;
+      height: 60px;
     }
-    &.top_left {
-
-    }
-    &.lower_right {
-
-    }
-    &.lower_left {
-
-    }
+  }
+  .top_left {
+    float: left;
+    top:0;
+  }
+  .lower_right {
+    float: right;
+  }
+  .lower_left {
+    float: left;
   }
 }
