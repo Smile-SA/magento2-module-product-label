@@ -28,6 +28,7 @@ use Smile\ProductLabel\Helper\Data as DataHelper;
  */
 class ReadHandler implements ExtensionInterface
 {
+
     /**
      * @var DataHelper
      */
@@ -35,7 +36,6 @@ class ReadHandler implements ExtensionInterface
 
     /**
      * ReadHandler constructor.
-     *
      * @param DataHelper $dataHelper
      */
     public function __construct(DataHelper $dataHelper)
@@ -43,12 +43,13 @@ class ReadHandler implements ExtensionInterface
         $this->dataHelper = $dataHelper;
     }
 
+
     /**
      * Perform action on relation/extension attribute
      *
-     * @param ProductInterface  $product   Catalog Product Object
-     * @param array             $arguments Array of Arguments
      *
+     * @param $product
+     * @param array $arguments
      * @return ProductInterface|object
      */
     public function execute($product, $arguments = [])
@@ -59,13 +60,14 @@ class ReadHandler implements ExtensionInterface
         if ($extension->getProductLabels() !== null)
             return $product;
 
-        $productLabels = $this->dataHelper->getProductPLabels($product);
+        $sellers = $this->dataHelper->getProductPLabels($product);
 
-        $extension->setProductLabels($productLabels);
+        $extension->setProductLabels($sellers);
 
         $product->setExtensionAttributes($extension);
 
         return $product;
+
 
     }
 }
