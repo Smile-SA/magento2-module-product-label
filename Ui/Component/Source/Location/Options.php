@@ -64,6 +64,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
             'value'   => 'lower_left',
             'label'   => 'Lower Left',
         ];
+
         return $this->locationsList;
     }
 }

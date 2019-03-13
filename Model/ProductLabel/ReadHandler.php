@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -36,20 +35,22 @@ class ReadHandler implements ExtensionInterface
 
     /**
      * ReadHandler constructor.
-     * @param DataHelper $dataHelper
+     *
+     * @param DataHelper $dataHelper Helper
      */
     public function __construct(DataHelper $dataHelper)
     {
         $this->dataHelper = $dataHelper;
     }
 
-
     /**
      * Perform action on relation/extension attribute
      *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      *
-     * @param $product
-     * @param array $arguments
+     * @param ProductInterface $product   Catalog Product Object
+     * @param array            $arguments Array of Arguments
+     *
      * @return ProductInterface|object
      */
     public function execute($product, $arguments = [])
@@ -57,8 +58,9 @@ class ReadHandler implements ExtensionInterface
         /** @var ProductInterface $product */
         $extension = $product->getExtensionAttributes();
 
-        if ($extension->getProductLabels() !== null)
+        if ($extension->getProductLabels() !== null) {
             return $product;
+        }
 
         $sellers = $this->dataHelper->getProductPLabels($product);
 
@@ -67,7 +69,6 @@ class ReadHandler implements ExtensionInterface
         $product->setExtensionAttributes($extension);
 
         return $product;
-
-
     }
+
 }

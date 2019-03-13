@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -48,12 +47,12 @@ class AttributeActions extends Column
     /**
      * AttributeActions constructor.
      *
-     * @param ContextInterface   $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param UrlInterface       $urlBuilder
-     * @param Escaper            $escaper
-     * @param array              $components
-     * @param array              $data
+     * @param ContextInterface   $context            Context
+     * @param UiComponentFactory $uiComponentFactory UI Component Factory
+     * @param UrlInterface       $urlBuilder         URL Builder
+     * @param Escaper            $escaper            Escaper
+     * @param array              $components         Components
+     * @param array              $data               Column Data
      */
     public function __construct(
         ContextInterface $context,
@@ -64,36 +63,36 @@ class AttributeActions extends Column
         array $data = []
     ) {
         $this->urlBuilder = $urlBuilder;
-        $this->escaper = $escaper;
+        $this->escaper    = $escaper;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['product_label_id'])) {
-                    $name = $this->escaper->escapeHtml($item['name']);
+                    $name                         = $this->escaper->escapeHtml($item['name']);
                     $item[$this->getData('name')] = [
-                        'edit' => [
-                            'href' => $this->urlBuilder->getUrl(
+                        'edit'   => [
+                            'href'  => $this->urlBuilder->getUrl(
                                 static::URL_PATH_EDIT,
                                 ['product_label_id' => $item['product_label_id']]
                             ),
                             'label' => __('Edit'),
                         ],
                         'delete' => [
-                            'href' => $this->urlBuilder->getUrl(
+                            'href'    => $this->urlBuilder->getUrl(
                                 static::URL_PATH_DELETE,
                                 ['product_label_id' => $item['product_label_id']]
                             ),
-                            'label' => __('Delete'),
+                            'label'   => __('Delete'),
                             'confirm' => [
-                                'title' => __('Delete %1', $name),
+                                'title'   => __('Delete %1', $name),
                                 'message' => __('Are you sure you want to delete the "%1" product label?', $name),
                             ],
                         ],
@@ -104,5 +103,4 @@ class AttributeActions extends Column
 
         return $dataSource;
     }
-
 }

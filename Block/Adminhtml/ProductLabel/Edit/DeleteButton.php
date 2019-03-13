@@ -24,7 +24,7 @@ namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
 class DeleteButton extends AbstractButton
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getButtonData()
     {
@@ -39,6 +39,7 @@ class DeleteButton extends AbstractButton
                 'sort_order' => 20,
             ];
         }
+
         return $data;
     }
 

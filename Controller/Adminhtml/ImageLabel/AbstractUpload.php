@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -35,8 +34,8 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
     /**
      * AbstractUpload constructor.
      *
-     * @param \Magento\Backend\App\Action\Context  $context         UI Component context
-     * @param \Magento\Catalog\Model\ImageUploader $imageUploader   Image uploader
+     * @param \Magento\Backend\App\Action\Context  $context       UI Component context
+     * @param \Magento\Catalog\Model\ImageUploader $imageUploader Image uploader
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -45,11 +44,6 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
         parent::__construct($context);
         $this->imageUploader = $imageUploader;
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function getFileId();
 
     /**
      * Upload file controller action
@@ -63,6 +57,12 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
         } catch (\Exception $e) {
             $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
         }
+
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getFileId();
 }

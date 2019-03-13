@@ -24,7 +24,7 @@ namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
 class SaveAndContinueButton extends AbstractButton
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getButtonData()
     {

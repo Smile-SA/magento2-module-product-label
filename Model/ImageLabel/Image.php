@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -16,8 +15,8 @@ namespace Smile\ProductLabel\Model\ImageLabel;
 
 use Magento\Framework\UrlInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
+
 /**
- *
  * @category  Smile
  * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
@@ -26,6 +25,7 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
 {
     /**
      * media sub folder
+     *
      * @var string
      */
     protected $subDir = 'smile_productlabel/imagelabel';
@@ -40,14 +40,11 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     /**
      * Image constructor.
      *
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param UrlInterface                          $urlBuilder
+     * @param UrlInterface $urlBuilder URL Builder
      */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
         UrlInterface $urlBuilder
-    )
-    {
+    ) {
         $this->urlBuilder = $urlBuilder;
     }
 
@@ -58,18 +55,18 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
      */
     public function getBaseUrl()
     {
-        return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]).$this->subDir;
+        return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . $this->subDir;
     }
 
     /**
      * Check if temporary file is available for new image upload.
      *
-     * @param array $value
+     * @param array $value The value
+     *
      * @return bool
      */
     public function isTmpFileAvailable($value)
     {
         return is_array($value) && isset($value[0]['tmp_name']);
     }
-
 }

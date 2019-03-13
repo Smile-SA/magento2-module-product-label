@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -57,11 +56,11 @@ class Data extends AbstractHelper
     /**
      * Data constructor.
      *
-     * @param Context                         $context
-     * @param ProductLabelRepositoryInterface $plabelRepository
-     * @param FilterBuilder                   $filterBuilder
-     * @param SortOrderBuilder                $sortOrderBuilder
-     * @param SearchCriteriaBuilder           $searchCriteriaBuilder
+     * @param Context                         $context               Context
+     * @param ProductLabelRepositoryInterface $plabelRepository      Product Label Repository
+     * @param FilterBuilder                   $filterBuilder         Filter Builder
+     * @param SortOrderBuilder                $sortOrderBuilder      Sort Order Builder
+     * @param SearchCriteriaBuilder           $searchCriteriaBuilder Search Criteria Builder
      */
     public function __construct(
         Context $context,
@@ -69,18 +68,18 @@ class Data extends AbstractHelper
         FilterBuilder $filterBuilder,
         SortOrderBuilder $sortOrderBuilder,
         SearchCriteriaBuilder $searchCriteriaBuilder
-        )
-    {
-        $this->plabelRepository = $plabelRepository;
-        $this->filterBuilder = $filterBuilder;
-        $this->sortOrderBuilder = $sortOrderBuilder;
+    ) {
+        $this->plabelRepository      = $plabelRepository;
+        $this->filterBuilder         = $filterBuilder;
+        $this->sortOrderBuilder      = $sortOrderBuilder;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
 
         parent::__construct($context);
     }
 
     /**
-     * @param ProductInterface $product
+     * @param ProductInterface $product The product
+     *
      * @return int[]
      */
     public function getProductLabelIds(ProductInterface $product)
@@ -98,13 +97,13 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param int[] $plabelIds
+     * @param int[] $plabelIds Product Label ids
+     *
      * @return SearchCriteria
      */
     public function getSearchCriteriaOnProductLabelIds($plabelIds)
     {
-
-        $filters = [];
+        $filters   = [];
         $filters[] = $this->filterBuilder
             ->setField(ProductLabelInterface::PRODUCTLABEL_ID)
             ->setConditionType('in')
@@ -123,15 +122,15 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param ProductInterface $product
+     * @param ProductInterface $product The Product
+     *
      * @return ProductLabelInterface[]
      */
     public function getProductPLabels(ProductInterface $product)
     {
-        $plabelIds = $this->getProductLabelIds($product);
+        $plabelIds      = $this->getProductLabelIds($product);
         $searchCriteria = $this->getSearchCriteriaOnProductLabelIds($plabelIds);
 
         return $this->plabelRepository->getList($searchCriteria)->getItems();
     }
-
 }

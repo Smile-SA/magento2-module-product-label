@@ -35,7 +35,7 @@ class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     /**
      * Attribute constructor.
      *
-     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator
+     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator Label Locator
      */
     public function __construct(
         \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator
@@ -50,9 +50,11 @@ class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     {
         $productLabel = $this->locator->getProductLabel();
 
+        // @codingStandardsIgnoreStart
         if ($productLabel && $productLabel->getIdentifier() && isset($data[$productLabel->getIdentifier()][ProductLabelInterface::ATTRIBUTE_ID])) {
             $data[$productLabel->getIdentifier()]['attribute_label'] = $data[$productLabel->getIdentifier()][ProductLabelInterface::ATTRIBUTE_ID];
         }
+        // @codingStandardsIgnoreEnd
 
         return $data;
     }

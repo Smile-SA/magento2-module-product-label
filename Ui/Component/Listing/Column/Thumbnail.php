@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -33,12 +32,12 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
     /**
      * Thumbnail constructor.
      *
-     * @param ContextInterface                           $context
-     * @param UiComponentFactory                         $uiComponentFactory
-     * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper
-     * @param \Magento\Framework\UrlInterface            $urlBuilder
-     * @param array                                      $components
-     * @param array                                      $data
+     * @param ContextInterface                           $context            Context
+     * @param UiComponentFactory                         $uiComponentFactory UI Component Factory
+     * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper        Image Helper
+     * @param \Magento\Framework\UrlInterface            $urlBuilder         URL Builder
+     * @param array                                      $components         Components
+     * @param array                                      $data               Column Data
      */
     public function __construct(
         ContextInterface $context,
@@ -50,13 +49,14 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->imageHelper = $imageHelper;
-        $this->urlBuilder = $urlBuilder;
+        $this->urlBuilder  = $urlBuilder;
     }
 
     /**
      * Prepare Data Source
      *
-     * @param array $dataSource
+     * @param array $dataSource Data source
+     *
      * @return array
      */
     public function prepareDataSource(array $dataSource)
@@ -64,14 +64,13 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
-
-                $item[$fieldName . '_src'] = $this->imageHelper->getBaseUrl().'/'.$item['image'];
-                $item[$fieldName . '_alt'] = $this->getAlt($item) ?: $this->imageHelper->getLabel();
-                $item[$fieldName . '_link'] = $this->urlBuilder->getUrl(
+                $item[$fieldName . '_src']      = $this->imageHelper->getBaseUrl() . '/' . $item['image'];
+                $item[$fieldName . '_alt']      = $this->getAlt($item) ?: $this->imageHelper->getLabel();
+                $item[$fieldName . '_link']     = $this->urlBuilder->getUrl(
                     'smile_productlabel/productlabel/edit',
                     ['product_label_id' => $item['identifier']]
                 );
-                $item[$fieldName . '_orig_src'] = $this->imageHelper->getBaseUrl().'/'.$item['image'];
+                $item[$fieldName . '_orig_src'] = $this->imageHelper->getBaseUrl() . '/' . $item['image'];
             }
         }
 
@@ -79,14 +78,14 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
     }
 
     /**
-     * @param array $row
+     * @param array $row The row
      *
      * @return null|string
      */
     protected function getAlt($row)
     {
         $altField = $this->getData('config/altField') ?: self::ALT_FIELD;
+
         return isset($row[$altField]) ? $row[$altField] : null;
     }
-
 }

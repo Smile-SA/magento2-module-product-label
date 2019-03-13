@@ -23,7 +23,6 @@ namespace Smile\ProductLabel\Ui\Component\Source\Location;
  */
 class View implements \Magento\Framework\Data\OptionSourceInterface
 {
-
     /**
      * @var array|null
      */
@@ -44,22 +43,24 @@ class View implements \Magento\Framework\Data\OptionSourceInterface
      */
     private function getViewsList()
     {
-
         $this->viewsList[0] = [
             'value'     => 0,
             'view_id'   => '',
             'label'     => '',
         ];
+
         $this->viewsList[1] = [
             'value'     => 1,
             'view_id'   => 'product_view',
             'label'     => 'Product View',
         ];
+
         $this->viewsList[2] = [
             'value'     => 2,
             'view_id'   => 'product_listing',
             'label'     => 'Product Listing',
         ];
+
         return $this->viewsList;
     }
 }

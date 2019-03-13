@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -26,7 +25,7 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
  * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-abstract class AbstractButton  implements ButtonProviderInterface
+abstract class AbstractButton implements ButtonProviderInterface
 {
     /**
      * @var Context
@@ -41,14 +40,14 @@ abstract class AbstractButton  implements ButtonProviderInterface
     /**
      * AbstractButton constructor.
      *
-     * @param Context                         $context      UI Component context
-     * @param ProductLabelRepositoryInterface $repository   Product Label Repository
+     * @param Context                         $context    UI Component context
+     * @param ProductLabelRepositoryInterface $repository Product Label Repository
      */
     public function __construct(
         Context $context,
         ProductLabelRepositoryInterface $repository
     ) {
-        $this->context = $context;
+        $this->context    = $context;
         $this->repository = $repository;
     }
 
@@ -73,14 +72,16 @@ abstract class AbstractButton  implements ButtonProviderInterface
             return $model->getProductLabelId();
         } catch (NoSuchEntityException $e) {
         }
+
         return null;
     }
 
     /**
      * Generate url by route and parameters.
      *
-     * @param string $route
-     * @param array $params
+     * @param string $route  URL route
+     * @param array  $params URL params
+     *
      * @return string
      */
     public function getUrl($route = '', $params = [])

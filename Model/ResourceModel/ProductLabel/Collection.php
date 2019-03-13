@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -19,6 +18,8 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 /**
  * Product Label Collection
  *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ *
  * @category  Smile
  * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
@@ -29,10 +30,12 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @var string
      */
     protected $_idFieldName = ProductLabelInterface::PRODUCTLABEL_ID;
+
     /**
      * @var int[]
      */
     private $storeIds = [];
+
     /**
      * Get store ids applied to current collection.
      *
@@ -42,6 +45,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     {
         return $this->storeIds;
     }
+
     /**
      * Retrieve all distinct attribute ids of current collection.
      *
@@ -55,8 +59,10 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         $optionIdsSelect->reset(\Magento\Framework\DB\Select::LIMIT_OFFSET);
         $optionIdsSelect->reset(\Magento\Framework\DB\Select::COLUMNS);
         $optionIdsSelect->distinct(true)->columns(ProductLabelInterface::ATTRIBUTE_ID, 'main_table');
+
         return $this->getConnection()->fetchCol($optionIdsSelect, $this->_bindParams);
     }
+
     /**
      * Retrieve all distinct options ids of current collection.
      *
@@ -70,8 +76,10 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         $optionIdsSelect->reset(\Magento\Framework\DB\Select::LIMIT_OFFSET);
         $optionIdsSelect->reset(\Magento\Framework\DB\Select::COLUMNS);
         $optionIdsSelect->distinct(true)->columns(ProductLabelInterface::OPTION_ID, 'main_table');
+
         return $this->getConnection()->fetchCol($optionIdsSelect, $this->_bindParams);
     }
+
     /**
      * Filter productlabel collection for a given attribute.
      *
@@ -84,8 +92,10 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         if ($attribute->getAttributeId()) {
             $this->addFieldToFilter(ProductLabelInterface::ATTRIBUTE_ID, (int) $attribute->getAttributeId());
         }
+
         return $this;
     }
+
     /**
      * Filter productlabel collection for a given list of attribute set ids.
      *
@@ -98,13 +108,17 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         if (!is_array($attributeSetIds)) {
             $attributeSetIds = [$attributeSetIds];
         }
+
         $this->getSelect()->joinInner(
             ['ea' => $this->getTable('eav_attribute')],
             'ea.attribute_id = main_table.attribute_id'
         )->where('ea.attribute_set_id IN (?)', $attributeSetIds);
+
         $this->getSelect()->group(ProductLabelInterface::PRODUCTLABEL_ID);
+
         return $this;
     }
+
     /**
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * {@inheritDoc}
@@ -115,8 +129,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
             'Smile\ProductLabel\Model\ProductLabel',
             'Smile\ProductLabel\Model\ResourceModel\ProductLabel'
         );
+
         /* @see self::_renderFiltersBefore() */
         $this->_map['fields']['attribute_id'] = 'main_table.attribute_id';
     }
-
 }

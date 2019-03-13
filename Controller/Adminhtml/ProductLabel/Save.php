@@ -41,13 +41,13 @@ class Save extends AbstractAction
     /**
      * Save constructor.
      *
-     * @param Context                                                                $context
-     * @param Registry                                                               $coreRegistry
-     * @param ProductLabelFactory                                                    $modelFactory
-     * @param ProductLabelRepository                                                 $modelRepository
-     * @param DataPersistorInterface                                                 $dataPersistor
-     * @param \Magento\Ui\Component\MassAction\Filter                                $filter
-     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
+     * @param Context                                                                $context           UI Component context
+     * @param Registry                                                               $coreRegistry      Core Registry
+     * @param ProductLabelFactory                                                    $modelFactory      Product Label Factory
+     * @param ProductLabelRepository                                                 $modelRepository   Product Label Repository
+     * @param DataPersistorInterface                                                 $dataPersistor     Data Persistor
+     * @param \Magento\Ui\Component\MassAction\Filter                                $filter            Action Filter
+     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory Product Label Collection Factory
      */
     public function __construct(
         Context $context,
@@ -64,7 +64,7 @@ class Save extends AbstractAction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function execute()
     {
@@ -79,35 +79,35 @@ class Save extends AbstractAction
             return $resultRedirect;
         }
 
-        // Get the product label id (if edit)
+        // Get the product label id (if edit).
         $productlabelId = null;
         if (!empty($data['product_label_id'])) {
-            $productlabelId = (int)$data['product_label_id'];
+            $productlabelId = (int) $data['product_label_id'];
         }
 
-        // Load the product label
+        // Load the product label.
         $model = $this->initModel($productlabelId);
 
 
 
-        // By default, redirect to the edit page of the product label
+        // By default, redirect to the edit page of the product label.
         $resultRedirect->setPath('*/*/edit', ['product_label_id' => $productlabelId]);
 
         /** @var ProductLabel $model */
         $model->populateFromArray($data);
 
-        // Try to save it
+        // Try to save it.
         try {
             $this->modelRepository->save($model);
             if ($productlabelId === null) {
                 $resultRedirect->setPath('*/*/edit', ['product_label_id' => $model->getProductLabelId()]);
             }
 
-            // Display success message
+            // Display success message.
             $this->messageManager->addSuccessMessage(__('The product label has been saved.'));
             $this->dataPersistor->clear('smile_productlabel');
 
-            // If requested => redirect to the list
+            // If requested => redirect to the list.
             if (!$this->getRequest()->getParam('back')) {
                 $resultRedirect->setPath('*/*/');
             }
@@ -125,4 +125,3 @@ class Save extends AbstractAction
         return $resultRedirect;
     }
 }
-    
