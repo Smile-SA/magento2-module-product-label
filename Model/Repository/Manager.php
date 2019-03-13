@@ -116,7 +116,7 @@ class Manager
             $this->objectResource->load($object, $objectId);
 
             if (!$object->getId()) {
-                // Object does not exist
+                // Object does not exist.
                 throw NoSuchEntityException::singleField('objectId', $objectId);
             }
 
