@@ -136,6 +136,8 @@ class FileInfo
     /**
      * Construct and return file subpath based on filename relative to media directory
      *
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     *
      * @param string $fileName The filename
      *
      * @return string
@@ -150,9 +152,10 @@ class FileInfo
         // If the file is not using a relative path, it resides in the catalog/category media directory.
         $fileIsInCategoryMediaDir = !$isFileNameBeginsWithMediaDirectoryPath;
 
-        $filePath = substr($filePath, strlen($mediaDirectoryRelativeSubpath));
         if ($fileIsInCategoryMediaDir) {
             $filePath = self::ENTITY_MEDIA_PATH . '/' . $filePath;
+        } else {
+            $filePath = substr($filePath, strlen($mediaDirectoryRelativeSubpath));
         }
 
         return $filePath;
