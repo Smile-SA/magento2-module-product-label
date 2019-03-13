@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -76,12 +75,12 @@ class Manager
     /**
      * Manager constructor.
      *
-     * @param CollectionProcessor   $collectionProcessor
-     * @param                       $objectFactory
-     * @param AbstractResourceModel $objectResource
-     * @param                       $objectCollectionFactory
-     * @param                       $objectSearchResultsFactory
-     * @param null                  $identifierFieldName
+     * @param CollectionProcessor   $collectionProcessor        Collection Processor
+     * @param                       $objectFactory              Object Factory
+     * @param AbstractResourceModel $objectResource             Object Resource
+     * @param                       $objectCollectionFactory    CollectionFactory
+     * @param                       $objectSearchResultsFactory Searchresult Factory
+     * @param null                  $identifierFieldName        Identifier Field Name
      */
     public function __construct(
         CollectionProcessor $collectionProcessor,
@@ -93,17 +92,18 @@ class Manager
     ) {
         $this->collectionProcessor = $collectionProcessor;
 
-        $this->objectFactory = $objectFactory;
-        $this->objectResource = $objectResource;
-        $this->objectCollectionFactory = $objectCollectionFactory;
+        $this->objectFactory              = $objectFactory;
+        $this->objectResource             = $objectResource;
+        $this->objectCollectionFactory    = $objectCollectionFactory;
         $this->objectSearchResultsFactory = $objectSearchResultsFactory;
-        $this->identifierFieldName = $identifierFieldName;
+        $this->identifierFieldName        = $identifierFieldName;
     }
 
     /**
      * Retrieve a entity by its ID.
      *
-     * @param int $objectId
+     * @param int $objectId The object Id
+     *
      * @return \Magento\Framework\Model\AbstractModel
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @SuppressWarnings(PMD.StaticAccess)
@@ -123,7 +123,7 @@ class Manager
             $this->cacheById[$object->getId()] = $object;
 
             if ($this->identifierFieldName !== null) {
-                $objectIdentifier = $object->getData($this->identifierFieldName);
+                $objectIdentifier                           = $object->getData($this->identifierFieldName);
                 $this->cacheByIdentifier[$objectIdentifier] = $object;
             }
         }
@@ -134,7 +134,8 @@ class Manager
     /**
      * Retrieve a entity by its identifier.
      *
-     * @param string $objectIdentifier
+     * @param string $objectIdentifier The Object Id
+     *
      * @return \Magento\Framework\Model\AbstractModel
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @SuppressWarnings(PMD.StaticAccess)
@@ -151,11 +152,11 @@ class Manager
             $this->objectResource->load($object, $objectIdentifier, $this->identifierFieldName);
 
             if (!$object->getId()) {
-                // Object does not exist
+                // Object does not exist.
                 throw NoSuchEntityException::singleField('objectIdentifier', $objectIdentifier);
             }
 
-            $this->cacheById[$object->getId()] = $object;
+            $this->cacheById[$object->getId()]          = $object;
             $this->cacheByIdentifier[$objectIdentifier] = $object;
         }
 
@@ -165,11 +166,12 @@ class Manager
     /**
      * Save entity.
      *
-     * @param mixed $object
+     * @param AbstractModel $object The Object
+     *
      * @return AbstractModel
      * @throws CouldNotSaveException
      */
-    public function saveEntity($object)
+    public function saveEntity(AbstractModel $object)
     {
         /** @var AbstractModel $object */
         try {
@@ -191,7 +193,8 @@ class Manager
     /**
      * Delete entity.
      *
-     * @param AbstractModel $object
+     * @param AbstractModel $object The Object
+     *
      * @return bool
      * @throws CouldNotDeleteException
      */
@@ -216,7 +219,8 @@ class Manager
     /**
      * Delete entity by id.
      *
-     * @param int $objectId
+     * @param int $objectId Object Id
+     *
      * @return bool
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
@@ -229,7 +233,8 @@ class Manager
     /**
      * Delete entity by identifier.
      *
-     * @param string $objectIdentifier
+     * @param string $objectIdentifier Object Id
+     *
      * @return bool
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
@@ -242,7 +247,8 @@ class Manager
     /**
      * Retrieve not eav entities which match a specified criteria.
      *
-     * @param SearchCriteriaInterface $searchCriteria
+     * @param SearchCriteriaInterface $searchCriteria SearchCriteria
+     *
      * @return \Magento\Framework\Api\SearchResults
      */
     public function getEntities(SearchCriteriaInterface $searchCriteria = null)
@@ -259,11 +265,11 @@ class Manager
             $this->collectionProcessor->process($searchCriteria, $collection);
         }
 
-        // Load the collection
+        // Load the collection.
         $collection->load();
 
 
-        // Build the result
+        // Build the result.
         $searchResults->setTotalCount($collection->getSize());
         $searchResults->setItems($collection->getItems());
 

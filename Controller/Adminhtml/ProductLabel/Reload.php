@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -11,6 +10,7 @@
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
  */
+
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Backend\App\Action;
@@ -73,14 +73,14 @@ class Reload extends Action
     /**
      * Reload constructor.
      *
-     * @param Action\Context                                                         $context                   UI Component context
-     * @param \Magento\Framework\View\Result\PageFactory                             $resultPageFactory         Result Page Factory
-     * @param \Magento\Framework\Registry                                            $coreRegistry              Core Registry
-     * @param \Magento\Framework\App\Request\DataPersistorInterface                  $dataPersistor             Data Persistor
-     * @param \Magento\Ui\Component\MassAction\Filter                                $filter                    Action Filter
-     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory         Product Label Collection Factory
-     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface                $productLabelRepository    Product Label Repository
-     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory              $productLabelFactory       Product Label Factory
+     * @param Action\Context                                                         $context                UI Component context
+     * @param \Magento\Framework\View\Result\PageFactory                             $resultPageFactory      Result Page Factory
+     * @param \Magento\Framework\Registry                                            $coreRegistry           Core Registry
+     * @param \Magento\Framework\App\Request\DataPersistorInterface                  $dataPersistor          Data Persistor
+     * @param \Magento\Ui\Component\MassAction\Filter                                $filter                 Action Filter
+     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory      Product Label Collection Factory
+     * @param \Smile\ProductLabel\Api\ProductLabelRepositoryInterface                $productLabelRepository Product Label Repository
+     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory              $productLabelFactory    Product Label Factory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -94,28 +94,13 @@ class Reload extends Action
     ) {
         parent::__construct($context);
 
-        $this->resultPageFactory         = $resultPageFactory;
-        $this->coreRegistry              = $coreRegistry;
-        $this->dataPersistor             = $dataPersistor;
-        $this->filter                    = $filter;
-        $this->collectionFactory         = $collectionFactory;
-        $this->productLabelRepository    = $productLabelRepository;
-        $this->productLabelFactory       = $productLabelFactory;
-    }
-
-    /**
-     * Create result page
-     *
-     * @return \Magento\Backend\Model\View\Result\Page
-     */
-    protected function createPage()
-    {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
-
-        $resultPage->setActiveMenu('Smile_ProductLabel::rule')->addBreadcrumb(__('Product Label'), __('Product Label'));
-
-        return $resultPage;
+        $this->resultPageFactory      = $resultPageFactory;
+        $this->coreRegistry           = $coreRegistry;
+        $this->dataPersistor          = $dataPersistor;
+        $this->filter                 = $filter;
+        $this->collectionFactory      = $collectionFactory;
+        $this->productLabelRepository = $productLabelRepository;
+        $this->productLabelFactory    = $productLabelFactory;
     }
 
     /**
@@ -145,5 +130,19 @@ class Reload extends Action
 
         return $resultLayout;
     }
-    
+
+    /**
+     * Create result page
+     *
+     * @return \Magento\Backend\Model\View\Result\Page
+     */
+    protected function createPage()
+    {
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        $resultPage = $this->resultPageFactory->create();
+
+        $resultPage->setActiveMenu('Smile_ProductLabel::rule')->addBreadcrumb(__('Product Label'), __('Product Label'));
+
+        return $resultPage;
+    }
 }

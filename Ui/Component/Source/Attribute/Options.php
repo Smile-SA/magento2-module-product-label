@@ -37,7 +37,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     /**
      * Options constructor.
      *
-     * @param CollectionFactory $attributesCollectionFactory
+     * @param CollectionFactory $attributesCollectionFactory Attributes Collection Factory
      */
     public function __construct(CollectionFactory $attributesCollectionFactory)
     {

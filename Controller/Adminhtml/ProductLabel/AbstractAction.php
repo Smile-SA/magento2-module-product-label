@@ -92,26 +92,26 @@ abstract class AbstractAction extends Action
     /**
      * Init the current model.
      *
-     * @param int|null $Id Product Label ID
+     * @param int|null $labelId Product Label ID
      *
      * @return ProductLabel
      * @throws NotFoundException
      */
-    protected function initModel($Id)
+    protected function initModel($labelId)
     {
         /** @var \Smile\ProductLabel\Model\ProductLabel $model */
         $model = $this->modelFactory->create();
 
-        // Initial checking
-        if ($Id) {
+        // Initial checking.
+        if ($labelId) {
             try {
-                $model = $this->modelRepository->getById($Id);
+                $model = $this->modelRepository->getById($labelId);
             } catch (NoSuchEntityException $e) {
                 throw new NotFoundException(__('This product label does not exist.'));
             }
         }
 
-        // Register model to use later in blocks
+        // Register model to use later in blocks.
         $this->coreRegistry->register('current_productlabel', $model);
 
         return $model;

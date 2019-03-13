@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -30,7 +29,6 @@ class Delete extends AbstractAction
 
     /**
      * Execute action based on request and return result
-     *
      * Note: Request will be added as operation argument in future
      *
      * @return \Magento\Framework\Controller\ResultInterface
@@ -43,7 +41,7 @@ class Delete extends AbstractAction
         $resultRedirect->setPath('*/*/index');
 
         try {
-            $productLabelId = (int)$this->getRequest()->getParam('product_label_id');
+            $productLabelId = (int) $this->getRequest()->getParam('product_label_id');
             $this->modelRepository->deleteById($productLabelId);
 
             $this->messageManager->addSuccessMessage(__('The product label "%1" has been deleted.', $productLabelId));

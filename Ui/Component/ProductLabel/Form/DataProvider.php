@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -43,21 +42,24 @@ class DataProvider extends AbstractDataProvider
      */
     private $dataPersistor;
 
+    /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
     protected $request;
 
     /**
      * DataProvider constructor.
      *
-     * @param string                                          $name
-     * @param string                                          $primaryFieldName
-     * @param string                                          $requestFieldName
-     * @param CollectionFactory                               $collectionFactory
-     * @param DataPersistorInterface                          $dataPersistor
-     * @param \Magento\Framework\App\RequestInterface         $request
-     * @param \Smile\ProductLabel\Model\ImageLabel\FileInfo   $fileInfo
-     * @param \Magento\Ui\DataProvider\Modifier\PoolInterface $modifierPool
-     * @param array                                           $meta
-     * @param array                                           $data
+     * @param string                                          $name              Component Name
+     * @param string                                          $primaryFieldName  Primary Field Name
+     * @param string                                          $requestFieldName  Request Field Name
+     * @param CollectionFactory                               $collectionFactory Collection Factory
+     * @param DataPersistorInterface                          $dataPersistor     Data Persistor
+     * @param \Magento\Framework\App\RequestInterface         $request           HTTP Request
+     * @param \Smile\ProductLabel\Model\ImageLabel\FileInfo   $fileInfo          File Info helper
+     * @param \Magento\Ui\DataProvider\Modifier\PoolInterface $modifierPool      Modifier Pool
+     * @param array                                           $meta              Component Meta
+     * @param array                                           $data              Component Data
      */
     public function __construct(
         $name,
@@ -71,17 +73,17 @@ class DataProvider extends AbstractDataProvider
         array $meta = [],
         array $data = []
     ) {
-        $this->collection = $collectionFactory->create();
+        $this->collection    = $collectionFactory->create();
         $this->dataPersistor = $dataPersistor;
         $this->modifierPool  = $modifierPool;
-        $this->fileInfo = $fileInfo;
-        $this->request = $request;
+        $this->fileInfo      = $fileInfo;
+        $this->request       = $request;
 
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getData()
     {
@@ -90,7 +92,7 @@ class DataProvider extends AbstractDataProvider
         $productLabel = $this->collection->addFieldToFilter($this->requestFieldName, $requestId)->getFirstItem();
 
         if ($productLabel->getId()) {
-            $data = $this->convertValues($productLabel, $productLabel->getData());
+            $data                               = $this->convertValues($productLabel, $productLabel->getData());
             $this->data[$productLabel->getId()] = $data;
         }
 
@@ -120,8 +122,9 @@ class DataProvider extends AbstractDataProvider
     /**
      * Converts category image data to acceptable for rendering format
      *
-     * @param \Smile\ProductLabel\Model\ProductLabel $productLabel
-     * @param array $data
+     * @param \Smile\ProductLabel\Model\ProductLabel $productLabel Product Label
+     * @param array                                  $data         Product Label Data
+     *
      * @return array
      */
     private function convertValues($productLabel, $data)

@@ -44,8 +44,8 @@ class EavPlugin
     /**
      * EavPlugin constructor.
      *
-     * @param \Magento\Framework\Stdlib\ArrayManager $arrayManager
-     * @param ProductLabelCollectionFactory          $plabelCollectionFactory
+     * @param \Magento\Framework\Stdlib\ArrayManager $arrayManager            Array Manager
+     * @param ProductLabelCollectionFactory          $plabelCollectionFactory Collection Factory
      */
     public function __construct(
         \Magento\Framework\Stdlib\ArrayManager $arrayManager,

@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -29,6 +28,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
      * @var \Magento\Framework\Api\Search\AggregationInterface[]
      */
     private $aggregations;
+
     /**
      * {@inheritdoc}
      */
@@ -36,6 +36,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     {
         return $this;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -43,14 +44,17 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     {
         return $this->aggregations;
     }
+
     /**
      * {@inheritdoc}
      */
     public function setAggregations($aggregations)
     {
         $this->aggregations = $aggregations;
+
         return $this;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -58,6 +62,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     {
         return null;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -65,6 +70,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     {
         return $this;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -72,6 +78,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     {
         return $this->getSize();
     }
+
     /**
      * {@inheritdoc}
      */
@@ -79,9 +86,9 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     {
         return $this;
     }
+
     /**
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     *
      * {@inheritDoc}
      */
     protected function _construct()
@@ -89,9 +96,9 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
         parent::_construct();
         $this->setModel('Magento\Framework\View\Element\UiComponent\DataProvider\Document');
     }
+
     /**
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     *
      * {@inheritdoc}
      */
     protected function _renderFiltersBefore()

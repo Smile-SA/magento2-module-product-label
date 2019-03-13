@@ -36,15 +36,15 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
     /**
      * Collection constructor.
      *
-     * @param \Magento\Framework\Data\Collection\EntityFactory             $entityFactory               Entity Factory
-     * @param \Psr\Log\LoggerInterface                                     $logger                      Logger Interface
-     * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy               Fetch Strategy Interface
-     * @param \Magento\Framework\Event\ManagerInterface                    $eventManager                Event Manager Interface
-     * @param \Magento\Eav\Model\Config                                    $eavConfig                   EAV Config
-     * @param \Magento\Eav\Model\EntityFactory                             $eavEntityFactory            EAV Entity Factory
-     * @param \Magento\Framework\DB\Adapter\AdapterInterface|null          $connection                  Adapter Interface
-     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null    $resource                    Resource Model
-     * @param array                                                        $availableFrontendInputs     Array of Available Frontend Inputs
+     * @param \Magento\Framework\Data\Collection\EntityFactory             $entityFactory           Entity Factory
+     * @param \Psr\Log\LoggerInterface                                     $logger                  Logger Interface
+     * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy           Fetch Strategy Interface
+     * @param \Magento\Framework\Event\ManagerInterface                    $eventManager            Event Manager Interface
+     * @param \Magento\Eav\Model\Config                                    $eavConfig               EAV Config
+     * @param \Magento\Eav\Model\EntityFactory                             $eavEntityFactory        EAV Entity Factory
+     * @param \Magento\Framework\DB\Adapter\AdapterInterface|null          $connection              Adapter Interface
+     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null    $resource                Resource Model
+     * @param array                                                        $availableFrontendInputs Array of Available Frontend Inputs
      */
     public function __construct(
         \Magento\Framework\Data\Collection\EntityFactory $entityFactory,

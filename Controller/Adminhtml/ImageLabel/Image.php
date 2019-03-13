@@ -30,5 +30,4 @@ class Image extends AbstractUpload
     {
         return 'image';
     }
-
 }

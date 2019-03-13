@@ -29,6 +29,7 @@ interface ProductLabelSearchResultsInterface extends \Magento\Framework\Api\Sear
      * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface[]
      */
     public function getItems();
+
     /**
      * Set Product label list.
      *

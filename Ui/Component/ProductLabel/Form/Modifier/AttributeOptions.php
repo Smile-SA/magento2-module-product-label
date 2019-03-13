@@ -39,8 +39,8 @@ class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInte
     /**
      * AttributeOptions constructor.
      *
-     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator
-     * @param \Magento\Catalog\Api\ProductAttributeRepositoryInterface        $attributeRepository
+     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator             Label Locatory
+     * @param \Magento\Catalog\Api\ProductAttributeRepositoryInterface        $attributeRepository Attribute Repository
      */
     public function __construct(
         \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator,

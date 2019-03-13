@@ -49,12 +49,10 @@ class Edit extends AbstractAction
             ->addBreadcrumb(__('Smile Product Label'), __('Smile Product Label'))
             ->addBreadcrumb($breadcrumbTitle, $breadcrumbTitle);
 
+        $title = $model->getProductLabelId() ? __("Edit product label #%1", $model->getIdentifier()) : __('New product label');
+
         $resultPage->getConfig()->getTitle()->prepend(__('Manage Smile_ProductLabel'));
-        $resultPage->getConfig()->getTitle()->prepend(
-            $model->getProductLabelId()
-                ? __("Edit product label #%1", $model->getIdentifier())
-                : __('New product label')
-        );
+        $resultPage->getConfig()->getTitle()->prepend($title);
 
         return $resultPage;
     }

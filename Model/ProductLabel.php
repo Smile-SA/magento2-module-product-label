@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -18,6 +17,7 @@ use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\DataObject\IdentityInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
+
 /**
  * Product Label Model
  *
@@ -25,7 +25,7 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
  * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-class ProductLabel extends AbstractModel implements IdentityInterface,ProductLabelInterface
+class ProductLabel extends AbstractModel implements IdentityInterface, ProductLabelInterface
 {
     /**
      * @var string
@@ -45,14 +45,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     private $imageUploader;
 
     /**
-     * @inheritdoc
-     */
-    protected function _construct()
-    {
-        $this->_init(ProductLabelResource::class);
-    }
-
-    /**
      * @var \Smile\ProductLabel\Model\ImageLabel\FileInfo
      */
     protected $fileInfo;
@@ -67,13 +59,13 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     /**
      * ProductLabel constructor.
      *
-     * @param \Magento\Framework\Model\Context                             $context
-     * @param \Magento\Framework\Registry                                  $registry
-     * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
-     * @param \Magento\Framework\Filesystem                                $filesystem
-     * @param array                                                        $data
+     * @param \Magento\Framework\Model\Context                             $context            Context
+     * @param \Magento\Framework\Registry                                  $registry           Registry
+     * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager       Store Manager
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource           Resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection Resource Collection
+     * @param \Magento\Framework\Filesystem                                $filesystem         FileSystem Helper
+     * @param array                                                        $data               Object Data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -85,7 +77,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
         array $data = []
     ) {
 
-        $this->storeManager = $storeManager;
+        $this->storeManager   = $storeManager;
         $this->mediaDirectory = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
         parent::__construct(
             $context,
@@ -126,6 +118,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return $this->getId();
     }
+
     /**
      * Get field: identifier.
      *
@@ -135,6 +128,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return (string) $this->getData(self::PRODUCTLABEL_IDENTIFIER);
     }
+
     /**
      * Get field: name.
      *
@@ -144,6 +138,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return (int) $this->getData(self::PRODUCTLABEL_NAME);
     }
+
     /**
      * Get field: attribute_id
      *
@@ -153,6 +148,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return (int) $this->getData(self::ATTRIBUTE_ID);
     }
+
     /**
      * Get field: option_id
      *
@@ -172,6 +168,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return (string) $this->getData(self::PRODUCTLABEL_IMAGE);
     }
+
     /**
      * Get field: position_category_list
      *
@@ -181,6 +178,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return (string) $this->getData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST);
     }
+
     /**
      * Get field: position_product_view
      *
@@ -190,6 +188,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return (string) $this->getData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW);
     }
+
     /**
      * Get field: display_on
      *
@@ -201,8 +200,10 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
         if (is_numeric($values)) {
             $values = [$values];
         }
+
         return $values ? $values : [];
     }
+
     /**
      * Get field: is_active
      *
@@ -212,80 +213,96 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     {
         return $this->setData(self::IS_ACTIVE, (bool) $status);
     }
+
     /**
      * Set field: product_label_id.
      *
-     * @param int $value
+     * @param int $value Field value
+     *
      * @return $this
      */
     public function setProductLabelId($value)
     {
         return $this->setId((int) $value);
     }
+
     /**
      * Set field: identifier.
      *
-     * @param string $value
+     * @param string $value Field value
+     *
      * @return $this
      */
     public function setIdentifier($value)
     {
         return $this->setData(self::PRODUCTLABEL_IDENTIFIER, (string) $value);
     }
+
     /**
      * Set field: name.
      *
-     * @param string $value
+     * @param string $value Field value
+     *
      * @return $this
      */
     public function setName($value)
     {
         return $this->setData(self::PRODUCTLABEL_NAME, (string) $value);
     }
+
     /**
      * Set field: attribute_id.
      *
-     * @param int $value
+     * @param int $value Field value
+     *
      * @return $this
      */
     public function setAttributeId(int $value)
     {
         return $this->setData(self::ATTRIBUTE_ID, $value);
     }
+
     /**
      * Set field: option_id.
      *
-     * @param int $value
+     * @param int $value Field value
+     *
      * @return $this
      */
     public function setOptionId(int $value)
     {
         return $this->setData(self::OPTION_ID, $value);
     }
+
     /**
      * Set field: image.
      *
-     * @param string $value
+     * @param string $value Field value
+     *
      * @return $this
      */
     public function setImage($value)
     {
         return $this->setData(self::PRODUCTLABEL_IMAGE, $value);
     }
+
     /**
      * Set field: position_category_list.
      *
-     * @param string $value
+     * @param string $value Field value
+     *
      * @return $this
      */
     public function setPositionCategoryList($value)
     {
         return $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, $value);
     }
+
     /**
      * Set field: position_product_view.
      *
-     * @param string $value
+     * @param string $value Field value
+     *
      * @return $this
      */
     public function setPositionProductView($value)
@@ -296,7 +313,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     /**
      * Set field: display_on.
      *
-     * @param array $value
+     * @param array $value Field value
+     *
      * @return $this
      */
     public function setDisplayOn($value)
@@ -317,7 +335,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
         $this->setData(self::PRODUCTLABEL_IMAGE, $values['image'][0]['name']);
         $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, (string) $values['position_category_list']);
         $this->setData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW, (string) $values['position_product_view']);
-        $this->setData(self::PRODUCTLABEL_DISPLAY_ON, implode(',',$values['display_on']));
+        $this->setData(self::PRODUCTLABEL_DISPLAY_ON, implode(',', $values['display_on']));
     }
 
     /**
@@ -326,7 +344,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
      */
     public function getImageUrl()
     {
-        $url = false;
+        $url   = false;
         $image = $this->getData('image');
         if ($image) {
             if (is_string($image)) {
@@ -348,7 +366,16 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
                 }
             }
         }
+
         return $url;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _construct()
+    {
+        $this->_init(ProductLabelResource::class);
     }
 
     /**
@@ -370,11 +397,12 @@ class ProductLabel extends AbstractModel implements IdentityInterface,ProductLab
     public function afterSave()
     {
         $imageName = $this->getData('image');
-        $path = $this->getImageUploader()->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
+        $path      = $this->getImageUploader()->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
 
         if ($this->mediaDirectory->isExist($path)) {
             $this->getImageUploader()->moveFileFromTmp($imageName);
         }
+
         return parent::afterSave();
     }
 }
