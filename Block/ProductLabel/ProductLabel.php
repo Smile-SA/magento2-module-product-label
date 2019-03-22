@@ -18,6 +18,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
+use Magento\Catalog\Api\Data\ProductInterface;
 use Smile\ProductLabel\Option\ProductLabel as ProductLabelOption;
 
 /**
@@ -41,12 +42,34 @@ class ProductLabel extends Template implements IdentityInterface
     protected $productLabelCollection;
 
     /**
+     * @var \Smile\ProductLabel\Model\ImageLabel\Image
+     */
+    protected $imageHelper;
+
+    /**
+     * @var ProductInterface
+     */
+    protected $product;
+
+    /**
+     * @var \Magento\Catalog\Model\ProductRepository
+     */
+    protected $productRepository;
+
+    /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    protected $request;
+
+    /**
      * ProductLabel constructor.
      *
      * @param \Magento\Backend\Block\Template\Context    $context
      * @param Registry                                   $registry
      * @param ProductLabelOption                         $productLabelCollection
      * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper
+     * @param \Magento\Catalog\Model\ProductRepository   $productRepository
+     * @param \Magento\Framework\App\RequestInterface    $request
      * @param array                                      $data
      */
     public function __construct(
@@ -54,24 +77,71 @@ class ProductLabel extends Template implements IdentityInterface
         \Magento\Framework\Registry $registry,
         ProductLabelOption $productLabelCollection,
         \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper,
+        \Magento\Catalog\Model\ProductRepository $productRepository,
+        \Magento\Framework\App\RequestInterface $request,
         array $data = []
     )
     {
         $this->registry = $registry;
         $this->productLabelCollection = $productLabelCollection;
         $this->imageHelper = $imageHelper;
+        $this->productRepository = $productRepository;
+        $this->request = $request;
 
         parent::__construct($context, $data);
     }
 
     /**
-     * Get Current Catalog Product
+     * Get Current View
      *
-     * @return Product
+     * @return string
+     */
+    public function getCurrentView()
+    {
+        if ($this->request->getControllerName('controller') == 'product') {
+            return 'product';
+        } else {
+            return 'category';
+        }
+    }
+
+    /**
+     * Set Product
+     *
+     * @param ProductInterface $product
+     *
+     * @return $this
+     */
+    public function setProduct(ProductInterface $product)
+    {
+        $this->product = $product;
+        return $this;
+    }
+
+    /**
+     * Get Product By Id
+     *
+     * @param $id
+     *
+     * @return ProductInterface|mixed
+     */
+    public function getProductById($id)
+    {
+        return $this->productRepository->getById($id);
+    }
+
+    /**
+     * Get Current Product
+     *
+     * @return Product|ProductInterface
      */
     public function getCurrentProduct()
     {
-        return $this->registry->registry('current_product');
+        if(!empty($this->registry->registry('current_product'))) {
+            return $this->registry->registry('current_product');
+        } else {
+            return $this->getProductById($this->product->getId());
+        }
     }
 
     /**
@@ -84,21 +154,14 @@ class ProductLabel extends Template implements IdentityInterface
         $attributesList = array();
         $attributes = $this->getCurrentProduct()->getAttributes();
 
-        foreach ($attributes as $attribute){
-
-            $optionsList = array();
+        foreach ($attributes as $attribute) {
             $optionIds = $this->getCurrentProduct()->getCustomAttribute($attribute->getAttributeCode());
 
             $attributesList[$attribute->getId()] = [
                 'id' => $attribute->getId(),
                 'label' => $attribute->getFrontend()->getLabel(),
-                'options' => ($optionIds)? $optionIds->getValue() : ''
+                'options' => ($optionIds) ? $optionIds->getValue() : ''
             ];
-            if($optionIds) {
-                foreach ($optionIds as $option) {
-                    $optionsList [] = $option;
-                }
-            }
         }
         return $attributesList;
     }
@@ -116,13 +179,15 @@ class ProductLabel extends Template implements IdentityInterface
         $attributesProduct = $this->getAttributesOfCurrentProduct();
 
         foreach ($productLabelList as $productLabel) {
-            $attributeIdLabel = $productLabel['attribute_id'];
-            $optionIdLabel = $productLabel['option_id'];
-            foreach ($attributesProduct as $attribute) {
-                if (isset($attribute['id']) && ($attributeIdLabel == $attribute['id'])){
-                    if (!is_array($attribute['options'])) {
-                        if (isset($attribute['options']) && ($optionIdLabel == $attribute['options'])) {
-                            $productLabels [] = $productLabel;
+            if ($productLabel['is_active']) {
+                $attributeIdLabel = $productLabel['attribute_id'];
+                $optionIdLabel = $productLabel['option_id'];
+                foreach ($attributesProduct as $attribute) {
+                    if (isset($attribute['id']) && ($attributeIdLabel == $attribute['id'])) {
+                        if (!is_array($attribute['options'])) {
+                            if (isset($attribute['options']) && ($optionIdLabel == $attribute['options'])) {
+                                $productLabels [] = $productLabel;
+                            }
                         }
                     }
                 }
@@ -139,8 +204,15 @@ class ProductLabel extends Template implements IdentityInterface
      *
      * @return string
      */
-    public function getImageUrl($imageName) {
+    public function getImageUrl($imageName)
+    {
        return $this->imageHelper->getBaseUrl().'/'.$imageName;
+    }
+
+
+    public function getDisplayOn()
+    {
+
     }
 
     /**

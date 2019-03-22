@@ -11,23 +11,33 @@
  * @license   Open Software License ("OSL") v. 3.0
  */
 
-.productlabel-product-view {
+.productlabel-wrapper {
+  position: absolute;
+  z-index: 2;
+  img {
+    width: 60px;
+    height: 60px;
+  }
   .top_right {
-    float: right;
-    top:0;
-    img {
-      width: 60px;
-      height: 60px;
-    }
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
   }
   .top_left {
-    float: left;
-    top:0;
+    top: 0;
+    right: 0;
+    padding: 5px;
   }
   .lower_right {
-    float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
   }
   .lower_left {
-    float: left;
+    position: absolute;
+    bottom: 0;
+    padding: 5px;
   }
 }

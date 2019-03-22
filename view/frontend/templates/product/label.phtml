@@ -13,16 +13,58 @@
  */
 
 /**
- * Product discount visual template
+ * Product label visual template
  *
  * @var $block \Smile\ProductLabel\Block\ProductLabel\ProductLabel
  */
 ?>
-<?php $productLabels = $block->getProductLabels(); ?>
-<div class="productlabel-product-view">
-    <?php foreach($productLabels as $productLabel) :?>
-        <div class="<?php echo $productLabel['position_product_view']; ?>">
-            <img src="<?php echo $block->getImageUrl($productLabel['image']); ?>"/>
-        </div>
-    <?php endforeach; ?>
-</div>
+<?php if($block->getProductLabels()) : ?>
+    <?php $productLabels = $block->getProductLabels(); ?>
+    <div class="productlabel-wrapper" id="labels">
+        <?php foreach($productLabels as $productLabel) :?>
+            <?php
+            $classCSS = '';
+            $view = $this->getCurrentView();
+            $displayOn = explode(',',$productLabel['display_on']);
+
+            foreach($displayOn as $display) :
+                switch($display)
+                {
+                    case 1:
+                        if($view == 'product') :
+                            $classCSS = $productLabel['position_product_view'].' product';
+                            ?>
+                            <div class="<?php echo $classCSS; ?>">
+                                <img src="<?php echo $block->getImageUrl($productLabel['image']); ?>"/>
+                            </div>
+                            <?php
+                        endif;
+                        break;
+                    case 2:
+                        if($view == 'category') :
+                            $classCSS = $productLabel['position_category_list'].' category';
+                            ?>
+                            <div class="<?php echo $classCSS; ?>">
+                                <img src="<?php echo $block->getImageUrl($productLabel['image']); ?>"/>
+                            </div>
+                            <?php
+                        endif;
+                        break;
+                    default:
+                        $classCSS = '';
+                }
+            endforeach;
+        endforeach;
+        ?>
+    </div>
+
+    <script type="text/x-magento-init">
+    {
+         ".productlabel-wrapper" : {
+            "Smile_ProductLabel/js/productlabel-position" : {}
+         }
+    }
+    </script>
+
+<?php endif; ?>
+
