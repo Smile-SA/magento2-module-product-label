@@ -14,8 +14,9 @@
 define([
         "jquery"
     ], function($){
+
         var widthOfParent = $("#labels").parent().width();
-        var heightOfParent = $("#labels").parent().height();
+        var heightOfParent = $("#labels").parent().height() - 44;
         $("#labels")[0].style.width = widthOfParent + "px";
         $("#labels")[0].style.height = heightOfParent + "px";
     }
