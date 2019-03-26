@@ -32,7 +32,7 @@
             <argument name="extensionActions" xsi:type="array">
                 <item name="Magento\Catalog\Api\Data\ProductInterface" xsi:type="array">
                     <item name="read" xsi:type="array">
-                        <item name="sellersReader" xsi:type="string">Smile\ProductLabel\Model\ProductLabel\ReadHandler</item>
+                        <item name="product_label" xsi:type="string">Smile\ProductLabel\Model\ProductLabel\ReadHandler</item>
                     </item>
                 </item>
             </argument>
