@@ -137,11 +137,15 @@ class ProductLabel extends Template implements IdentityInterface
      */
     public function getCurrentProduct()
     {
+        $product = null;
         if(!empty($this->registry->registry('current_product'))) {
-            return $this->registry->registry('current_product');
+             $product = $this->registry->registry('current_product');
         } else {
-            return $this->getProductById($this->product->getId());
+            if ($this->product) {
+                $product = $this->getProductById($this->product->getId());
+            }
         }
+        return $product;
     }
 
     /**
