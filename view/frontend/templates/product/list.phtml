@@ -48,9 +48,10 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
             <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
             <?php foreach ($_productCollection as $_product): ?>
             <li class="item product product-item">
+                <?php /** SMILE OVERRIDING BEGIN */ ?>
                 <?php $labelHTML = $block->getChildBlock('productlabel.visual')->setProduct($_product)->toHtml(); ?>
+                <?php /** SMILE OVERRIDING END */ ?>
                 <div class="product-item-info" data-container="product-<?= /* @escapeNotVerified */ $viewMode ?>">
-                    <?php echo $labelHTML; ?>
                     <?php
                     $productImage = $block->getImage($_product, $imageDisplayArea);
                     if ($pos != null) {
@@ -60,6 +61,9 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                     ?>
                     <?php // Product Image ?>
                     <a href="<?= /* @escapeNotVerified */ $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+                        <?php /** SMILE OVERRIDING BEGIN */ ?>
+                        <?= $labelHTML; ?>
+                        <?php /** SMILE OVERRIDING END */ ?>
                         <?= $productImage->toHtml() ?>
                     </a>
                     <div class="product details product-item-details">

@@ -20,11 +20,13 @@
 ?>
 <?php if($block->getProductLabels()) : ?>
     <?php $productLabels = $block->getProductLabels(); ?>
-    <div class="productlabel-wrapper" id="labels">
+    <?php $view = $this->getCurrentView(); ?>
+    <div class="productlabel-wrapper
+        <?php if ($view == 'category'){ echo 'category';}?>
+        <?php if ($view == 'product'){ echo 'product';}?>" id="smile-productlabels-wrapper">
         <?php foreach($productLabels as $productLabel) :?>
             <?php
             $classCSS = '';
-            $view = $this->getCurrentView();
             $displayOn = explode(',',$productLabel['display_on']);
 
             foreach($displayOn as $display) :

@@ -188,10 +188,12 @@ class ProductLabel extends Template implements IdentityInterface
                 $optionIdLabel = $productLabel['option_id'];
                 foreach ($attributesProduct as $attribute) {
                     if (isset($attribute['id']) && ($attributeIdLabel == $attribute['id'])) {
-                        if (!is_array($attribute['options'])) {
-                            if (isset($attribute['options']) && ($optionIdLabel == $attribute['options'])) {
-                                $productLabels [] = $productLabel;
-                            }
+                        $options = $attribute['options'] ?? [];
+                        if (!is_array($options)) {
+                            $options = explode(',', $options);
+                        }
+                        if (in_array($optionIdLabel, $options)) {
+                            $productLabels[] = $productLabel;
                         }
                     }
                 }
@@ -211,12 +213,6 @@ class ProductLabel extends Template implements IdentityInterface
     public function getImageUrl($imageName)
     {
        return $this->imageHelper->getBaseUrl().'/'.$imageName;
-    }
-
-
-    public function getDisplayOn()
-    {
-
     }
 
     /**

@@ -15,9 +15,14 @@ define([
         "jquery"
     ], function($){
 
-        var widthOfParent = $("#labels").parent().width();
-        var heightOfParent = $("#labels").parent().height() - 44;
-        $("#labels")[0].style.width = widthOfParent + "px";
-        $("#labels")[0].style.height = heightOfParent + "px";
+        var widthOfParent = $(".productlabel-wrapper.category").parent().parent().width();
+        var heightOfParent = $(".productlabel-wrapper.category").parent().parent().height() - 44;
+        $(".productlabel-wrapper")[0].style.width = widthOfParent + "px";
+        $(".productlabel-wrapper")[0].style.height = heightOfParent + "px";
+
+        var widthOfParentProductView = $(".productlabel-wrapper.product").parent().width();
+        var heightOfParentProductView = $(".productlabel-wrapper.product").parent().height() - 44;
+        $(".productlabel-wrapper")[0].style.width = widthOfParentProductView + "px";
+        $(".productlabel-wrapper")[0].style.height = heightOfParentProductView + "px";
     }
 );
