@@ -20,6 +20,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Smile\ProductLabel\Option\ProductLabel as ProductLabelOption;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as ProductLabelCollectionFactory;
 
 /**
  * Class ProductLabel
@@ -40,6 +41,11 @@ class ProductLabel extends Template implements IdentityInterface
      * @var ProductLabelOption
      */
     protected $productLabelCollection;
+
+    /**
+     * @var ProductLabelCollectionFactory
+     */
+    protected $productLabelCollectionFactory;
 
     /**
      * @var \Smile\ProductLabel\Model\ImageLabel\Image
@@ -79,6 +85,7 @@ class ProductLabel extends Template implements IdentityInterface
         \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper,
         \Magento\Catalog\Model\ProductRepository $productRepository,
         \Magento\Framework\App\RequestInterface $request,
+        ProductLabelCollectionFactory $productLabelCollectionFactory,
         array $data = []
     )
     {
@@ -87,6 +94,7 @@ class ProductLabel extends Template implements IdentityInterface
         $this->imageHelper = $imageHelper;
         $this->productRepository = $productRepository;
         $this->request = $request;
+        $this->productLabelCollectionFactory = $productLabelCollectionFactory;
 
         parent::__construct($context, $data);
     }
@@ -144,16 +152,23 @@ class ProductLabel extends Template implements IdentityInterface
     public function getAttributesOfCurrentProduct()
     {
         $attributesList = array();
-        $attributes = $this->getCurrentProduct()->getAttributes();
 
-        foreach ($attributes as $attribute) {
-            $optionIds = $this->getCurrentProduct()->getCustomAttribute($attribute->getAttributeCode());
+        /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
+        $productLabelsCollection = $this->productLabelCollectionFactory->create();
+        $attributeIds = $productLabelsCollection->getAllAttributeIds();
 
-            $attributesList[$attribute->getId()] = [
-                'id' => $attribute->getId(),
-                'label' => $attribute->getFrontend()->getLabel(),
-                'options' => ($optionIds) ? $optionIds->getValue() : ''
-            ];
+        $productEntity = $this->getCurrentProduct()->getResourceCollection()->getEntity();
+        foreach ($attributeIds as $attributeId) {
+            $attribute = $productEntity->getAttribute($attributeId);
+            if ($attribute) {
+                $optionIds = $this->getCurrentProduct()->getCustomAttribute($attribute->getAttributeCode());
+
+                $attributesList[$attribute->getId()] = [
+                    'id' => $attribute->getId(),
+                    'label' => $attribute->getFrontend()->getLabel(),
+                    'options' => ($optionIds) ? $optionIds->getValue() : ''
+                ];
+            }
         }
         return $attributesList;
     }
