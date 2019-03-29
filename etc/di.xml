@@ -19,6 +19,10 @@
     <preference for="Smile\ProductLabel\Api\Data\ProductLabelInterface" type="Smile\ProductLabel\Model\ProductLabel" />
     <preference for="Smile\ProductLabel\Api\ProductLabelRepositoryInterface" type="Smile\ProductLabel\Model\Repository\ProductLabel" />
 
+    <type name="Magento\Catalog\Model\Config">
+        <plugin name="magento-catalog-model-config-plugin" type="Smile\ProductLabel\Plugin\Catalog\Model\Config"/>
+    </type>
+
     <type name="Magento\Framework\Model\Entity\RepositoryFactory">
         <arguments>
             <argument name="entities" xsi:type="array">

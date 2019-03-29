@@ -119,18 +119,6 @@ class ProductLabel extends Template implements IdentityInterface
     }
 
     /**
-     * Get Product By Id
-     *
-     * @param $id
-     *
-     * @return ProductInterface|mixed
-     */
-    public function getProductById($id)
-    {
-        return $this->productRepository->getById($id);
-    }
-
-    /**
      * Get Current Product
      *
      * @return Product|ProductInterface
@@ -142,7 +130,7 @@ class ProductLabel extends Template implements IdentityInterface
              $product = $this->registry->registry('current_product');
         } else {
             if ($this->product) {
-                $product = $this->getProductById($this->product->getId());
+                $product = $this->product;
             }
         }
         return $product;
