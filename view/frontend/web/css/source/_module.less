@@ -1,0 +1,53 @@
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+.productlabel-wrapper {
+  position: absolute;
+  z-index: 2;
+  img {
+    width: 60px;
+    height: 60px;
+  }
+  .top_right {
+    position: relative;
+    top: 0;
+    right: -11em;
+    &.product {
+      position: absolute;
+      right: 0;
+    }
+  }
+  .top_left {
+    position: absolute;
+    top: 0;
+    left:0;
+  }
+  .lower_right {
+    position: relative;
+    bottom: -12em;
+    right: -11em;
+    &.product {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+  .lower_left {
+    position: relative;
+    bottom: -15em;
+    &.product {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}

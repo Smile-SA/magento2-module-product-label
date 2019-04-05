@@ -19,10 +19,26 @@
     <preference for="Smile\ProductLabel\Api\Data\ProductLabelInterface" type="Smile\ProductLabel\Model\ProductLabel" />
     <preference for="Smile\ProductLabel\Api\ProductLabelRepositoryInterface" type="Smile\ProductLabel\Model\Repository\ProductLabel" />
 
+    <type name="Magento\Catalog\Model\Config">
+        <plugin name="magento-catalog-model-config-plugin" type="Smile\ProductLabel\Plugin\Catalog\Model\Config"/>
+    </type>
+
     <type name="Magento\Framework\Model\Entity\RepositoryFactory">
         <arguments>
             <argument name="entities" xsi:type="array">
                 <item name="Smile\ProductLabel\Api\Data\ProductLabelInterface" xsi:type="string">Smile\ProductLabel\Api\ProductLabelRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\EntityManager\Operation\ExtensionPool">
+        <arguments>
+            <argument name="extensionActions" xsi:type="array">
+                <item name="Magento\Catalog\Api\Data\ProductInterface" xsi:type="array">
+                    <item name="read" xsi:type="array">
+                        <item name="product_labels" xsi:type="string">Smile\ProductLabel\Model\ProductLabel\ReadHandler</item>
+                    </item>
+                </item>
             </argument>
         </arguments>
     </type>

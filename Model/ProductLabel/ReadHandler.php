@@ -27,6 +27,7 @@ use Smile\ProductLabel\Helper\Data as DataHelper;
  */
 class ReadHandler implements ExtensionInterface
 {
+
     /**
      * @var DataHelper
      */
@@ -69,4 +70,5 @@ class ReadHandler implements ExtensionInterface
 
         return $product;
     }
+
 }
