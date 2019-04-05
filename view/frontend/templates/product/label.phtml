@@ -21,9 +21,7 @@
 <?php if($block->getProductLabels()) : ?>
     <?php $productLabels = $block->getProductLabels(); ?>
     <?php $view = $this->getCurrentView(); ?>
-    <div class="productlabel-wrapper
-        <?php if ($view == 'category'){ echo 'category';}?>
-        <?php if ($view == 'product'){ echo 'product';}?>" id="smile-productlabels-wrapper">
+    <div class="productlabel-wrapper <?= $view ?>" id="smile-productlabels-wrapper">
         <?php foreach($productLabels as $productLabel) :?>
             <?php
             $classCSS = '';

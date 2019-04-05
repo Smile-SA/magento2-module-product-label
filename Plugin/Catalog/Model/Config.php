@@ -55,14 +55,21 @@ class Config
     protected $_storeId = null;
 
     /**
+     * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory
+     */
+    protected $collectionFactory;
+
+    /**
      * Config constructor.
      *
-     * @param \Magento\Framework\App\Cache\StateInterface        $cacheState
-     * @param \Magento\Framework\Validator\UniversalFactory      $universalFactory
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Catalog\Model\ResourceModel\ConfigFactory $configFactory
-     * @param \Magento\Store\Model\StoreManagerInterface         $storeManager
-     * @param \Magento\Eav\Model\Config                          $eavConfig
+     * @param \Magento\Framework\App\Cache\StateInterface                            $cacheState
+     * @param \Magento\Framework\Validator\UniversalFactory                          $universalFactory
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface                     $scopeConfig
+     * @param \Magento\Catalog\Model\ResourceModel\ConfigFactory                     $configFactory
+     * @param \Magento\Store\Model\StoreManagerInterface                             $storeManager
+     * @param \Magento\Eav\Model\Config                                              $eavConfig
+     * @param \Magento\Catalog\Model\ResourceModel\Eav\Attribute                     $attributeFactory
+     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $productLabelCollectionFactory
      */
     public function __construct(
         \Magento\Framework\App\Cache\StateInterface $cacheState,
@@ -71,13 +78,15 @@ class Config
         \Magento\Catalog\Model\ResourceModel\ConfigFactory $configFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory
+        \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory,
+        \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $productLabelCollectionFactory
     ) {
         $this->_scopeConfig = $scopeConfig;
         $this->_configFactory = $configFactory;
         $this->_storeManager = $storeManager;
         $this->_eavConfig = $eavConfig;
         $this->_attributeFactory = $attributeFactory;
+        $this->productLabelCollectionFactory = $productLabelCollectionFactory;
     }
 
     /**
@@ -85,34 +94,29 @@ class Config
      *
      * @return array
      */
-    public function afterGetAttributesUsedInProductListing()
+    public function afterGetAttributesUsedInProductListing(\Magento\Catalog\Model\Config $subject, $result)
     {
         if ($this->_usedInProductListing === null) {
-            $this->_usedInProductListing = [];
+            $this->_usedInProductListing = $result;
             $entityType = \Magento\Catalog\Model\Product::ENTITY;
 
-            $attributesData = $this->_getResource()->setStoreId($this->getStoreId())->getAttributesUsedInListing();
-            $this->_eavConfig->importAttributesData($entityType, $attributesData);
-            foreach ($attributesData as $attributeData) {
+            /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
+            $productLabelsCollection = $this->productLabelCollectionFactory->create();
+            // Here you have all the attribute ids that are used to build product label rules.
+            $attributeIds = $productLabelsCollection->getAllAttributeIds();
+
+            // Filter the collection on these attributes only.
+            $attributesDataExtra = $this->_attributeFactory->getCollection()->addFieldToFilter('attribute_id', ['in' => $attributeIds])->getData();
+            $this->_eavConfig->importAttributesData($entityType, $attributesDataExtra);
+            foreach ($attributesDataExtra as $attributeData) {
                 $attributeCode = $attributeData['attribute_code'];
                 $this->_usedInProductListing[$attributeCode] = $this->_eavConfig->getAttribute(
                     $entityType,
                     $attributeCode
                 );
             }
-
-            $attributesDataExtra = $this->_attributeFactory->getCollection()->getData();
-            $this->_eavConfig->importAttributesData($entityType, $attributesDataExtra);
-            foreach ($attributesDataExtra as $attributeData) {
-                if ($attributeData['backend_model'] == \Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class) {
-                    $attributeCode = $attributeData['attribute_code'];
-                    $this->_usedInProductListing[$attributeCode] = $this->_eavConfig->getAttribute(
-                        $entityType,
-                        $attributeCode
-                    );
-                }
-            }
         }
+
         return $this->_usedInProductListing;
     }
 
