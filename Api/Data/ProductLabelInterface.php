@@ -38,11 +38,6 @@ interface ProductLabelInterface
     const PRODUCTLABEL_ID = 'product_label_id';
 
     /**
-     * Constant for field identifier
-     */
-    const PRODUCTLABEL_IDENTIFIER = 'identifier';
-
-    /**
      * Constant for field name
      */
     const PRODUCTLABEL_NAME = 'name';
@@ -92,11 +87,11 @@ interface ProductLabelInterface
     public function getProductLabelId();
 
     /**
-     * Get Identifier.
+     * Get product label Id
      *
-     * @return string
+     * @return int
      */
-    public function getIdentifier();
+    public function getId();
 
     /**
      * Get Name
@@ -164,15 +159,6 @@ interface ProductLabelInterface
      * @return ProductLabelInterface
      */
     public function setProductLabelId($value);
-
-    /**
-     * Set Identifier.
-     *
-     * @param string $value The value
-     *
-     * @return $this
-     */
-    public function setIdentifier($value);
 
     /**
      * Set Name

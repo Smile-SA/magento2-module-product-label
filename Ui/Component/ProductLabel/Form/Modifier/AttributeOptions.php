@@ -73,7 +73,7 @@ class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInte
         $meta['general']['children']['option_id']['arguments']['data']['options']    = $options;
         $meta['general']['children']['option_label']['arguments']['data']['options'] = $options;
 
-        $isNew          = (!$productLabel || !$productLabel->getIdentifier());
+        $isNew          = (!$productLabel || !$productLabel->getId());
         $optionFieldVisible = $isNew && $productLabel && $productLabel->getAttributeId();
 
         $meta['general']['children']['option_id']['arguments']['data']['config']['disabled'] = !$isNew;

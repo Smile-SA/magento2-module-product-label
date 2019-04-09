@@ -129,22 +129,6 @@
             </settings>
         </field>
 
-        <field name="identifier" formElement="input" sortOrder="20">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">productlabel</item>
-                </item>
-            </argument>
-            <settings>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-                <dataType>text</dataType>
-                <label translate="true">Identifier</label>
-                <dataScope>identifier</dataScope>
-            </settings>
-        </field>
-
         <field name="attribute_id" formElement="select" component="Magento_Ui/js/form/element/ui-select" sortOrder="30">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

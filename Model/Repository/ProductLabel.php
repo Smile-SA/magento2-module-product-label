@@ -60,7 +60,7 @@ class ProductLabel implements ProductLabelRepositoryInterface
                 'objectResource'             => $objectResource,
                 'objectCollectionFactory'    => $objectCollectionFactory,
                 'objectSearchResultsFactory' => $objectSearchResultsFactory,
-                'identifierFieldName'        => ProductLabelInterface::PRODUCTLABEL_IDENTIFIER,
+                'identifierFieldName'        => ProductLabelInterface::PRODUCTLABEL_ID,
             ]
         );
     }

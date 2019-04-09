@@ -96,7 +96,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      */
     public function getIdentities()
     {
-        return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG . '_' . $this->getIdentifier()];
+        return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG ];
     }
 
     /**
@@ -117,16 +117,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     public function getProductLabelId()
     {
         return $this->getId();
-    }
-
-    /**
-     * Get field: identifier.
-     *
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return (string) $this->getData(self::PRODUCTLABEL_IDENTIFIER);
     }
 
     /**
@@ -229,18 +219,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
-     * Set field: identifier.
-     *
-     * @param string $value Field value
-     *
-     * @return $this
-     */
-    public function setIdentifier($value)
-    {
-        return $this->setData(self::PRODUCTLABEL_IDENTIFIER, (string) $value);
-    }
-
-    /**
      * Set field: name.
      *
      * @param string $value Field value
@@ -330,7 +308,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     public function populateFromArray(array $values)
     {
         $this->setData(self::IS_ACTIVE, (bool) $values['is_active']);
-        $this->setData(self::PRODUCTLABEL_IDENTIFIER, (string) $values['identifier']);
         $this->setData(self::PRODUCTLABEL_NAME, (string) $values['name']);
         $this->setData(self::ATTRIBUTE_ID, (int) $values['attribute_id']);
         $this->setData(self::OPTION_ID, (int) $values['option_id']);

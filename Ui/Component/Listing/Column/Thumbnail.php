@@ -68,7 +68,7 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
                 $item[$fieldName . '_alt']      = $this->getAlt($item) ?: $this->imageHelper->getLabel();
                 $item[$fieldName . '_link']     = $this->urlBuilder->getUrl(
                     'smile_productlabel/productlabel/edit',
-                    ['product_label_id' => $item['identifier']]
+                    ['product_label_id' => $item['product_label_id']]
                 );
                 $item[$fieldName . '_orig_src'] = $this->imageHelper->getBaseUrl() . '/' . $item['image'];
             }

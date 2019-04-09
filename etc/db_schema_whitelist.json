@@ -2,7 +2,6 @@
     "smile_productlabel": {
         "column": {
             "product_label_id": true,
-            "identifier": true,
             "name": true,
             "attribute_id": true,
             "option_id": true,

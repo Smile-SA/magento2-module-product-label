@@ -129,14 +129,14 @@
                 <indexField>product_label_id</indexField>
             </settings>
         </selectionsColumn>
-        <column name="product_label_id">
+        <column name="product_label_id" sortOrder="10">
             <settings>
                 <filter>textRange</filter>
                 <label translate="true">ID</label>
                 <sorting>asc</sorting>
             </settings>
         </column>
-        <column name="image" class="Smile\ProductLabel\Ui\Component\Listing\Column\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail">
+        <column sortOrder="20" name="image" class="Smile\ProductLabel\Ui\Component\Listing\Column\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="align" xsi:type="string">left</item>
@@ -150,20 +150,7 @@
                 <resizeDefaultWidth>150</resizeDefaultWidth>
             </settings>
         </column>
-        <column name="identifier">
-            <settings>
-                <filter>text</filter>
-                <editor>
-                    <validation>
-                        <rule name="required-entry" xsi:type="boolean">true</rule>
-                        <rule name="validate-xml-identifier" xsi:type="boolean">true</rule>
-                    </validation>
-                    <editorType>text</editorType>
-                </editor>
-                <label translate="true">Identifier</label>
-            </settings>
-        </column>
-        <column name="name">
+        <column name="name" sortOrder="30">
             <settings>
                 <filter>text</filter>
                 <editor>
@@ -175,7 +162,24 @@
                 <label translate="true">Name</label>
             </settings>
         </column>
-        <column name="is_active" component="Magento_Ui/js/grid/columns/select">
+
+        <column name="frontend_label" sortOrder="40">
+            <settings>
+                <label translate="true">Attribute</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <sortable>true</sortable>
+            </settings>
+        </column>
+
+        <column name="option_label" sortOrder="50">
+            <settings>
+                <label translate="true">Value</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <sortable>true</sortable>
+            </settings>
+        </column>
+
+        <column name="is_active" sortOrder="60" component="Magento_Ui/js/grid/columns/select">
             <settings>
                 <options>
                     <option name="active" xsi:type="array">
@@ -195,7 +199,7 @@
                 <label translate="true">Status</label>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Smile\ProductLabel\Ui\Component\Listing\Column\AttributeActions">
+        <actionsColumn sortOrder="70" name="actions" class="Smile\ProductLabel\Ui\Component\Listing\Column\AttributeActions">
             <settings>
                 <indexField>product_label_id</indexField>
             </settings>
