@@ -14,6 +14,8 @@
 
 namespace Smile\ProductLabel\Ui\Component\Source\Location;
 
+use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+
 /**
  * Locations values for product label edit form.
  *
@@ -50,13 +52,13 @@ class View implements \Magento\Framework\Data\OptionSourceInterface
         ];
 
         $this->viewsList[1] = [
-            'value'     => 1,
+            'value'     => ProductLabelInterface::PRODUCTLABEL_DISPLAY_PRODUCT,
             'view_id'   => 'product_view',
             'label'     => 'Product View',
         ];
 
         $this->viewsList[2] = [
-            'value'     => 2,
+            'value'     => ProductLabelInterface::PRODUCTLABEL_DISPLAY_LISTING,
             'view_id'   => 'product_listing',
             'label'     => 'Product Listing',
         ];

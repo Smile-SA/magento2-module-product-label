@@ -1,7 +1,6 @@
 <?php
 /**
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
@@ -19,7 +18,7 @@ use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
 use Magento\Catalog\Api\Data\ProductInterface;
-use Smile\ProductLabel\Option\ProductLabel as ProductLabelOption;
+use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as ProductLabelCollectionFactory;
 
 /**
@@ -31,16 +30,10 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as Pro
  */
 class ProductLabel extends Template implements IdentityInterface
 {
-
     /**
      * @var Registry
      */
     protected $registry;
-
-    /**
-     * @var ProductLabelOption
-     */
-    protected $productLabelCollection;
 
     /**
      * @var ProductLabelCollectionFactory
@@ -58,43 +51,27 @@ class ProductLabel extends Template implements IdentityInterface
     protected $product;
 
     /**
-     * @var \Magento\Catalog\Model\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
-     * @var \Magento\Framework\App\RequestInterface
-     */
-    protected $request;
-
-    /**
      * ProductLabel constructor.
      *
-     * @param \Magento\Backend\Block\Template\Context    $context
-     * @param Registry                                   $registry
-     * @param ProductLabelOption                         $productLabelCollection
-     * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper
-     * @param \Magento\Catalog\Model\ProductRepository   $productRepository
-     * @param \Magento\Framework\App\RequestInterface    $request
-     * @param array                                      $data
+     * @param \Magento\Backend\Block\Template\Context    $context                       Block context
+     * @param Registry                                   $registry                      Registry
+     * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper                   Image Helper
+     * @param ProductLabelCollectionFactory              $productLabelCollectionFactory Product Label Collection Factory
+     * @param \Magento\Framework\App\CacheInterface      $cache                         Cache Interface
+     * @param array                                      $data                          Block data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
-        ProductLabelOption $productLabelCollection,
         \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper,
-        \Magento\Catalog\Model\ProductRepository $productRepository,
-        \Magento\Framework\App\RequestInterface $request,
         ProductLabelCollectionFactory $productLabelCollectionFactory,
+        \Magento\Framework\App\CacheInterface $cache,
         array $data = []
-    )
-    {
-        $this->registry = $registry;
-        $this->productLabelCollection = $productLabelCollection;
-        $this->imageHelper = $imageHelper;
-        $this->productRepository = $productRepository;
-        $this->request = $request;
+    ) {
+        $this->registry                      = $registry;
+        $this->imageHelper                   = $imageHelper;
         $this->productLabelCollectionFactory = $productLabelCollectionFactory;
+        $this->cache                         = $cache;
 
         parent::__construct($context, $data);
     }
@@ -106,11 +83,28 @@ class ProductLabel extends Template implements IdentityInterface
      */
     public function getCurrentView()
     {
-        if ($this->request->getControllerName('controller') == 'product') {
-            return 'product';
-        } else {
-            return 'category';
+        $view = ProductLabelInterface::PRODUCTLABEL_DISPLAY_LISTING;
+        if ($this->getRequest()->getControllerName('controller') == 'product') {
+            $view = ProductLabelInterface::PRODUCTLABEL_DISPLAY_PRODUCT;
         }
+
+        return $view;
+    }
+
+    /**
+     * Get labels block wrapper class
+     *
+     * @return string
+     */
+    public function getWrapperClass()
+    {
+        $class = 'listing';
+
+        if ($this->getCurrentView() === ProductLabelInterface::PRODUCTLABEL_DISPLAY_PRODUCT) {
+            $class = 'product';
+        }
+
+        return $class;
     }
 
     /**
@@ -123,25 +117,22 @@ class ProductLabel extends Template implements IdentityInterface
     public function setProduct(ProductInterface $product)
     {
         $this->product = $product;
+
         return $this;
     }
 
     /**
-     * Get Current Product
+     * Get Product
      *
-     * @return Product|ProductInterface
+     * @return Product|ProductInterface|null
      */
-    public function getCurrentProduct()
+    public function getProduct()
     {
-        $product = null;
-        if(!empty($this->registry->registry('current_product'))) {
-             $product = $this->registry->registry('current_product');
-        } else {
-            if ($this->product) {
-                $product = $this->product;
-            }
+        if (null === $this->product) {
+            $this->product = $this->registry->registry('current_product');
         }
-        return $product;
+
+        return $this->product;
     }
 
     /**
@@ -151,25 +142,23 @@ class ProductLabel extends Template implements IdentityInterface
      */
     public function getAttributesOfCurrentProduct()
     {
-        $attributesList = array();
+        $attributesList = [];
+        $attributeIds   = array_column($this->getProductLabelsList(), 'attribute_id');
+        $productEntity  = $this->getProduct()->getResourceCollection()->getEntity();
 
-        /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
-        $productLabelsCollection = $this->productLabelCollectionFactory->create();
-        $attributeIds = $productLabelsCollection->getAllAttributeIds();
-
-        $productEntity = $this->getCurrentProduct()->getResourceCollection()->getEntity();
         foreach ($attributeIds as $attributeId) {
             $attribute = $productEntity->getAttribute($attributeId);
             if ($attribute) {
-                $optionIds = $this->getCurrentProduct()->getCustomAttribute($attribute->getAttributeCode());
+                $optionIds = $this->getProduct()->getCustomAttribute($attribute->getAttributeCode());
 
                 $attributesList[$attribute->getId()] = [
-                    'id' => $attribute->getId(),
-                    'label' => $attribute->getFrontend()->getLabel(),
-                    'options' => ($optionIds) ? $optionIds->getValue() : ''
+                    'id'      => $attribute->getId(),
+                    'label'   => $attribute->getFrontend()->getLabel(),
+                    'options' => ($optionIds) ? $optionIds->getValue() : '',
                 ];
             }
         }
+
         return $attributesList;
     }
 
@@ -181,23 +170,23 @@ class ProductLabel extends Template implements IdentityInterface
      */
     public function getProductLabels()
     {
-        $productLabels = array();
-        $productLabelList = $this->productLabelCollection->getAllOptions();
+        $productLabels     = [];
+        $productLabelList  = $this->getProductLabelsList();
         $attributesProduct = $this->getAttributesOfCurrentProduct();
 
         foreach ($productLabelList as $productLabel) {
-            if ($productLabel['is_active']) {
-                $attributeIdLabel = $productLabel['attribute_id'];
-                $optionIdLabel = $productLabel['option_id'];
-                foreach ($attributesProduct as $attribute) {
-                    if (isset($attribute['id']) && ($attributeIdLabel == $attribute['id'])) {
-                        $options = $attribute['options'] ?? [];
-                        if (!is_array($options)) {
-                            $options = explode(',', $options);
-                        }
-                        if (in_array($optionIdLabel, $options)) {
-                            $productLabels[] = $productLabel;
-                        }
+            $attributeIdLabel = $productLabel['attribute_id'];
+            $optionIdLabel    = $productLabel['option_id'];
+            foreach ($attributesProduct as $attribute) {
+                if (isset($attribute['id']) && ($attributeIdLabel == $attribute['id'])) {
+                    $options = $attribute['options'] ?? [];
+                    if (!is_array($options)) {
+                        $options = explode(',', $options);
+                    }
+                    if (in_array($optionIdLabel, $options) && in_array($this->getCurrentView(), $productLabel['display_on'])) {
+                        $productLabel['class'] = $this->getCssClass($productLabel);
+                        $class = $this->getCssClass($productLabel);
+                        $productLabels[] = $productLabel;
                     }
                 }
             }
@@ -215,7 +204,7 @@ class ProductLabel extends Template implements IdentityInterface
      */
     public function getImageUrl($imageName)
     {
-       return $this->imageHelper->getBaseUrl().'/'.$imageName;
+        return $this->imageHelper->getBaseUrl() . '/' . $imageName;
     }
 
     /**
@@ -228,11 +217,61 @@ class ProductLabel extends Template implements IdentityInterface
         $identities = [];
 
         /** @var IdentityInterface $product */
-        $product = $this->getCurrentProduct();
+        $product = $this->getProduct();
         if ($product) {
             $identities = array_merge($identities, $product->getIdentities());
         }
+
         return $identities;
     }
 
+    /**
+     * Fetch proper css class according to current label and view.
+     *
+     * @param array $productLabel A product Label
+     */
+    private function getCssClass($productLabel)
+    {
+        $class = '';
+
+        if ($this->getCurrentView() === ProductLabelInterface::PRODUCTLABEL_DISPLAY_PRODUCT) {
+            $class = $productLabel['position_product_view'] . ' product';
+        }
+
+        if ($this->getCurrentView() === ProductLabelInterface::PRODUCTLABEL_DISPLAY_LISTING) {
+            $class = $productLabel['position_category_list'] . ' category';
+        }
+
+        return $class;
+    }
+
+    /**
+     * Fetch product labels list : the list of all enabled product labels.
+     * Fetched only once and put in cache.
+     *
+     * @return array
+     */
+    private function getProductLabelsList()
+    {
+        $cacheKey         = 'smile_productlabel_frontend';
+        $productLabelList = $this->cache->load($cacheKey);
+
+        if (is_string($productLabelList)) {
+            $productLabelList = json_decode($productLabelList, true);
+        }
+
+        if ($productLabelList === false) {
+            /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
+            $productLabelsCollection = $this->productLabelCollectionFactory->create();
+            $productLabelList        = $productLabelsCollection->addFieldToFilter('is_active', true)->getData();
+            $productLabelList        = array_map(function($label) {
+                $label['display_on'] = explode(',', $label['display_on']);
+                return $label;
+            }, $productLabelList);
+
+            $this->cache->save(json_encode($productLabelList), $cacheKey,  [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]);
+        }
+
+        return $productLabelList;
+    }
 }

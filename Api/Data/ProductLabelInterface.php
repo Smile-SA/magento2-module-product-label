@@ -73,6 +73,16 @@ interface ProductLabelInterface
     const PRODUCTLABEL_DISPLAY_ON = 'display_on';
 
     /**
+     * If displayed on Product page
+     */
+    const PRODUCTLABEL_DISPLAY_PRODUCT = 1;
+
+    /**
+     * If displayed on Product listing
+     */
+    const PRODUCTLABEL_DISPLAY_LISTING = 2;
+
+    /**
      * Get product label status
      *
      * @return bool
