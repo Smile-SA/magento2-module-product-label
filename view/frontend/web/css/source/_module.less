@@ -12,42 +12,54 @@
  */
 
 .productlabel-wrapper {
-  position: absolute;
-  z-index: 2;
-  img {
-    width: 60px;
-    height: 60px;
-  }
-  .top_right {
-    position: relative;
-    top: 0;
-    right: -11em;
-    &.product {
-      position: absolute;
-      right: 0;
-    }
-  }
-  .top_left {
     position: absolute;
-    top: 0;
-    left:0;
-  }
-  .lower_right {
-    position: relative;
-    bottom: -12em;
-    right: -11em;
-    &.product {
-      position: absolute;
-      bottom: 0;
-      right: 0;
+    z-index: 2;
+
+    img {
+        width: 60px;
+        height: 60px;
     }
-  }
-  .lower_left {
-    position: relative;
-    bottom: -15em;
+
     &.product {
-      position: absolute;
-      bottom: 0;
+        position: relative;
     }
-  }
+
+    .top_right {
+        position: relative;
+        top: 0;
+        right: -11em;
+
+        &.product {
+            position: absolute;
+            right: 0;
+        }
+    }
+
+    .top_left {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .lower_right {
+        position: relative;
+        bottom: -12em;
+        right: -11em;
+
+        &.product {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    }
+
+    .lower_left {
+        position: relative;
+        bottom: -15em;
+
+        &.product {
+            position: absolute;
+            bottom: 0;
+        }
+    }
 }
