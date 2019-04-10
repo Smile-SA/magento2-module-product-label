@@ -83,6 +83,11 @@ interface ProductLabelInterface
     const PRODUCTLABEL_DISPLAY_LISTING = 2;
 
     /**
+     * Alternative caption
+     */
+    const PRODUCTLABEL_ALT = 'alt';
+
+    /**
      * Get product label status
      *
      * @return bool
@@ -151,6 +156,13 @@ interface ProductLabelInterface
      * @return array
      */
     public function getDisplayOn();
+
+    /**
+     * Get Alternative caption
+     *
+     * @return string
+     */
+    public function getAlt();
 
     /**
      * Set product label status
@@ -232,4 +244,13 @@ interface ProductLabelInterface
      * @return ProductLabelInterface
      */
     public function setDisplayOn($value);
+
+    /**
+     * Set Alternative Caption
+     *
+     * @param string $value The value
+     *
+     * @return ProductLabelInterface
+     */
+    public function setAlt($value);
 }

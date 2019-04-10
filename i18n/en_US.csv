@@ -5,7 +5,7 @@
 "Attributes","Attributes"
 "Option","Option"
 "Logo Image","Logo Image"
-"Image location in thumbnail mode","Image location in thumbnail mode"
+"Image location in listing mode","Image location in listing mode"
 "Location of the image on product view","Location of the image on product view"
 "Display on","Display on"
 "New Product Label","New Product Label"
@@ -18,3 +18,4 @@
 "Total of %1 ProductLabel(s) were deleted.","Total of %1 ProductLabel(s) were deleted."
 "The product label has been saved.","The product label has been saved."
 "Something went wrong while saving the product label. ""%1""","Something went wrong while saving the product label. ""%1"""
+"Alternative text for this label","Alternative text for this label"

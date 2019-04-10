@@ -24,7 +24,7 @@
     <?php foreach($productLabels as $class => $labels) :?>
         <div class="<?php echo $class; ?>">
             <?php foreach ($labels as $label) : ?>
-                <img src="<?php echo $label['image']; ?>" alt="<?php echo $label['alt'] ?? ''; ?>"/>
+                <img src="<?php echo $label['image']; ?>" alt="<?php echo $label['alt'] ?? ''; ?>" title="<?php echo $label['alt'] ?? ''; ?>"/>
             <?php endforeach ;?>
         </div>
     <?php endforeach; ?>

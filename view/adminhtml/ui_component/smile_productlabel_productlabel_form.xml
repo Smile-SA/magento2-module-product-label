@@ -259,7 +259,7 @@
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>int</dataType>
-                <label translate="true">Image location in thumbnail mode</label>
+                <label translate="true">Image location in listing mode</label>
                 <dataScope>position_category_list</dataScope>
                 <componentType>field</componentType>
             </settings>
@@ -309,6 +309,22 @@
             </formElements>
         </field>
 
+        <field name="alt" formElement="input" sortOrder="90">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">alt</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Alternative text for this label</label>
+                <visible>true</visible>
+                <dataScope>alt</dataScope>
+            </settings>
+        </field>
     </fieldset>
 
 </form>

@@ -5,7 +5,7 @@
 "Attributes","Attributs"
 "Option","Option"
 "Logo Image","Logo Image"
-"Image location in thumbnail mode","Emplacement de l'étiquette en mode vignette"
+"Image location in listing mode","Emplacement de l'étiquette en mode liste"
 "Location of the image on product view","Emplacement de l'étiquette sur la fiche produit"
 "Display on","Afficher sur"
 "Manage Product labels","Gestion des étiquettes produit"
@@ -22,3 +22,4 @@
 "Total of %1 ProductLabel(s) were deleted.","Total de %1 des étiquettes produits supprimés."
 "The product label has been saved.","L'étiquette du produit a été enregistrée."
 "A total of %1 product label(s) have been deleted.","Suppression de %1 étiquette(s) produit avec succès."
+"Alternative text for this label","Texte alternatif du label"

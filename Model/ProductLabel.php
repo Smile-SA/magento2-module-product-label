@@ -195,6 +195,16 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
+     * Get field: alt.
+     *
+     * @return string
+     */
+    public function getAlt()
+    {
+        return (int) $this->getData(self::PRODUCTLABEL_ALT);
+    }
+
+    /**
      * Set field: is_active
      *
      * @param boolean $status The status
@@ -303,6 +313,18 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
+     * Set field: alt.
+     *
+     * @param string $value Field value
+     *
+     * @return $this
+     */
+    public function setAlt($value)
+    {
+        return $this->setData(self::PRODUCTLABEL_ALT, (string) $value);
+    }
+
+    /**
      * @param array $values Form values
      */
     public function populateFromArray(array $values)
@@ -315,6 +337,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
         $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, (string) $values['position_category_list']);
         $this->setData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW, (string) $values['position_product_view']);
         $this->setData(self::PRODUCTLABEL_DISPLAY_ON, implode(',', $values['display_on']));
+        $this->setData(self::PRODUCTLABEL_ALT, (string) $values['alt']);
     }
 
     /**

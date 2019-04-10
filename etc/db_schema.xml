@@ -25,6 +25,7 @@
         <column xsi:type="blob" name="image" nullable="true" comment="Image of Attribute or Option of Attribute"/>
         <column xsi:type="varchar" name="position_category_list" nullable="true" comment="Position of Image on Category List"/>
         <column xsi:type="varchar" name="position_product_view" nullable="true" comment="Position of Image on Product View"/>
+        <column xsi:type="varchar" name="alt" nullable="true" comment="Alternative caption for Product Label"/>
         <column xsi:type="varchar" name="display_on" nullable="true" default="" comment="Display on"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="product_label_id"/>
