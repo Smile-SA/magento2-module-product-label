@@ -22,6 +22,7 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
  * Product Label Model
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  *
  * @category  Smile
  * @package   Smile\ProductLabel
@@ -57,6 +58,11 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * @var \Magento\Framework\Filesystem\Directory\WriteInterface
      */
     protected $mediaDirectory;
+
+    /**
+     * @var string
+     */
+    protected $_cacheTag = self::CACHE_TAG;
 
     /**
      * ProductLabel constructor.
