@@ -185,8 +185,9 @@ class ProductLabel extends Template implements IdentityInterface
                     }
                     if (in_array($optionIdLabel, $options) && in_array($this->getCurrentView(), $productLabel['display_on'])) {
                         $productLabel['class'] = $this->getCssClass($productLabel);
+                        $productLabel['image'] = $this->getImageUrl($productLabel['image']);
                         $class = $this->getCssClass($productLabel);
-                        $productLabels[] = $productLabel;
+                        $productLabels[$class][] = $productLabel;
                     }
                 }
             }
@@ -219,7 +220,7 @@ class ProductLabel extends Template implements IdentityInterface
         /** @var IdentityInterface $product */
         $product = $this->getProduct();
         if ($product) {
-            $identities = array_merge($identities, $product->getIdentities());
+            $identities = array_merge($identities, $product->getIdentities(), [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]);
         }
 
         return $identities;

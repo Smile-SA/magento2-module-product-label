@@ -15,7 +15,7 @@
 namespace Smile\ProductLabel\Plugin\Catalog\Model;
 
 /**
- * Class ProductLabel
+ * Plugin on Catalog Configuration to enforce loading of all attributes used for product labels rules to be loaded on listing pages.
  *
  * @category  Smile
  * @package   Smile\ProductLabel

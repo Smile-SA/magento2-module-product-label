@@ -1,0 +1,42 @@
+<?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile\ProductLabel
+ * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * @copyright 2019 Smile
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+/**
+ * Product image able to also display product labels / pictos
+ *
+ * @var $block \Magento\Catalog\Block\Product\Image
+ */
+?>
+<?php $productLabels = $block->getProductLabels(); ?>
+<span class="product-image-container"
+      style="width:<?= /* @escapeNotVerified */ $block->getWidth() ?>px;">
+    <span class="product-image-wrapper"
+          style="padding-bottom: <?= /* @escapeNotVerified */ ($block->getRatio() * 100) ?>%;">
+        <?php if ($productLabels) : ?>
+            <?php foreach($productLabels as $class => $labels) :?>
+                <div class="<?php echo $class; ?>">
+                    <?php foreach ($labels as $label) : ?>
+                        <img src="<?php echo $label['image']; ?>"  alt="<?php echo $label['alt'] ?? ''; ?>"/>
+                    <?php endforeach ;?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <img class="product-image-photo"
+            <?= /* @escapeNotVerified */ $block->getCustomAttributes() ?>
+            src="<?= /* @escapeNotVerified */ $block->getImageUrl() ?>"
+             max-width="<?= /* @escapeNotVerified */ $block->getWidth() ?>"
+             max-height="<?= /* @escapeNotVerified */ $block->getHeight() ?>"
+             alt="<?= /* @escapeNotVerified */ $block->stripTags($block->getLabel(), null, true) ?>"/>
+    </span>
+</span>

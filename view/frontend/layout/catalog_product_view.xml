@@ -18,11 +18,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceBlock name="product.info.media">
+        <referenceContainer name="product.info.media">
             <block class="Smile\ProductLabel\Block\ProductLabel\ProductLabel"
                    name="productlabel.visual"
                    template="Smile_ProductLabel::product/label.phtml"
-                   before="product.info.media.image"/>
-        </referenceBlock>
+                   before="-"/>
+        </referenceContainer>
     </body>
 </page>

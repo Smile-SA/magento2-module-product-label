@@ -21,13 +21,12 @@
 <?php $productLabels = $block->getProductLabels(); ?>
 
 <?php if ($productLabels) : ?>
-    <div class="productlabel-wrapper <?= $block->getWrapperClass() ?>" id="smile-productlabels-wrapper">
-        <?php foreach($productLabels as $class => $productLabel) :?>
-            <?php $classCSS = $productLabel['class']; ?>
-            <div class="<?php echo $classCSS; ?>">
-                <img src="<?php echo $block->getImageUrl($productLabel['image']); ?>"/>
-            </div>
-        <?php endforeach; ?>
-    </div>
+    <?php foreach($productLabels as $class => $labels) :?>
+        <div class="<?php echo $class; ?>">
+            <?php foreach ($labels as $label) : ?>
+                <img src="<?php echo $label['image']; ?>" alt="<?php echo $label['alt'] ?? ''; ?>"/>
+            <?php endforeach ;?>
+        </div>
+    <?php endforeach; ?>
 <?php endif; ?>
 

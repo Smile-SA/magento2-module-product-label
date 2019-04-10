@@ -11,54 +11,75 @@
  * @license   Open Software License ("OSL") v. 3.0
  */
 
-.productlabel-wrapper {
-    position: absolute;
-    z-index: 2;
-
-    img {
-        width: 40px;
-    }
-
-    &.product {
-        position: relative;
-    }
-
-    .top_right {
-        position: relative;
-        top: 0;
-        right: -11em;
-
-        &.product {
-            position: absolute;
-            right: 0;
-        }
-    }
-
+.product-image-wrapper {
     .top_left {
         position: absolute;
         top: 0;
+        z-index: 2;
         left: 0;
+        max-width: 25%;
     }
 
-    .lower_right {
-        position: relative;
-        bottom: -12em;
-        right: -11em;
-
-        &.product {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
+    .top_right {
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        right: 0;
+        max-width: 25%;
     }
 
     .lower_left {
-        position: relative;
-        bottom: -15em;
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+        left: 0;
+        max-width: 25%;
+    }
 
-        &.product {
+    .lower_right {
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+        right: 0;
+        max-width: 25%;
+    }
+}
+
+.product {
+    &.media {
+
+        position: relative;
+
+        .top_left {
             position: absolute;
-            bottom: 0;
+            top: 0;
+            z-index: 2;
+            left: 0;
+            max-width: 10%;
+        }
+
+        .top_right {
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            right: 0;
+            max-width: 10%;
+        }
+
+        .lower_left {
+            position: absolute;
+            bottom: 110px;
+            z-index: 2;
+            left: 0;
+            max-width: 10%;
+        }
+
+        .lower_right {
+            position: absolute;
+            bottom: 110px;
+            z-index: 2;
+            right: 0;
+            max-width: 10%;
         }
     }
 }
