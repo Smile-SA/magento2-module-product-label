@@ -11,8 +11,6 @@
  * @license   Open Software License ("OSL") v. 3.0
  */
 
-declare(strict_types=1);
-
 namespace Smile\ProductLabel\Block\Product;
 
 use Magento\Catalog\Block\Product\Image as ImageBlock;
@@ -25,7 +23,8 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\View\ConfigInterface;
 
 /**
- * Custom Image Factory
+ * Custom Image Factory.
+ * It's a copy paste of the legacy image factory. Override is only in create() method and is highlighted.
  *
  * @category Smile
  * @package  Smile\ProductLabel
@@ -88,61 +87,13 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
     }
 
     /**
-     * Retrieve image custom attributes for HTML element
-     *
-     * @param array $attributes
-     *
-     * @return string
-     */
-    private function getStringCustomAttributes(array $attributes): string
-    {
-        $result = [];
-        foreach ($attributes as $name => $value) {
-            $result[] = $name . '="' . $value . '"';
-        }
-
-        return !empty($result) ? implode(' ', $result) : '';
-    }
-
-    /**
-     * Calculate image ratio
-     *
-     * @param $width
-     * @param $height
-     *
-     * @return float
-     */
-    private function getRatio(int $width, int $height): float
-    {
-        if ($width && $height) {
-            return $height / $width;
-        }
-
-        return 1.0;
-    }
-
-    /**
-     * @param Product $product
-     * @param string  $imageType
-     *
-     * @return string
-     */
-    private function getLabel(Product $product, string $imageType): string
-    {
-        $label = $product->getData($imageType . '_' . 'label');
-        if (empty($label)) {
-            $label = $product->getName();
-        }
-
-        return (string) $label;
-    }
-
-    /**
      * Create image block from product
      *
-     * @param Product    $product
-     * @param string     $imageId
-     * @param array|null $attributes
+     * @SuppressWarnings(PHPMD.ElseExpression) Method is inherited
+     *
+     * @param Product    $product    The Product
+     * @param string     $imageId    Image Id
+     * @param array|null $attributes Attributes
      *
      * @return ImageBlock
      */
@@ -185,6 +136,7 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
             ],
         ];
 
+        // Override starts here.
         /** @var \Smile\ProductLabel\Block\ProductLabel\ProductLabel $labelsRenderer */
         $labelsRenderer = $this->objectManager->create(\Smile\ProductLabel\Block\ProductLabel\ProductLabel::class);
         $labelsRenderer->setProduct($product);
@@ -196,5 +148,55 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
         $block = $this->objectManager->create(ImageBlock::class, $data);
 
         return $block;
+    }
+
+    /**
+     * Retrieve image custom attributes for HTML element
+     *
+     * @param array $attributes Attributes
+     *
+     * @return string
+     */
+    private function getStringCustomAttributes(array $attributes): string
+    {
+        $result = [];
+        foreach ($attributes as $name => $value) {
+            $result[] = $name . '="' . $value . '"';
+        }
+
+        return !empty($result) ? implode(' ', $result) : '';
+    }
+
+    /**
+     * Calculate image ratio
+     *
+     * @param int $width  Width
+     * @param int $height Height
+     *
+     * @return float
+     */
+    private function getRatio(int $width, int $height): float
+    {
+        if ($width && $height) {
+            return $height / $width;
+        }
+
+        return 1.0;
+    }
+
+    /**
+     * @param Product $product   The product
+     * @param string  $imageType The image type
+     *
+     * @return string
+     */
+    private function getLabel(Product $product, string $imageType): string
+    {
+        $label = $product->getData($imageType . '_' . 'label');
+        if (empty($label)) {
+            $label = $product->getName();
+        }
+
+        return (string) $label;
     }
 }

@@ -70,5 +70,4 @@ class ReadHandler implements ExtensionInterface
 
         return $product;
     }
-
 }

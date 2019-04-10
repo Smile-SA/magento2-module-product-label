@@ -110,7 +110,7 @@ class ProductLabel extends Template implements IdentityInterface
     /**
      * Set Product
      *
-     * @param ProductInterface $product
+     * @param ProductInterface $product The product
      *
      * @return $this
      */
@@ -199,7 +199,7 @@ class ProductLabel extends Template implements IdentityInterface
     /**
      * Get Image URL of product label
      *
-     * @param $imageName
+     * @param string $imageName Image Name
      *
      * @return string
      */
@@ -230,6 +230,8 @@ class ProductLabel extends Template implements IdentityInterface
      * Fetch proper css class according to current label and view.
      *
      * @param array $productLabel A product Label
+     *
+     * @return string
      */
     private function getCssClass($productLabel)
     {
@@ -265,12 +267,13 @@ class ProductLabel extends Template implements IdentityInterface
             /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
             $productLabelList        = $productLabelsCollection->addFieldToFilter('is_active', true)->getData();
-            $productLabelList        = array_map(function($label) {
+            $productLabelList        = array_map(function ($label) {
                 $label['display_on'] = explode(',', $label['display_on']);
+
                 return $label;
             }, $productLabelList);
 
-            $this->cache->save(json_encode($productLabelList), $cacheKey,  [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]);
+            $this->cache->save(json_encode($productLabelList), $cacheKey, [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]);
         }
 
         return $productLabelList;
