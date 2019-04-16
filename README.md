@@ -35,7 +35,7 @@ You can create as many entity types as you need
 
 ### Product label on front
 
-* **Product labels are displayed in Product Listing and Product Details pages. **
+* **Product labels are displayed in Product Listing and Product Details pages.**
 
 ![Product Listing](./doc/static/product_label_product_listing.png)
 
