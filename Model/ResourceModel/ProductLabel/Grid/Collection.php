@@ -104,6 +104,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     protected function _renderFiltersBefore()
     {
         parent::_renderFiltersBefore();
+
         $this->getSelect()->joinInner(
             ['ea' => $this->getTable('eav_attribute')],
             'ea.attribute_id = main_table.attribute_id',
@@ -115,6 +116,25 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
             'eaov.option_id = main_table.option_id',
             ['option_label' => 'value']
         );
+
+        $storeCondition = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
+
+        if ($this->getFilter('store')) {
+            $storeId = current($this->getStoreIds());
+
+            $this->getSelect()->joinLeft(
+                ['eaov_s' => $this->getTable('eav_attribute_option_value')],
+                sprintf('eaov_s.option_id = main_table.option_id AND eaov_s.store_id = %s', $storeId),
+                ['option_label' => 'value']
+            );
+
+            $storeCondition = $this->getConnection()->getIfNullSql(
+                "eaov_s.store_id",
+                \Magento\Store\Model\Store::DEFAULT_STORE_ID
+            );
+        }
+
+        $this->getSelect()->where('eaov.store_id = ?', $storeCondition);
 
         return $this;
     }

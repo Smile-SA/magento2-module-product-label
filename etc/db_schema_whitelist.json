@@ -2,14 +2,15 @@
     "smile_productlabel": {
         "column": {
             "product_label_id": true,
+            "is_active": true,
             "name": true,
             "attribute_id": true,
             "option_id": true,
             "image": true,
             "position_category_list": true,
             "position_product_view": true,
-            "display_on": true,
-            "is_active": true
+            "alt": true,
+            "display_on": true
         },
         "index": {
             "SMILE_PRODUCTLABEL_PRODUCT_LABEL_ID": true,
@@ -21,6 +22,20 @@
             "SMILE_PRODUCTLABEL_ATTRIBUTE_ID_OPTION_ID": true,
             "SMILE_PRODUCTLABEL_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID": true,
             "SMILE_PRODUCTLABEL_OPTION_ID_EAV_ATTRIBUTE_OPTION_OPTION_ID": true
+        }
+    },
+    "smile_productlabel_store": {
+        "column": {
+            "product_label_id": true,
+            "store_id": true
+        },
+        "index": {
+            "SMILE_PRODUCTLABEL_STORE_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SMILE_PRDLBL_STORE_PRD_LBL_ID_SMILE_PRDLBL_PRD_LBL_ID": true,
+            "SMILE_PRODUCTLABEL_STORE_STORE_ID_STORE_STORE_ID": true
         }
     }
 }

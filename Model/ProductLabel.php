@@ -126,6 +126,22 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
+     * Get field: store_id.
+     * @return array
+     */
+    public function getStores() : array
+    {
+        $stores = $this->hasData('stores') ? $this->getData('stores') : $this->getData('store_id');
+
+
+        if (is_numeric($stores)) {
+            $stores = [$stores];
+        }
+
+        return $stores ?? [];
+    }
+
+    /**
      * Get field: name.
      *
      * @return string
