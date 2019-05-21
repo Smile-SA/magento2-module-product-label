@@ -96,6 +96,7 @@
             </argument>
             <settings>
                 <dataType>boolean</dataType>
+                <visible>true</visible>
                 <label translate="true">Enable Product Label</label>
                 <dataScope>is_active</dataScope>
             </settings>

@@ -33,10 +33,10 @@
                     <item name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\AttributeOptions</item>
                     <item name="sortOrder" xsi:type="number">30</item>
                 </item>
-                <item name="stores" xsi:type="array">
-                    <item name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\Stores</item>
-                    <item name="sortOrder" xsi:type="number">40</item>
-                </item>
+                <!--<item name="stores" xsi:type="array">-->
+                    <!--<item name="class" xsi:type="string">Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier\Stores</item>-->
+                    <!--<item name="sortOrder" xsi:type="number">40</item>-->
+                <!--</item>-->
             </argument>
         </arguments>
     </virtualType>

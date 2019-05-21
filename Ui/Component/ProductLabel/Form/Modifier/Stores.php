@@ -55,11 +55,17 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     {
         $productLabel = $this->locator->getProductLabel();
 
-        if ($productLabel && $productLabel->getId() && !empty($productLabel->getStores()) && empty($data[$productLabel->getId()]['store_id'])) {
+        if ($productLabel && $productLabel->getId()
+            && !empty($productLabel->getStores())
+            && empty($data[$productLabel->getId()]['store_id'])
+        ) {
             $data[$productLabel->getId()]['store_id'] = $productLabel->getStores();
         }
 
-        if ($productLabel && $productLabel->getAttributeId() && !$this->isScopeStore($productLabel->getAttributeId())) {
+        if ($productLabel
+            && $productLabel->getAttributeId()
+            && !$this->isScopeStore($productLabel->getAttributeId())
+        ) {
             $data[$productLabel->getId()]['store_id'] = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
         }
 
@@ -90,6 +96,7 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
      */
     private function isScopeStore($attributeId)
     {
+
         $attribute = $this->attributeRepository->get($attributeId);
 
         return ($attribute->getAttributeId() && $attribute->isScopeStore());
