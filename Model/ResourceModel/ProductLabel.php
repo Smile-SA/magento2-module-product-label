@@ -169,7 +169,7 @@ class ProductLabel extends AbstractDb
                 'pls.' . $this->getIdFieldName() . ' = pl.' . $this->getIdFieldName(),
                 []
             )
-            ->where('r.' . $this->getIdFieldName() . ' = :product_label_id');
+            ->where('pl.' . $this->getIdFieldName() . ' = :product_label_id');
 
         return $connection->fetchCol($select, ['product_label_id' => (int) $object->getId()]);
     }
