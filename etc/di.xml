@@ -109,7 +109,7 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\ProductLabelFilterProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor">
+    <virtualType name="Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\ProductLabelStoreFilterProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor">
         <arguments>
             <argument name="customFilters" xsi:type="array">
                 <item name="store_id" xsi:type="object">Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor\ProductLabelStoreFilter</item>

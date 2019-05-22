@@ -144,6 +144,8 @@ class ProductLabel extends AbstractDb
                 ];
             }
 
+            var_dump($data);
+            die();
             $this->getConnection()->insertMultiple($table, $data);
         }
 
