@@ -56,6 +56,8 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
             $data[$productLabel->getId()]['store_id'] = $productLabel->getStores();
         }
 
+
+
         if ($productLabel
             && $productLabel->getAttributeId()
             && !$this->isScopeStore($productLabel->getAttributeId())
@@ -73,12 +75,14 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     {
         $productLabel = $this->locator->getProductLabel();
 
-        $meta['general']['children']['storeviews']['arguments']['data']['config']['visible'] = false;
-        if ($productLabel && $productLabel->getAttributeId()
-            && $this->isScopeStore($productLabel->getAttributeId())
-        ) {
-            $meta['general']['children']['storeviews']['arguments']['data']['config']['visible'] = true;
-        }
+        $meta['general']['children']['storeviews']['arguments']['data']['config']['visible'] = true;
+        print_r($meta);
+//        if ($productLabel
+//            && $productLabel->getAttributeId()
+//            && $this->isScopeStore($productLabel->getAttributeId())
+//        ) {
+//            $meta['general']['children']['storeviews']['arguments']['data']['config']['visible'] = true;
+//        }
 
         return $meta;
     }
