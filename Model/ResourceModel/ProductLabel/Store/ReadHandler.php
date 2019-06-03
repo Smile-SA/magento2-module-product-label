@@ -29,7 +29,7 @@ class ReadHandler implements \Magento\Framework\EntityManager\Operation\Extensio
         /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel $resource */
         $resource = $entity->getResource();
 
-        $stores = $resource->getStoreIds($entity);
+        $stores = $resource->getStoreIds((int)$entity->getId());
         $entity->setData('store_id', $stores);
         $entity->setData('stores', $stores);
 

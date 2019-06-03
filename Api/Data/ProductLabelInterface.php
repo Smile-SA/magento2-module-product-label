@@ -97,7 +97,7 @@ interface ProductLabelInterface
      *
      * @return int[]
      */
-    public function getStores(): array;
+    public function getStores();
 
     /**
      * Get product label status

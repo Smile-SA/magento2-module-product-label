@@ -49,14 +49,13 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     {
         $productLabel = $this->locator->getProductLabel();
 
-        if ($productLabel && $productLabel->getId()
+        if ($productLabel
+            && $productLabel->getId()
             && !empty($productLabel->getStores())
             && empty($data[$productLabel->getId()]['store_id'])
         ) {
             $data[$productLabel->getId()]['store_id'] = $productLabel->getStores();
         }
-
-
 
         if ($productLabel
             && $productLabel->getAttributeId()
@@ -75,14 +74,10 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     {
         $productLabel = $this->locator->getProductLabel();
 
-        $meta['general']['children']['storeviews']['arguments']['data']['config']['visible'] = true;
-        print_r($meta);
-//        if ($productLabel
-//            && $productLabel->getAttributeId()
-//            && $this->isScopeStore($productLabel->getAttributeId())
-//        ) {
-//            $meta['general']['children']['storeviews']['arguments']['data']['config']['visible'] = true;
-//        }
+        $isNew = ($productLabel && $productLabel->getAttributeId() && $this->isScopeStore($productLabel->getAttributeId()));
+
+        $meta['general']['children']['storeviews']['arguments']['data']['config']['disabled']  = !$isNew;
+        $meta['general']['children']['storeviews']['arguments']['data']['config']['visible']  = $isNew;
 
         return $meta;
     }
