@@ -99,18 +99,6 @@ class ProductLabel extends AbstractDb
     }
 
     /**
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * {@inheritDoc}
-     */
-    protected function _construct()
-    {
-        $this->_init(
-            ProductLabelInterface::TABLE_NAME,
-            ProductLabelInterface::PRODUCTLABEL_ID
-        );
-    }
-
-    /**
      * Persist relation between a given product label and his stores.
      *
      * @param \Magento\Framework\Model\AbstractModel $object The rule
@@ -121,6 +109,7 @@ class ProductLabel extends AbstractDb
     public function saveStoreRelation(\Magento\Framework\Model\AbstractModel $object)
     {
         $oldStores = $this->getStoreIds($object);
+
         $newStores = explode(',',(string) $object->getStores());
 
         $table = $this->getTable(ProductLabelInterface::STORE_TABLE_NAME);
@@ -143,6 +132,7 @@ class ProductLabel extends AbstractDb
                     'store_id'              => (int) $storeId,
                 ];
             }
+
             $this->getConnection()->insertMultiple($table, $data);
         }
 
@@ -173,4 +163,15 @@ class ProductLabel extends AbstractDb
         return $connection->fetchCol($select, [$this->getIdFieldName() => (int) $object->getId()]);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * {@inheritDoc}
+     */
+    protected function _construct()
+    {
+        $this->_init(
+            ProductLabelInterface::TABLE_NAME,
+            ProductLabelInterface::PRODUCTLABEL_ID
+        );
+    }
 }
