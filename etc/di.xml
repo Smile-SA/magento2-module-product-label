@@ -109,28 +109,28 @@
         </arguments>
     </virtualType>
 
-    <!--<virtualType name="Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\ProductLabelStoreFilterProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor">-->
-        <!--<arguments>-->
-            <!--<argument name="customFilters" xsi:type="array">-->
-                <!--<item name="store_id" xsi:type="object">Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor\ProductLabelStoreFilter</item>-->
-            <!--</argument>-->
-        <!--</arguments>-->
-    <!--</virtualType>-->
+    <virtualType name="Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\ProductLabelStoreFilterProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor">
+        <arguments>
+            <argument name="customFilters" xsi:type="array">
+                <item name="store_id" xsi:type="object">Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor\ProductLabelStoreFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
 
-    <!--<virtualType name="Smile\ProductLabel\Model\Api\SearchCriteria\ProductLabelCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">-->
-        <!--<arguments>-->
-            <!--<argument name="processors" xsi:type="array">-->
-                <!--<item name="filters" xsi:type="object">Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\ProductLabelStoreFilterProcessor</item>-->
-                <!--<item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>-->
-                <!--<item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>-->
-            <!--</argument>-->
-        <!--</arguments>-->
-    <!--</virtualType>-->
+    <virtualType name="Smile\ProductLabel\Model\Api\SearchCriteria\ProductLabelCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\ProductLabelStoreFilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
 
-    <!--<type name="Smile\ProductLabel\Model\Repository\ProductLabel">-->
-        <!--<arguments>-->
-            <!--<argument name="collectionProcessor" xsi:type="object">Smile\ProductLabel\Model\Api\SearchCriteria\ProductLabelCollectionProcessor</argument>-->
-        <!--</arguments>-->
-    <!--</type>-->
+    <type name="Smile\ProductLabel\Model\Repository\ProductLabel">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Smile\ProductLabel\Model\Api\SearchCriteria\ProductLabelCollectionProcessor</argument>
+        </arguments>
+    </type>
 
 </config>

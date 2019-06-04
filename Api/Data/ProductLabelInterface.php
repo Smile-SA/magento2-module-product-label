@@ -93,6 +93,11 @@ interface ProductLabelInterface
     const PRODUCTLABEL_ALT = 'alt';
 
     /**
+     * Store Id(s)
+     */
+    const STORE_ID = 'store_id';
+
+    /**
      * Retrieve product label store ids
      *
      * @return int[]

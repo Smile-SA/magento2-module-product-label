@@ -127,12 +127,11 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Get field: store_id.
-     * @return array
+     * @return int[]
      */
-    public function getStores() : array
+    public function getStores()
     {
         $stores = $this->hasData('stores') ? $this->getData('stores') : $this->getData('store_id');
-
 
         if (is_numeric($stores)) {
             $stores = [$stores];
@@ -215,6 +214,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
         return $values ? $values : [];
     }
+
 
     /**
      * Get field: alt.
@@ -351,6 +351,10 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      */
     public function populateFromArray(array $values)
     {
+        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/system.log');
+        $logger = new \Zend\Log\Logger();
+        $logger->addWriter($writer);
+        $logger->info(print_r($values, true));
         $this->setData(self::IS_ACTIVE, (bool) $values['is_active']);
         $this->setData(self::PRODUCTLABEL_NAME, (string) $values['name']);
         $this->setData(self::ATTRIBUTE_ID, (int) $values['attribute_id']);
@@ -360,6 +364,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
         $this->setData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW, (string) $values['position_product_view']);
         $this->setData(self::PRODUCTLABEL_DISPLAY_ON, implode(',', $values['display_on']));
         $this->setData(self::PRODUCTLABEL_ALT, (string) $values['alt']);
+        $this->setData(self::STORE_ID, implode(',',$values['stores'] ?? $values['store_id']));
     }
 
     /**

@@ -111,32 +111,27 @@ class ProductLabel extends AbstractDb
     }
 
     /**
-     * Persist relation between a given object and his product labels.
+     * Persist relation between a given product label and his stores.
      *
-     * @param object $entity The product label
-     * @param array $arguments
-     * @return object
-     * @throws \Exception
+     * @param \Magento\Framework\Model\AbstractModel $object The rule
+     *
+     * @return \Magento\Framework\Model\AbstractModel
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function saveStoreRelation($entity, $arguments = [])
+    public function saveStoreRelation(\Magento\Framework\Model\AbstractModel $object)
     {
-        $entityMetadata = $this->metadataPool->getMetadata(ProductLabelInterface::class);
-        $linkField = $entityMetadata->getLinkField();
-
-        $connection = $entityMetadata->getEntityConnection();
-
-        $oldStores = $this->getStoreIds((int)$entity->getId());
-        $newStores = (array) $entity->getStores();
+        $oldStores = $this->getStoreIds($object);
+        $newStores = explode(',',(string) $object->getStores());
 
         $table = $this->getTable(ProductLabelInterface::STORE_TABLE_NAME);
 
         $delete = array_diff($oldStores, $newStores);
         if ($delete) {
             $where = [
-                $linkField . ' = ?' => (int) $entity->getData($linkField),
+                $this->getIdFieldName() . ' = ?' => (int) $object->getData($this->getIdFieldName()),
                 'store_id IN (?)' => $delete,
             ];
-            $connection->delete($table, $where);
+            $this->getConnection()->delete($table, $where);
         }
 
         $insert = array_diff($newStores, $oldStores);
@@ -144,39 +139,38 @@ class ProductLabel extends AbstractDb
             $data = [];
             foreach ($insert as $storeId) {
                 $data[] = [
-                    $this->getIdFieldName() => (int) $entity->getData($linkField),
+                    $this->getIdFieldName() => (int) $object->getData($this->getIdFieldName()),
                     'store_id'              => (int) $storeId,
                 ];
             }
             $this->getConnection()->insertMultiple($table, $data);
         }
 
-        return $entity;
+        return $object;
     }
 
     /**
      * Retrieve store ids associated to a given product label.
      *
-     * @param int $id
+     * @param \Magento\Framework\Model\AbstractModel $object The product label
+     *
      * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getStoreIds($id)
+    public function getStoreIds(\Magento\Framework\Model\AbstractModel $object)
     {
         $connection = $this->getConnection();
-
-        $entityMetadata = $this->metadataPool->getMetadata(ProductLabelInterface::class);
-        $linkField = $entityMetadata->getLinkField();
 
         $select = $connection->select()
             ->from(['pls' => $this->getTable(ProductLabelInterface::STORE_TABLE_NAME)], 'store_id')
             ->join(
                 ['pl' => $this->getMainTable()],
-                'pls.' . $linkField . ' = pl.' . $linkField,
+                'pls.' . $this->getIdFieldName() . ' = pl.' . $this->getIdFieldName(),
                 []
             )
-            ->where('pl.' . $entityMetadata->getIdentifierField() . ' = :product_label_id');
+            ->where("pl." . $this->getIdFieldName() . " = :{$this->getIdFieldName()}");
 
-        return $connection->fetchCol($select, ['product_label_id' => (int) $id]);
+        return $connection->fetchCol($select, [$this->getIdFieldName() => (int) $object->getId()]);
     }
 
 }
