@@ -109,8 +109,11 @@ class ProductLabel extends AbstractDb
     public function saveStoreRelation(\Magento\Framework\Model\AbstractModel $object)
     {
         $oldStores = $this->getStoreIds($object);
-
-        $newStores = explode(',',(string) $object->getStores());
+        if (strpos(serialize( $object->getStores()), ',') !== false ) {
+            $newStores = explode(',', (string)$object->getStores());
+        } else {
+            $newStores = $object->getStores();
+        }
 
         $table = $this->getTable(ProductLabelInterface::STORE_TABLE_NAME);
 
