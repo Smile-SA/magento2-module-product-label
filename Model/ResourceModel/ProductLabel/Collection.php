@@ -140,12 +140,19 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     public function addStoreFilter($store)
     {
+        $defaultStoreId = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
         if ($store instanceof \Magento\Store\Model\Store) {
             $store = [$store->getId()];
         }
 
         if (!is_array($store)) {
             $store = [$store];
+        }
+
+        $store = array_map('intval', $store);
+
+        if (!in_array($defaultStoreId, $store)) {
+            $store[] = $defaultStoreId;
         }
 
         $this->storeIds = $store;
