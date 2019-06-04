@@ -99,6 +99,74 @@ class ProductLabel extends AbstractDb
     }
 
     /**
+     * Persist relation between a given product label and his stores.
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object The rule
+     *
+     * @return \Magento\Framework\Model\AbstractModel
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function saveStoreRelation(\Magento\Framework\Model\AbstractModel $object)
+    {
+        $oldStores = $this->getStoreIds($object);
+        if (strpos(serialize( $object->getStores()), ',') !== false ) {
+            $newStores = explode(',', (string)$object->getStores());
+        } else {
+            $newStores = $object->getStores();
+        }
+
+        $table = $this->getTable(ProductLabelInterface::STORE_TABLE_NAME);
+
+        $delete = array_diff($oldStores, $newStores);
+        if ($delete) {
+            $where = [
+                $this->getIdFieldName() . ' = ?' => (int) $object->getData($this->getIdFieldName()),
+                'store_id IN (?)' => $delete,
+            ];
+            $this->getConnection()->delete($table, $where);
+        }
+
+        $insert = array_diff($newStores, $oldStores);
+        if ($insert) {
+            $data = [];
+            foreach ($insert as $storeId) {
+                $data[] = [
+                    $this->getIdFieldName() => (int) $object->getData($this->getIdFieldName()),
+                    'store_id'              => (int) $storeId,
+                ];
+            }
+
+            $this->getConnection()->insertMultiple($table, $data);
+        }
+
+        return $object;
+    }
+
+    /**
+     * Retrieve store ids associated to a given product label.
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object The product label
+     *
+     * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getStoreIds(\Magento\Framework\Model\AbstractModel $object)
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()
+            ->from(['pls' => $this->getTable(ProductLabelInterface::STORE_TABLE_NAME)], 'store_id')
+            ->join(
+                ['pl' => $this->getMainTable()],
+                'pls.' . $this->getIdFieldName() . ' = pl.' . $this->getIdFieldName(),
+                []
+            )
+            ->where("pl." . $this->getIdFieldName() . " = :{$this->getIdFieldName()}");
+
+        return $connection->fetchCol($select, [$this->getIdFieldName() => (int) $object->getId()]);
+    }
+
+    /**
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * {@inheritDoc}
      */

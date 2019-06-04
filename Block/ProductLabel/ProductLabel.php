@@ -51,6 +51,16 @@ class ProductLabel extends Template implements IdentityInterface
     protected $product;
 
     /**
+     * @var \Magento\Framework\App\CacheInterface
+     */
+    private $cache;
+
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
      * ProductLabel constructor.
      *
      * @param \Magento\Backend\Block\Template\Context    $context                       Block context
@@ -72,6 +82,7 @@ class ProductLabel extends Template implements IdentityInterface
         $this->imageHelper                   = $imageHelper;
         $this->productLabelCollectionFactory = $productLabelCollectionFactory;
         $this->cache                         = $cache;
+        $this->storeManager                  = $context->getStoreManager();
 
         parent::__construct($context, $data);
     }
@@ -256,7 +267,8 @@ class ProductLabel extends Template implements IdentityInterface
      */
     private function getProductLabelsList()
     {
-        $cacheKey         = 'smile_productlabel_frontend';
+        $storeId          = $this->getStoreId();
+        $cacheKey         = 'smile_productlabel_frontend_' . $storeId;
         $productLabelList = $this->cache->load($cacheKey);
 
         if (is_string($productLabelList)) {
@@ -266,7 +278,11 @@ class ProductLabel extends Template implements IdentityInterface
         if ($productLabelList === false) {
             /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
-            $productLabelList        = $productLabelsCollection->addFieldToFilter('is_active', true)->getData();
+            $productLabelList        = $productLabelsCollection
+                ->addStoreFilter($storeId)
+                ->addFieldToFilter('is_active', true)
+                ->getData();
+
             $productLabelList        = array_map(function ($label) {
                 $label['display_on'] = explode(',', $label['display_on']);
 
@@ -277,5 +293,15 @@ class ProductLabel extends Template implements IdentityInterface
         }
 
         return $productLabelList;
+    }
+
+    /**
+     * Get current store Id.
+     *
+     * @return int
+     */
+    private function getStoreId()
+    {
+        return $this->storeManager->getStore()->getId();
     }
 }

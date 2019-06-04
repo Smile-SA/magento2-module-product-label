@@ -28,6 +28,11 @@ interface ProductLabelInterface
     const TABLE_NAME = 'smile_productlabel';
 
     /**
+     * Name of the smile-productlabel-store association table
+     */
+    const STORE_TABLE_NAME = 'smile_productlabel_store';
+
+    /**
      * Constant for field is_active
      */
     const IS_ACTIVE = 'is_active';
@@ -86,6 +91,18 @@ interface ProductLabelInterface
      * Alternative caption
      */
     const PRODUCTLABEL_ALT = 'alt';
+
+    /**
+     * Store Id(s)
+     */
+    const STORE_ID = 'store_id';
+
+    /**
+     * Retrieve product label store ids
+     *
+     * @return int[]
+     */
+    public function getStores();
 
     /**
      * Get product label status

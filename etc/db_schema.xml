@@ -15,6 +15,7 @@
 -->
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
     <table name="smile_productlabel" resource="default" engine="innodb" comment="Smile Product Label Table">
         <column xsi:type="int" name="product_label_id" padding="6" unsigned="false" nullable="false" identity="true" comment="Entity Id"/>
         <column xsi:type="boolean" name="is_active" nullable="false" default="1" comment="Product Label Is Active"/>
@@ -48,4 +49,18 @@
             <column name="option_id"/>
         </index>
     </table>
+
+    <table name="smile_productlabel_store" resource="default" engine="innodb" comment="Smile Product Label Table">
+        <column xsi:type="int" name="product_label_id" padding="6" unsigned="false" nullable="false" identity="false" comment="Entity Id"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store View of Product Label"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="product_label_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="SMILE_PRODUCTLABEL_STORE_PRODUCT_LABEL_ID_SMILE_PRODUCTLABEL_PRODUCT_LABEL_ID" table="smile_productlabel_store"
+                    column="product_label_id" referenceTable="smile_productlabel" referenceColumn="product_label_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="SMILE_PRODUCTLABEL_STORE_STORE_ID_STORE_STORE_ID" table="smile_productlabel_store"
+                    column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+    </table>
+
 </schema>

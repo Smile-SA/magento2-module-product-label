@@ -120,6 +120,49 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function addFieldToFilter($field, $condition = null)
+    {
+        if ($field === 'store_id') {
+            return $this->addStoreFilter($condition);
+        }
+
+        return parent::addFieldToFilter($field, $condition);
+    }
+
+    /**
+     * Perform adding filter by store
+     *
+     * @param int|array|\Magento\Store\Model\Store $store The store
+     *
+     * @return $this
+     */
+    public function addStoreFilter($store)
+    {
+        $defaultStoreId = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
+
+        if ($store instanceof \Magento\Store\Model\Store) {
+            $store = [$store->getId()];
+        }
+
+        if (!is_array($store)) {
+            $store = [$store];
+        }
+
+        $store = array_map('intval', $store);
+
+        if (!in_array($defaultStoreId, $store)) {
+            $store[] = $defaultStoreId;
+        }
+
+        $this->storeIds = $store;
+        $this->addFilter('store', ['in' => $store], 'public');
+
+        return $this;
+    }
+
+    /**
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * {@inheritDoc}
      */
@@ -131,6 +174,63 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         );
 
         /* @see self::_renderFiltersBefore() */
+        $this->_map['fields']['store']        = ProductLabelInterface::STORE_TABLE_NAME . '.store_id';
         $this->_map['fields']['attribute_id'] = 'main_table.attribute_id';
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * {@inheritdoc}
+     */
+    protected function _afterLoad()
+    {
+        $linkedIds = $this->getColumnValues(ProductLabelInterface::PRODUCTLABEL_ID);
+
+        if (count($linkedIds)) {
+            $connection = $this->getConnection();
+            $select     = $connection->select()
+                ->from($this->getTable(ProductLabelInterface::STORE_TABLE_NAME))
+                ->where(ProductLabelInterface::PRODUCTLABEL_ID . ' IN (?)', array_map('intval', $linkedIds));
+
+            $result = $connection->fetchAll($select);
+
+            if ($result) {
+                $storesData = [];
+                foreach ($result as $storeData) {
+                    $storesData[$storeData[ProductLabelInterface::PRODUCTLABEL_ID]][] = $storeData['store_id'];
+                }
+
+                foreach ($this as $item) {
+                    $linkedId = $item->getData(ProductLabelInterface::PRODUCTLABEL_ID);
+                    if (!isset($storesData[$linkedId])) {
+                        continue;
+                    }
+
+                    $item->setData('store_id', $storesData[$linkedId]);
+                }
+            }
+        }
+
+        return parent::_afterLoad();
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     *
+     * {@inheritdoc}
+     */
+    protected function _renderFiltersBefore()
+    {
+        if ($this->getFilter('store')) {
+            $this->getSelect()->join(
+                [ProductLabelInterface::STORE_TABLE_NAME => $this->getTable(ProductLabelInterface::STORE_TABLE_NAME)],
+                sprintf('main_table.%s = %s.%s', ProductLabelInterface::PRODUCTLABEL_ID, ProductLabelInterface::STORE_TABLE_NAME, ProductLabelInterface::PRODUCTLABEL_ID),
+                []
+            )->group(
+                'main_table.' . ProductLabelInterface::PRODUCTLABEL_ID
+            );
+        }
+
+        parent::_renderFiltersBefore();
     }
 }
