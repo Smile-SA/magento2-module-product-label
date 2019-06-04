@@ -101,6 +101,8 @@ class ProductLabel extends AbstractDb
     /**
      * Persist relation between a given product label and his stores.
      *
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     *
      * @param \Magento\Framework\Model\AbstractModel $object The rule
      *
      * @return \Magento\Framework\Model\AbstractModel
@@ -109,8 +111,8 @@ class ProductLabel extends AbstractDb
     public function saveStoreRelation(\Magento\Framework\Model\AbstractModel $object)
     {
         $oldStores = $this->getStoreIds($object);
-        if (strpos(serialize( $object->getStores()), ',') !== false ) {
-            $newStores = explode(',', (string)$object->getStores());
+        if (strpos(serialize($object->getStores()), ',') !== false) {
+            $newStores = explode(',', (string) $object->getStores());
         } else {
             $newStores = $object->getStores();
         }

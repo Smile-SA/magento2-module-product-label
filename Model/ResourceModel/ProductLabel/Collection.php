@@ -224,7 +224,12 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         if ($this->getFilter('store')) {
             $this->getSelect()->join(
                 [ProductLabelInterface::STORE_TABLE_NAME => $this->getTable(ProductLabelInterface::STORE_TABLE_NAME)],
-                sprintf('main_table.%s = %s.%s', ProductLabelInterface::PRODUCTLABEL_ID, ProductLabelInterface::STORE_TABLE_NAME, ProductLabelInterface::PRODUCTLABEL_ID),
+                sprintf(
+                    'main_table.%s = %s.%s',
+                    ProductLabelInterface::PRODUCTLABEL_ID,
+                    ProductLabelInterface::STORE_TABLE_NAME,
+                    ProductLabelInterface::PRODUCTLABEL_ID
+                ),
                 []
             )->group(
                 'main_table.' . ProductLabelInterface::PRODUCTLABEL_ID
