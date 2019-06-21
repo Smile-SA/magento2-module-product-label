@@ -157,12 +157,50 @@ class ProductLabel extends AbstractDb
     }
 
     /**
+     * Retrieve store ids associated to a given product label.
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object The product label
+     *
+     * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getStoreIds(\Magento\Framework\Model\AbstractModel $object)
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()
+            ->from(['pls' => $this->getTable(ProductLabelInterface::STORE_TABLE_NAME)], 'store_id')
+            ->join(
+                ['pl' => $this->getMainTable()],
+                'pls.' . $this->getIdFieldName() . ' = pl.' . $this->getIdFieldName(),
+                []
+            )
+            ->where("pl." . $this->getIdFieldName() . " = :{$this->getIdFieldName()}");
+
+        return $connection->fetchCol($select, [$this->getIdFieldName() => (int) $object->getId()]);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * {@inheritDoc}
+     */
+    protected function _construct()
+    {
+        $this->_init(
+            ProductLabelInterface::TABLE_NAME,
+            ProductLabelInterface::PRODUCTLABEL_ID
+        );
+    }
+
+    /**
      * Check unicity between a product label and stores.
      * Unique constraint is : product_label_id / attribute_id / option_id / store_id
      * A product label can also not be created for store 0 (all store views) if other exists for specific stores.
      *
      * @param \Magento\Framework\Model\AbstractModel $object The product label
      * @param array                                  $stores The stores to be associated with
+     *
+     * @return bool
      *
      * @throws \Magento\Framework\Exception\AlreadyExistsException
      */
@@ -207,41 +245,5 @@ class ProductLabel extends AbstractDb
         }
 
         return true;
-    }
-
-    /**
-     * Retrieve store ids associated to a given product label.
-     *
-     * @param \Magento\Framework\Model\AbstractModel $object The product label
-     *
-     * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function getStoreIds(\Magento\Framework\Model\AbstractModel $object)
-    {
-        $connection = $this->getConnection();
-
-        $select = $connection->select()
-            ->from(['pls' => $this->getTable(ProductLabelInterface::STORE_TABLE_NAME)], 'store_id')
-            ->join(
-                ['pl' => $this->getMainTable()],
-                'pls.' . $this->getIdFieldName() . ' = pl.' . $this->getIdFieldName(),
-                []
-            )
-            ->where("pl." . $this->getIdFieldName() . " = :{$this->getIdFieldName()}");
-
-        return $connection->fetchCol($select, [$this->getIdFieldName() => (int) $object->getId()]);
-    }
-
-    /**
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * {@inheritDoc}
-     */
-    protected function _construct()
-    {
-        $this->_init(
-            ProductLabelInterface::TABLE_NAME,
-            ProductLabelInterface::PRODUCTLABEL_ID
-        );
     }
 }
