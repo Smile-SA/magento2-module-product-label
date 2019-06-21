@@ -66,5 +66,4 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     {
         return $meta;
     }
-
 }

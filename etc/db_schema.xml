@@ -31,10 +31,6 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="product_label_id"/>
         </constraint>
-        <constraint xsi:type="unique" referenceId="SMILE_PRODUCTLABEL_ATTRIBUTEID_OPTIONID">
-            <column name="attribute_id"/>
-            <column name="option_id"/>
-        </constraint>
         <constraint xsi:type="foreign" referenceId="SMILE_PRODUCTLABEL_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID" table="smile_productlabel"
                     column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE"/>
         <constraint xsi:type="foreign" referenceId="SMILE_PRODUCTLABEL_OPTION_ID_EAV_ATTRIBUTE_OPTION_OPTION_ID" table="smile_productlabel"

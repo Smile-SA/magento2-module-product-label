@@ -16,9 +16,12 @@ namespace Smile\ProductLabel\Model\ResourceModel;
 use Magento\Framework\DB\Select;
 use Magento\Framework\EntityManager\EntityManager;
 use Magento\Framework\EntityManager\MetadataPool;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Store\Model\Store;
+use Magento\Store\Model\StoreManagerInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
@@ -41,23 +44,31 @@ class ProductLabel extends AbstractDb
     protected $metadataPool;
 
     /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
      * Resource initialization
      *
-     * @param Context       $context        Context
-     * @param EntityManager $entityManager  Entity Manager
-     * @param MetadataPool  $metadataPool   Metadata Pool
-     * @param null          $connectionName Connection Name
+     * @param Context               $context        Context
+     * @param EntityManager         $entityManager  Entity Manager
+     * @param MetadataPool          $metadataPool   Metadata Pool
+     * @param StoreManagerInterface $storeManager   Store Manager
+     * @param null                  $connectionName Connection Name
      */
     public function __construct(
         Context $context,
         EntityManager $entityManager,
         MetadataPool $metadataPool,
+        StoreManagerInterface $storeManager,
         $connectionName = null
     ) {
         parent::__construct($context, $connectionName);
 
         $this->entityManager = $entityManager;
         $this->metadataPool  = $metadataPool;
+        $this->storeManager  = $storeManager;
     }
 
     /**
@@ -100,7 +111,6 @@ class ProductLabel extends AbstractDb
 
     /**
      * Persist relation between a given product label and his stores.
-     *
      * @SuppressWarnings(PHPMD.ElseExpression)
      *
      * @param \Magento\Framework\Model\AbstractModel $object The rule
@@ -117,13 +127,15 @@ class ProductLabel extends AbstractDb
             $newStores = $object->getStores();
         }
 
+        $this->checkUnicity($object, $newStores);
+
         $table = $this->getTable(ProductLabelInterface::STORE_TABLE_NAME);
 
         $delete = array_diff($oldStores, $newStores);
         if ($delete) {
             $where = [
                 $this->getIdFieldName() . ' = ?' => (int) $object->getData($this->getIdFieldName()),
-                'store_id IN (?)' => $delete,
+                'store_id IN (?)'                => $delete,
             ];
             $this->getConnection()->delete($table, $where);
         }
@@ -178,5 +190,60 @@ class ProductLabel extends AbstractDb
             ProductLabelInterface::TABLE_NAME,
             ProductLabelInterface::PRODUCTLABEL_ID
         );
+    }
+
+    /**
+     * Check unicity between a product label and stores.
+     * Unique constraint is : product_label_id / attribute_id / option_id / store_id
+     * A product label can also not be created for store 0 (all store views) if other exists for specific stores.
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object The product label
+     * @param array                                  $stores The stores to be associated with
+     *
+     * @return bool
+     *
+     * @throws \Magento\Framework\Exception\AlreadyExistsException
+     */
+    private function checkUnicity(\Magento\Framework\Model\AbstractModel $object, array $stores)
+    {
+        $isDefaultStore = $this->storeManager->isSingleStoreMode()
+            || array_search(Store::DEFAULT_STORE_ID, $stores) !== false;
+
+        if (!$isDefaultStore) {
+            $stores[] = Store::DEFAULT_STORE_ID;
+        }
+
+        $select = $this->getConnection()->select()
+            ->from(['pl' => $this->getMainTable()])
+            ->join(
+                ['pls' => $this->getTable(ProductLabelInterface::STORE_TABLE_NAME)],
+                'pl.' . $this->getIdFieldName() . ' = pls.' . $this->getIdFieldName(),
+                [ProductLabelInterface::STORE_ID]
+            )
+            ->where('pl.' . ProductLabelInterface::ATTRIBUTE_ID . ' = ?  ', $object->getData(ProductLabelInterface::ATTRIBUTE_ID))
+            ->where('pl.' . ProductLabelInterface::OPTION_ID . ' = ?  ', $object->getData(ProductLabelInterface::OPTION_ID));
+
+        if (!$isDefaultStore) {
+            $select->where('pls.store_id IN (?)', $stores);
+        }
+
+        if ($object->getId()) {
+            $select->where('pl.' . $this->getIdFieldName() . ' <> ?', $object->getId());
+        }
+
+        if ($row = $this->getConnection()->fetchRow($select)) {
+            $error = new \Magento\Framework\Phrase(
+                'Label for attribute %1, option %2, and store %3  already exist.',
+                [
+                    $object->getData(ProductLabelInterface::ATTRIBUTE_ID),
+                    $object->getData(ProductLabelInterface::OPTION_ID),
+                    $row[ProductLabelInterface::STORE_ID],
+                ]
+            );
+
+            throw new AlreadyExistsException($error);
+        }
+
+        return true;
     }
 }
