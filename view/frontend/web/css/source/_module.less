@@ -18,6 +18,9 @@
         z-index: 2;
         left: 0;
         max-width: 25%;
+				&_50 { max-width:50%; &:extend(.product-image-wrapper .top_left); }
+				&_30 { max-width:30%; &:extend(.product-image-wrapper .top_left); }
+
     }
 
     .top_right {
@@ -26,6 +29,9 @@
         z-index: 2;
         right: 0;
         max-width: 25%;
+				&_50 { max-width:50%; &:extend(.product-image-wrapper .top_right); }
+				&_30 { max-width:30%; &:extend(.product-image-wrapper .top_right); }
+
     }
 
     .lower_left {
@@ -34,6 +40,8 @@
         z-index: 2;
         left: 0;
         max-width: 25%;
+				&_50 { max-width:50%; &:extend(.product-image-wrapper .lower_left); }
+				&_30 { max-width:30%; &:extend(.product-image-wrapper .lower_left); }
     }
 
     .lower_right {
@@ -42,6 +50,8 @@
         z-index: 2;
         right: 0;
         max-width: 25%;
+				&_50 { max-width:50%; &:extend(.product-image-wrapper .lower_right); }
+				&_30 { max-width:30%; &:extend(.product-image-wrapper .lower_right); }
     }
 }
 
@@ -56,6 +66,8 @@
             z-index: 2;
             left: 0;
             max-width: 10%;
+						&_50 { max-width:50%; &:extend(.product.media .top_left); }
+						&_30 { max-width:30%; &:extend(.product.media .top_left); }
         }
 
         .top_right {
@@ -64,6 +76,8 @@
             z-index: 2;
             right: 0;
             max-width: 10%;
+						&_50 { max-width:50%; &:extend(.product.media .top_right); }
+						&_30 { max-width:30%; &:extend(.product.media .top_right); }
         }
 
         .lower_left {
@@ -72,6 +86,8 @@
             z-index: 2;
             left: 0;
             max-width: 10%;
+						&_50 { max-width:50%; &:extend(.product.media .lower_left); }
+						&_30 { max-width:30%; &:extend(.product.media .lower_left); }
         }
 
         .lower_right {
@@ -80,6 +96,8 @@
             z-index: 2;
             right: 0;
             max-width: 10%;
+						&_50 { max-width:50%; &:extend(.product.media .lower_right); }
+						&_30 { max-width:30%; &:extend(.product.media .lower_right); }
         }
     }
 }
