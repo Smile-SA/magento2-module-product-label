@@ -170,7 +170,7 @@ interface ProductLabelInterface
     /**
      * Get display_on
      *
-     * @return array
+     * @return mixed[]
      */
     public function getDisplayOn();
 
