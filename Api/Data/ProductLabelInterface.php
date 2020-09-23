@@ -45,6 +45,16 @@ interface ProductLabelInterface
     public const OPTION_ID = 'option_id';
 
     /**
+     * Constant for field from_date
+     */
+    const FROM_DATE = 'from_date';
+
+    /**
+     * Constant for field to_date
+     */
+    const TO_DATE = 'to_date';
+
+    /**
      * Constant for field image
      */
     public const PRODUCTLABEL_IMAGE = 'image';
@@ -134,6 +144,20 @@ interface ProductLabelInterface
     public function getOptionId(): int;
 
     /**
+     * Get from date
+     *
+     * @return string
+     */
+    public function getFromDate(): string;
+
+    /**
+     * Get to date
+     *
+     * @return string
+     */
+    public function getToDate(): string;
+
+    /**
      * Get image
      *
      * @return string
@@ -207,6 +231,24 @@ interface ProductLabelInterface
      * @return ProductLabelInterface
      */
     public function setOptionId(int $value): ProductLabelInterface;
+
+    /**
+     * Set from date
+     *
+     * @param string $value From Date
+     *
+     * @return ProductLabelInterface
+     */
+    public function setFromDate(string $value);
+
+    /**
+     * Set to date
+     *
+     * @param string $value To Date
+     *
+     * @return ProductLabelInterface
+     */
+    public function setToDate(string $value);
 
     /**
      * Set Image.
