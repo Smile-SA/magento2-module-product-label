@@ -56,6 +56,11 @@ class ProductLabel extends Template implements IdentityInterface
     private $cache;
 
     /**
+     * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
+     */
+    private $timezoneInterface;
+
+    /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
     private $storeManager;
@@ -63,12 +68,13 @@ class ProductLabel extends Template implements IdentityInterface
     /**
      * ProductLabel constructor.
      *
-     * @param \Magento\Backend\Block\Template\Context    $context                       Block context
-     * @param Registry                                   $registry                      Registry
-     * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper                   Image Helper
-     * @param ProductLabelCollectionFactory              $productLabelCollectionFactory Product Label Collection Factory
-     * @param \Magento\Framework\App\CacheInterface      $cache                         Cache Interface
-     * @param array                                      $data                          Block data
+     * @param \Magento\Backend\Block\Template\Context              $context                       Block context
+     * @param Registry                                             $registry                      Registry
+     * @param \Smile\ProductLabel\Model\ImageLabel\Image           $imageHelper                   Image Helper
+     * @param ProductLabelCollectionFactory                        $productLabelCollectionFactory Product Label Collection Factory
+     * @param \Magento\Framework\App\CacheInterface                $cache                         Cache Interface
+     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezoneInterface             Timezone Interface
+     * @param array                                                $data                          Block data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
@@ -76,6 +82,7 @@ class ProductLabel extends Template implements IdentityInterface
         \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper,
         ProductLabelCollectionFactory $productLabelCollectionFactory,
         \Magento\Framework\App\CacheInterface $cache,
+        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezoneInterface,
         array $data = []
     ) {
         $this->registry                      = $registry;
@@ -83,6 +90,7 @@ class ProductLabel extends Template implements IdentityInterface
         $this->productLabelCollectionFactory = $productLabelCollectionFactory;
         $this->cache                         = $cache;
         $this->storeManager                  = $context->getStoreManager();
+        $this->timezoneInterface             = $timezoneInterface;
 
         parent::__construct($context, $data);
     }
@@ -186,6 +194,12 @@ class ProductLabel extends Template implements IdentityInterface
         $attributesProduct = $this->getAttributesOfCurrentProduct();
 
         foreach ($productLabelList as $productLabel) {
+            if (
+                $productLabel['from_date'] > $this->timezoneInterface->date()->format('Y-m-d') ||
+                $productLabel['to_date'] < $this->timezoneInterface->date()->format('Y-m-d')
+            ) {
+                continue;
+            }
             $attributeIdLabel = $productLabel['attribute_id'];
             $optionIdLabel    = $productLabel['option_id'];
             foreach ($attributesProduct as $attribute) {
