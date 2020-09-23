@@ -23,6 +23,8 @@
         <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false" default="0"
                 comment="Attribute ID"/>
         <column xsi:type="int" name="option_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Option Id"/>
+        <column xsi:type="date" name="from_date" nullable="true" comment="From Date"/>
+        <column xsi:type="date" name="to_date" nullable="true" comment="To Date"/>
         <column xsi:type="blob" name="image" nullable="true" comment="Image of Attribute or Option of Attribute"/>
         <column xsi:type="varchar" name="position_category_list" nullable="true" comment="Position of Image on Category List"/>
         <column xsi:type="varchar" name="position_product_view" nullable="true" comment="Position of Image on Product View"/>

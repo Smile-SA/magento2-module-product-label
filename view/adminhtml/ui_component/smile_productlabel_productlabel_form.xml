@@ -237,7 +237,43 @@
             </formElements>
         </field>
 
-        <field name="image" formElement="imageUploader" sortOrder="50">
+        <field name="from_date" formElement="date" sortOrder="50">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">from_date</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-date" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Form Date</label>
+                <visible>true</visible>
+                <dataScope>from_date</dataScope>
+            </settings>
+        </field>
+
+        <field name="to_date" formElement="date" sortOrder="55">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">to_date</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-date" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">To Date</label>
+                <visible>true</visible>
+                <dataScope>to_date</dataScope>
+            </settings>
+        </field>
+
+        <field name="image" formElement="imageUploader" sortOrder="60">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">productlabel</item>
@@ -245,6 +281,7 @@
             </argument>
             <settings>
                 <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
                 <elementTmpl>ui/form/element/uploader/image</elementTmpl>
@@ -270,7 +307,7 @@
             </formElements>
         </field>
 
-        <field name="position_category_list" formElement="select" sortOrder="60">
+        <field name="position_category_list" formElement="select" sortOrder="70">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\Source\Location\Options</item>
                 <item name="config" xsi:type="array">
@@ -290,7 +327,7 @@
             </settings>
         </field>
 
-        <field name="position_product_view" formElement="select" sortOrder="70">
+        <field name="position_product_view" formElement="select" sortOrder="80">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Smile\ProductLabel\Ui\Component\Source\Location\Options</item>
                 <item name="config" xsi:type="array">
@@ -310,7 +347,7 @@
             </settings>
         </field>
 
-        <field name="display_on" formElement="multiselect" sortOrder="80">
+        <field name="display_on" formElement="multiselect" sortOrder="90">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">productlabel</item>
@@ -334,7 +371,7 @@
             </formElements>
         </field>
 
-        <field name="alt" formElement="input" sortOrder="90">
+        <field name="alt" formElement="input" sortOrder="100">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">alt</item>

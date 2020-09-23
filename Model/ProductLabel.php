@@ -60,6 +60,11 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     protected $mediaDirectory;
 
     /**
+     * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
+     */
+    protected $timezoneInterface;
+
+    /**
      * @var string
      */
     protected $_cacheTag = self::CACHE_TAG;
@@ -73,6 +78,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * @param \Magento\Framework\Filesystem                                $filesystem         FileSystem Helper
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource           Resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection Resource Collection
+     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface         $timezoneInterface  Timezone Interface
      * @param array                                                        $data               Object Data
      */
     public function __construct(
@@ -82,10 +88,12 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
         \Magento\Framework\Filesystem $filesystem,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezoneInterface,
         array $data = []
     ) {
         $this->storeManager   = $storeManager;
         $this->mediaDirectory = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+        $this->timezoneInterface = $timezoneInterface;
         parent::__construct(
             $context,
             $registry,
@@ -168,6 +176,26 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     public function getOptionId(): int
     {
         return (int) $this->getData(self::OPTION_ID);
+    }
+
+    /**
+     * Get field: from_date
+     *
+     * @return string
+     */
+    public function getFromDate(): string
+    {
+        return (string) $this->getData(self::FROM_DATE);
+    }
+
+    /**
+     * Get field: to_date
+     *
+     * @return string
+     */
+    public function getToDate(): string
+    {
+        return (string) $this->getData(self::TO_DATE);
     }
 
     /**
@@ -287,6 +315,30 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
+     * Set field: from_date.
+     *
+     * @param string $value Field value
+     *
+     * @return $this
+     */
+    public function setFromDate(string $value)
+    {
+        return (string) $this->setData(self::FROM_DATE, $value);
+    }
+
+    /**
+     * Set field: to_date.
+     *
+     * @param string $value Field value
+     *
+     * @return $this
+     */
+    public function setToDate(string $value)
+    {
+        return (string) $this->setData(self::TO_DATE, $value);
+    }
+
+    /**
      * Set field: image.
      *
      * @param string $value Field value
@@ -355,6 +407,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
         $this->setData(self::PRODUCTLABEL_NAME, (string) $values['name']);
         $this->setData(self::ATTRIBUTE_ID, (int) $values['attribute_id']);
         $this->setData(self::OPTION_ID, (int) $values['option_id']);
+        $this->setData(self::FROM_DATE, (string) $this->timezoneInterface->date($values['from_date'])->format('Y-m-d H:i:s'));
+        $this->setData(self::TO_DATE, (string) $this->timezoneInterface->date($values['to_date'])->format('Y-m-d H:i:s'));
         $this->setData(self::PRODUCTLABEL_IMAGE, $values['image'][0]['name']);
         $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, (string) $values['position_category_list']);
         $this->setData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW, (string) $values['position_product_view']);
