@@ -1,5 +1,5 @@
 {
-    "name": "smile/module-product-label",
+    "name": "caher/module-product-label",
     "type": "magento2-module",
     "description": "Extension of Magento2 to be able to contribute images associated to product attribute values.",
     "keywords": ["magento2", "product", "label", "image"],
