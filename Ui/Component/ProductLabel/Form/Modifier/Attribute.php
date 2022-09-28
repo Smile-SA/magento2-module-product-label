@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -22,15 +24,11 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
  * Used to set "attribute_id" field to disabled in case of already existing product label.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
-    /**
-     * @var \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface
-     */
-    private $locator;
+    private \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator;
 
     /**
      * Attribute constructor.

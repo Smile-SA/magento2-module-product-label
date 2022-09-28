@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -18,7 +20,6 @@ namespace Smile\ProductLabel\Ui\Component\Source\Store;
  * Store Options for product label edit form.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Options extends \Magento\Store\Ui\Component\Listing\Column\Store\Options
@@ -33,7 +34,7 @@ class Options extends \Magento\Store\Ui\Component\Listing\Column\Store\Options
      *
      * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         if ($this->options !== null) {
             return $this->options;

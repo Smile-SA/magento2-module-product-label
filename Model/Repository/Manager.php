@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -27,25 +29,18 @@ use Magento\Framework\Phrase;
  * Repository Manager
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Manager
 {
-    /**
-     * @var CollectionProcessor
-     */
-    protected $collectionProcessor;
+    protected CollectionProcessor $collectionProcessor;
 
     /**
      * @var mixed
      */
     protected $objectFactory;
 
-    /**
-     * @var AbstractResourceModel
-     */
-    protected $objectResource;
+    protected AbstractResourceModel $objectResource;
 
     /**
      * @var mixed
@@ -57,20 +52,17 @@ class Manager
      */
     protected $objectSearchResultsFactory;
 
-    /**
-     * @var string|null
-     */
-    protected $identifierFieldName;
+    protected ?string $identifierFieldName = null;
 
     /**
      * @var array
      */
-    protected $cacheById = [];
+    protected array $cacheById = [];
 
     /**
      * @var array
      */
-    protected $cacheByIdentifier = [];
+    protected array $cacheByIdentifier = [];
 
     /**
      * Manager constructor.
@@ -103,12 +95,10 @@ class Manager
      * Retrieve a entity by its ID.
      *
      * @param int $objectId The object Id
-     *
-     * @return \Magento\Framework\Model\AbstractModel
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @SuppressWarnings(PMD.StaticAccess)
      */
-    public function getEntityById($objectId)
+    public function getEntityById(int $objectId): \Magento\Framework\Model\AbstractModel
     {
         if (!isset($this->cacheById[$objectId])) {
             /** @var \Magento\Framework\Model\AbstractModel $object */
@@ -135,12 +125,10 @@ class Manager
      * Retrieve a entity by its identifier.
      *
      * @param string $objectIdentifier The Object Id
-     *
-     * @return \Magento\Framework\Model\AbstractModel
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @SuppressWarnings(PMD.StaticAccess)
      */
-    public function getEntityByIdentifier($objectIdentifier)
+    public function getEntityByIdentifier(string $objectIdentifier): \Magento\Framework\Model\AbstractModel
     {
         if ($this->identifierFieldName === null) {
             throw new NoSuchEntityException('The identifier field name is not set');
@@ -167,11 +155,9 @@ class Manager
      * Save entity.
      *
      * @param AbstractModel $object The Object
-     *
-     * @return AbstractModel
      * @throws CouldNotSaveException
      */
-    public function saveEntity(AbstractModel $object)
+    public function saveEntity(AbstractModel $object): AbstractModel
     {
         /** @var AbstractModel $object */
         try {
@@ -194,11 +180,9 @@ class Manager
      * Delete entity.
      *
      * @param AbstractModel $object The Object
-     *
-     * @return bool
      * @throws CouldNotDeleteException
      */
-    public function deleteEntity(AbstractModel $object)
+    public function deleteEntity(AbstractModel $object): bool
     {
         try {
             $this->objectResource->delete($object);
@@ -220,12 +204,10 @@ class Manager
      * Delete entity by id.
      *
      * @param int $objectId Object Id
-     *
-     * @return bool
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
      */
-    public function deleteEntityById($objectId)
+    public function deleteEntityById(int $objectId): bool
     {
         return $this->deleteEntity($this->getEntityById($objectId));
     }
@@ -234,12 +216,10 @@ class Manager
      * Delete entity by identifier.
      *
      * @param string $objectIdentifier Object Id
-     *
-     * @return bool
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
      */
-    public function deleteEntityByIdentifier($objectIdentifier)
+    public function deleteEntityByIdentifier(string $objectIdentifier): bool
     {
         return $this->deleteEntity($this->getEntityByIdentifier($objectIdentifier));
     }
@@ -248,10 +228,8 @@ class Manager
      * Retrieve not eav entities which match a specified criteria.
      *
      * @param SearchCriteriaInterface $searchCriteria SearchCriteria
-     *
-     * @return \Magento\Framework\Api\SearchResults
      */
-    public function getEntities(SearchCriteriaInterface $searchCriteria = null)
+    public function getEntities(?SearchCriteriaInterface $searchCriteria = null): \Magento\Framework\Api\SearchResults
     {
         /** @var AbstractCollection $collection */
         $collection = $this->objectCollectionFactory->create();

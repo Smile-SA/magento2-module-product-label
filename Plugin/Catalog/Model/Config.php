@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -17,7 +19,6 @@ namespace Smile\ProductLabel\Plugin\Catalog\Model;
  * Plugin on Catalog Configuration to enforce loading of all attributes used for product labels rules to be loaded on listing pages.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Config
@@ -27,24 +28,16 @@ class Config
      *
      * @var array
      */
-    private $usedInProductListing;
+    private array $usedInProductListing;
 
     /**
      * Eav config
-     *
-     * @var \Magento\Eav\Model\Config
      */
-    private $eavConfig;
+    private \Magento\Eav\Model\Config $eavConfig;
 
-    /**
-     * @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute
-     */
-    private $attributeFactory;
+    private \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory;
 
-    /**
-     * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory
-     */
-    private $productLabelCollectionFactory;
+    private \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $productLabelCollectionFactory;
 
     /**
      * Config constructor.
@@ -67,13 +60,11 @@ class Config
      * Add all attributes used for picto/labels into the list of attributes used in product listing.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     *
      * @param \Magento\Catalog\Model\Config $subject The Catalog config
      * @param array                         $result  The result of $subject->getAttributesUsedInProductListing
-     *
      * @return array
      */
-    public function afterGetAttributesUsedInProductListing(\Magento\Catalog\Model\Config $subject, $result)
+    public function afterGetAttributesUsedInProductListing(\Magento\Catalog\Model\Config $subject, array $result): array
     {
         if ($this->usedInProductListing === null) {
             $this->usedInProductListing = $result;

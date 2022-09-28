@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -13,13 +15,12 @@
 
 namespace Smile\ProductLabel\Model\ResourceModel;
 
-use Magento\Framework\DB\Select;
 use Magento\Framework\EntityManager\EntityManager;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Exception\AlreadyExistsException;
+use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
-use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
@@ -28,25 +29,15 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
  * Collection Resource Model Class: ProductLabel
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class ProductLabel extends AbstractDb
 {
-    /**
-     * @var EntityManager
-     */
-    protected $entityManager;
+    protected EntityManager $entityManager;
 
-    /**
-     * @var MetadataPool
-     */
-    protected $metadataPool;
+    protected MetadataPool $metadataPool;
 
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    private $storeManager;
+    private \Magento\Store\Model\StoreManagerInterface $storeManager;
 
     /**
      * Resource initialization
@@ -71,10 +62,7 @@ class ProductLabel extends AbstractDb
         $this->storeManager  = $storeManager;
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    public function getConnection()
+    public function getConnection(): \Magento\Framework\DB\Adapter\AdapterInterface
     {
         $connectionName = $this->metadataPool->getMetadata(ProductLabelInterface::class)->getEntityConnectionName();
 
@@ -85,7 +73,6 @@ class ProductLabel extends AbstractDb
      * Save Product Label
      *
      * @param AbstractModel $object Product Label
-     *
      * @return $this
      */
     public function save(AbstractModel $object)
@@ -99,7 +86,6 @@ class ProductLabel extends AbstractDb
      * Delete Product Label
      *
      * @param AbstractModel $object Product Label
-     *
      * @return $this
      */
     public function delete(AbstractModel $object)
@@ -111,14 +97,12 @@ class ProductLabel extends AbstractDb
 
     /**
      * Persist relation between a given product label and his stores.
+     *
      * @SuppressWarnings(PHPMD.ElseExpression)
-     *
      * @param \Magento\Framework\Model\AbstractModel $object The rule
-     *
-     * @return \Magento\Framework\Model\AbstractModel
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function saveStoreRelation(\Magento\Framework\Model\AbstractModel $object)
+    public function saveStoreRelation(\Magento\Framework\Model\AbstractModel $object): \Magento\Framework\Model\AbstractModel
     {
         $oldStores = $this->getStoreIds($object);
         if (strpos(serialize($object->getStores()), ',') !== false) {
@@ -160,11 +144,10 @@ class ProductLabel extends AbstractDb
      * Retrieve store ids associated to a given product label.
      *
      * @param \Magento\Framework\Model\AbstractModel $object The product label
-     *
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getStoreIds(\Magento\Framework\Model\AbstractModel $object)
+    public function getStoreIds(\Magento\Framework\Model\AbstractModel $object): array
     {
         $connection = $this->getConnection();
 
@@ -199,12 +182,9 @@ class ProductLabel extends AbstractDb
      *
      * @param \Magento\Framework\Model\AbstractModel $object The product label
      * @param array                                  $stores The stores to be associated with
-     *
-     * @return bool
-     *
      * @throws \Magento\Framework\Exception\AlreadyExistsException
      */
-    private function checkUnicity(\Magento\Framework\Model\AbstractModel $object, array $stores)
+    private function checkUnicity(\Magento\Framework\Model\AbstractModel $object, array $stores): bool
     {
         $isDefaultStore = $this->storeManager->isSingleStoreMode()
             || array_search(Store::DEFAULT_STORE_ID, $stores) !== false;

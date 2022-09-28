@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -19,15 +21,11 @@ namespace Smile\ProductLabel\Model\ProductLabel\Locator;
  * Used by Ui Component modifiers.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class RegistryLocator implements LocatorInterface
 {
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    private $registry;
+    private \Magento\Framework\Registry $registry;
 
     /**
      * @var null

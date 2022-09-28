@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -18,7 +20,6 @@ namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
  * Adminhtml block: Button Back
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class BackButton extends AbstractButton
@@ -38,10 +39,8 @@ class BackButton extends AbstractButton
 
     /**
      * Get URL for back (reset) button
-     *
-     * @return string
      */
-    public function getBackUrl()
+    public function getBackUrl(): string
     {
         return $this->getUrl('*/*/');
     }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -28,15 +30,11 @@ use Smile\ProductLabel\Model\ProductLabel;
  * Admin Action: productlabel/save
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Save extends AbstractAction
 {
-    /**
-     * @var DataPersistorInterface
-     */
-    protected $dataPersistor;
+    protected DataPersistorInterface $dataPersistor;
 
     /**
      * Save constructor.

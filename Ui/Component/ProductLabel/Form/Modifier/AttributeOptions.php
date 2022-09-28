@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -21,20 +23,13 @@ namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
  * Used to populate "option_id" field according to current value of "attribute_id" for current product label.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
-    /**
-     * @var \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface
-     */
-    private $locator;
+    private \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator;
 
-    /**
-     * @var \Magento\Catalog\Api\ProductAttributeRepositoryInterface
-     */
-    private $attributeRepository;
+    private \Magento\Catalog\Api\ProductAttributeRepositoryInterface $attributeRepository;
 
     /**
      * AttributeOptions constructor.
@@ -89,10 +84,9 @@ class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInte
      * Retrieve attribute options for a given attribute Id.
      *
      * @param int $attributeId The attribute Id
-     *
      * @return array
      */
-    private function getAttributeOptions($attributeId)
+    private function getAttributeOptions(int $attributeId): array
     {
         $attribute = $this->attributeRepository->get($attributeId);
         $options   = [];

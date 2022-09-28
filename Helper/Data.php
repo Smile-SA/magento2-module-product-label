@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -28,30 +30,17 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
  * Product Label Data helper
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Data extends AbstractHelper
 {
-    /**
-     * @var ProductLabelRepositoryInterface
-     */
-    protected $plabelRepository;
+    protected ProductLabelRepositoryInterface $plabelRepository;
 
-    /**
-     * @var FilterBuilder
-     */
-    protected $filterBuilder;
+    protected FilterBuilder $filterBuilder;
 
-    /**
-     * @var SortOrderBuilder
-     */
-    protected $sortOrderBuilder;
+    protected SortOrderBuilder $sortOrderBuilder;
 
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    protected $searchCriteriaBuilder;
+    protected SearchCriteriaBuilder $searchCriteriaBuilder;
 
     /**
      * Data constructor.
@@ -79,10 +68,9 @@ class Data extends AbstractHelper
 
     /**
      * @param ProductInterface $product The product
-     *
      * @return int[]
      */
-    public function getProductLabelIds(ProductInterface $product)
+    public function getProductLabelIds(ProductInterface $product): array
     {
         $plabelIds = $product->getSmileProductLabelIds();
         if (!is_array($plabelIds)) {
@@ -98,10 +86,8 @@ class Data extends AbstractHelper
 
     /**
      * @param int[] $plabelIds Product Label ids
-     *
-     * @return SearchCriteria
      */
-    public function getSearchCriteriaOnProductLabelIds($plabelIds)
+    public function getSearchCriteriaOnProductLabelIds(array $plabelIds): SearchCriteria
     {
         $filters   = [];
         $filters[] = $this->filterBuilder
@@ -123,10 +109,9 @@ class Data extends AbstractHelper
 
     /**
      * @param ProductInterface $product The Product
-     *
      * @return ProductLabelInterface[]
      */
-    public function getProductPLabels(ProductInterface $product)
+    public function getProductPLabels(ProductInterface $product): array
     {
         $plabelIds      = $this->getProductLabelIds($product);
         $searchCriteria = $this->getSearchCriteriaOnProductLabelIds($plabelIds);

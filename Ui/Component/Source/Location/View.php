@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -20,7 +22,6 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
  * Locations values for product label edit form.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class View implements \Magento\Framework\Data\OptionSourceInterface
@@ -28,7 +29,7 @@ class View implements \Magento\Framework\Data\OptionSourceInterface
     /**
      * @var array|null
      */
-    private $viewsList;
+    private ?array $viewsList = null;
 
     /**
      * {@inheritdoc}
@@ -43,7 +44,7 @@ class View implements \Magento\Framework\Data\OptionSourceInterface
      *
      * @return array
      */
-    private function getViewsList()
+    private function getViewsList(): array
     {
         $this->viewsList[0] = [
             'value'     => 0,

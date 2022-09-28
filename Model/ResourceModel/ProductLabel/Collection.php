@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -19,29 +21,24 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
  * Product Label Collection
  *
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-    /**
-     * @var string
-     */
-    protected $_idFieldName = ProductLabelInterface::PRODUCTLABEL_ID;
+    protected string $_idFieldName = ProductLabelInterface::PRODUCTLABEL_ID;
 
     /**
      * @var int[]
      */
-    private $storeIds = [];
+    private array $storeIds = [];
 
     /**
      * Get store ids applied to current collection.
      *
      * @return int[]
      */
-    public function getStoreIds()
+    public function getStoreIds(): array
     {
         return $this->storeIds;
     }
@@ -51,7 +48,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      *
      * @return array
      */
-    public function getAllAttributeIds()
+    public function getAllAttributeIds(): array
     {
         $optionIdsSelect = clone $this->getSelect();
         $optionIdsSelect->reset(\Magento\Framework\DB\Select::ORDER);
@@ -68,7 +65,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      *
      * @return array
      */
-    public function getAllOptionIds()
+    public function getAllOptionIds(): array
     {
         $optionIdsSelect = clone $this->getSelect();
         $optionIdsSelect->reset(\Magento\Framework\DB\Select::ORDER);
@@ -84,7 +81,6 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * Filter productlabel collection for a given attribute.
      *
      * @param \Magento\Catalog\Api\Data\ProductAttributeInterface $attribute The attribute
-     *
      * @return $this
      */
     public function addAttributeFilter(\Magento\Catalog\Api\Data\ProductAttributeInterface $attribute)
@@ -100,10 +96,9 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * Filter productlabel collection for a given list of attribute set ids.
      *
      * @param array $attributeSetIds List of attribute set ids
-     *
      * @return $this
      */
-    public function addAttributeSetIdFilter($attributeSetIds)
+    public function addAttributeSetIdFilter(array $attributeSetIds)
     {
         if (!is_array($attributeSetIds)) {
             $attributeSetIds = [$attributeSetIds];
@@ -135,7 +130,6 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * Perform adding filter by store
      *
      * @param int|array|\Magento\Store\Model\Store $store The store
-     *
      * @return $this
      */
     public function addStoreFilter($store)

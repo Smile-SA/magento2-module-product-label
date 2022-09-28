@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -22,20 +24,13 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
  * Adminhtml block: Abstract Button
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 abstract class AbstractButton implements ButtonProviderInterface
 {
-    /**
-     * @var Context
-     */
-    protected $context;
+    protected Context $context;
 
-    /**
-     * @var ProductLabelRepositoryInterface
-     */
-    protected $repository;
+    protected ProductLabelRepositoryInterface $repository;
 
     /**
      * AbstractButton constructor.
@@ -58,10 +53,8 @@ abstract class AbstractButton implements ButtonProviderInterface
 
     /**
      * Return object ID.
-     *
-     * @return int|null
      */
-    public function getObjectId()
+    public function getObjectId(): ?int
     {
         try {
             $modelId = (int) $this->context->getRequest()->getParam('product_label_id');
@@ -81,10 +74,8 @@ abstract class AbstractButton implements ButtonProviderInterface
      *
      * @param string $route  URL route
      * @param array  $params URL params
-     *
-     * @return string
      */
-    public function getUrl($route = '', $params = [])
+    public function getUrl(string $route = '', array $params = []): string
     {
         return $this->context->getUrlBuilder()->getUrl($route, $params);
     }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -27,7 +29,6 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface as ProductLabelReposi
  * Abstract Admin action for product label
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 abstract class AbstractAction extends Action
@@ -37,30 +38,15 @@ abstract class AbstractAction extends Action
      */
     const ADMIN_RESOURCE = 'Smile_ProductLabel::manage';
 
-    /**
-     * @var ProductLabelFactory
-     */
-    protected $modelFactory;
+    protected ProductLabelFactory $modelFactory;
 
-    /**
-     * @var ProductLabelRepository
-     */
-    protected $modelRepository;
+    protected ProductLabelRepository $modelRepository;
 
-    /**
-     * @var Registry
-     */
-    protected $coreRegistry;
+    protected Registry $coreRegistry;
 
-    /**
-     * @var \Magento\Ui\Component\MassAction\Filter
-     */
-    protected $filter;
+    protected \Magento\Ui\Component\MassAction\Filter $filter;
 
-    /**
-     * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory
-     */
-    protected $collectionFactory;
+    protected \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory;
 
     /**
      * AbstractAction constructor.
@@ -93,11 +79,9 @@ abstract class AbstractAction extends Action
      * Init the current model.
      *
      * @param int|null $labelId Product Label ID
-     *
-     * @return ProductLabel
      * @throws NotFoundException
      */
-    protected function initModel($labelId)
+    protected function initModel(?int $labelId): ProductLabel
     {
         /** @var \Smile\ProductLabel\Model\ProductLabel $model */
         $model = $this->modelFactory->create();

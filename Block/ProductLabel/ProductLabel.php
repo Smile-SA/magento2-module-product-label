@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -13,11 +15,11 @@
 
 namespace Smile\ProductLabel\Block\ProductLabel;
 
+use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\DataObject\IdentityInterface;
-use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
-use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Framework\View\Element\Template;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as ProductLabelCollectionFactory;
 
@@ -25,40 +27,21 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as Pro
  * Class ProductLabel
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class ProductLabel extends Template implements IdentityInterface
 {
-    /**
-     * @var Registry
-     */
-    protected $registry;
+    protected Registry $registry;
 
-    /**
-     * @var ProductLabelCollectionFactory
-     */
-    protected $productLabelCollectionFactory;
+    protected ProductLabelCollectionFactory $productLabelCollectionFactory;
 
-    /**
-     * @var \Smile\ProductLabel\Model\ImageLabel\Image
-     */
-    protected $imageHelper;
+    protected \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper;
 
-    /**
-     * @var ProductInterface
-     */
-    protected $product;
+    protected ProductInterface $product;
 
-    /**
-     * @var \Magento\Framework\App\CacheInterface
-     */
-    private $cache;
+    private \Magento\Framework\App\CacheInterface $cache;
 
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    private $storeManager;
+    private \Magento\Store\Model\StoreManagerInterface $storeManager;
 
     /**
      * ProductLabel constructor.
@@ -89,10 +72,8 @@ class ProductLabel extends Template implements IdentityInterface
 
     /**
      * Get Current View
-     *
-     * @return string
      */
-    public function getCurrentView()
+    public function getCurrentView(): string
     {
         $view = ProductLabelInterface::PRODUCTLABEL_DISPLAY_LISTING;
         if ($this->getRequest()->getControllerName('controller') == 'product') {
@@ -104,10 +85,8 @@ class ProductLabel extends Template implements IdentityInterface
 
     /**
      * Get labels block wrapper class
-     *
-     * @return string
      */
-    public function getWrapperClass()
+    public function getWrapperClass(): string
     {
         $class = 'listing';
 
@@ -122,7 +101,6 @@ class ProductLabel extends Template implements IdentityInterface
      * Set Product
      *
      * @param ProductInterface $product The product
-     *
      * @return $this
      */
     public function setProduct(ProductInterface $product)
@@ -151,7 +129,7 @@ class ProductLabel extends Template implements IdentityInterface
      *
      * @return array
      */
-    public function getAttributesOfCurrentProduct()
+    public function getAttributesOfCurrentProduct(): array
     {
         $attributesList = [];
         $attributeIds   = array_column($this->getProductLabelsList(), 'attribute_id');
@@ -165,7 +143,7 @@ class ProductLabel extends Template implements IdentityInterface
                 $attributesList[$attribute->getId()] = [
                     'id'      => $attribute->getId(),
                     'label'   => $attribute->getFrontend()->getLabel(),
-                    'options' => ($optionIds) ? $optionIds->getValue() : '',
+                    'options' => $optionIds ? $optionIds->getValue() : '',
                 ];
             }
         }
@@ -179,7 +157,7 @@ class ProductLabel extends Template implements IdentityInterface
      *
      * @return array
      */
-    public function getProductLabels()
+    public function getProductLabels(): array
     {
         $productLabels     = [];
         $productLabelList  = $this->getProductLabelsList();
@@ -211,10 +189,8 @@ class ProductLabel extends Template implements IdentityInterface
      * Get Image URL of product label
      *
      * @param string $imageName Image Name
-     *
-     * @return string
      */
-    public function getImageUrl($imageName)
+    public function getImageUrl(string $imageName): string
     {
         return $this->imageHelper->getBaseUrl() . '/' . $imageName;
     }
@@ -224,7 +200,7 @@ class ProductLabel extends Template implements IdentityInterface
      *
      * @return string[]
      */
-    public function getIdentities()
+    public function getIdentities(): array
     {
         $identities = [];
 
@@ -241,10 +217,8 @@ class ProductLabel extends Template implements IdentityInterface
      * Fetch proper css class according to current label and view.
      *
      * @param array $productLabel A product Label
-     *
-     * @return string
      */
-    private function getCssClass($productLabel)
+    private function getCssClass(array $productLabel): string
     {
         $class = '';
 
@@ -265,7 +239,7 @@ class ProductLabel extends Template implements IdentityInterface
      *
      * @return array
      */
-    private function getProductLabelsList()
+    private function getProductLabelsList(): array
     {
         $storeId          = $this->getStoreId();
         $cacheKey         = 'smile_productlabel_frontend_' . $storeId;
@@ -297,10 +271,8 @@ class ProductLabel extends Template implements IdentityInterface
 
     /**
      * Get current store Id.
-     *
-     * @return int
      */
-    private function getStoreId()
+    private function getStoreId(): int
     {
         return $this->storeManager->getStore()->getId();
     }

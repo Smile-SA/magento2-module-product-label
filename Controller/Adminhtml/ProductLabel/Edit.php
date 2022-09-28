@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -14,19 +16,17 @@
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\Model\View\Result\Page as ResultPage;
+use Magento\Framework\Controller\ResultFactory;
 
 /**
  * Admin Action: productlabel/edit
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Edit extends AbstractAction
 {
-
     /**
      * Execute action based on request and return result
      *

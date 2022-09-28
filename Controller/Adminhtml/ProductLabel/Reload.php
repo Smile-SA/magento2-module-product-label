@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -20,7 +22,6 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
  * Reload controller for product label edition : used to refresh the form after attribute_id is chosen.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Reload extends Action
@@ -32,44 +33,25 @@ class Reload extends Action
      */
     const ADMIN_RESOURCE = 'Smile_ProductLabel::manage';
 
-    /**
-     * @var \Magento\Framework\View\Result\PageFactory|null
-     */
-    protected $resultPageFactory = null;
+    protected ?\Magento\Framework\View\Result\PageFactory $resultPageFactory = null;
 
     /**
      * Core registry
-     *
-     * @var \Magento\Framework\Registry
      */
-    protected $coreRegistry;
+    protected \Magento\Framework\Registry $coreRegistry;
 
-    /**
-     * @var \Magento\Framework\App\Request\DataPersistorInterface
-     */
-    protected $dataPersistor;
+    protected \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor;
 
-    /**
-     * @var \Magento\Ui\Component\MassAction\Filter
-     */
-    protected $filter;
+    protected \Magento\Ui\Component\MassAction\Filter $filter;
 
-    /**
-     * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory
-     */
-    protected $collectionFactory;
+    protected \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory;
 
-    /**
-     * @var \Smile\ProductLabel\Api\ProductLabelRepositoryInterface
-     */
-    protected $productLabelRepository;
+    protected \Smile\ProductLabel\Api\ProductLabelRepositoryInterface $productLabelRepository;
 
     /**
      * Product Label Factory
-     *
-     * @var \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory
      */
-    protected $productLabelFactory;
+    protected \Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory $productLabelFactory;
 
     /**
      * Reload constructor.
@@ -134,10 +116,8 @@ class Reload extends Action
 
     /**
      * Create result page
-     *
-     * @return \Magento\Backend\Model\View\Result\Page
      */
-    protected function createPage()
+    protected function createPage(): \Magento\Backend\Model\View\Result\Page
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();

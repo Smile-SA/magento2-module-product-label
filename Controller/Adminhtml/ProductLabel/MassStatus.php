@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -18,7 +20,6 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
  * Smile Product Label status mass action controller.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class MassStatus extends AbstractAction
@@ -26,10 +27,9 @@ class MassStatus extends AbstractAction
     /**
      * Execute action
      *
-     * @return \Magento\Backend\Model\View\Result\Redirect
      * @throws \Magento\Framework\Exception\LocalizedException|\Exception
      */
-    public function execute()
+    public function execute(): \Magento\Backend\Model\View\Result\Redirect
     {
         $collection     = $this->filter->getCollection($this->collectionFactory->create());
         $collectionSize = $collection->getSize();

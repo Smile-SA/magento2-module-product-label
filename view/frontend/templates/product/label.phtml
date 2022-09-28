@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +7,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -20,10 +20,10 @@
 ?>
 <?php $productLabels = $block->getProductLabels(); ?>
 
-<?php if ($productLabels) : ?>
-    <?php foreach($productLabels as $class => $labels) :?>
+<?php if ($productLabels): ?>
+    <?php foreach ($productLabels as $class => $labels):?>
         <div class="<?php echo $class; ?>">
-            <?php foreach ($labels as $label) : ?>
+            <?php foreach ($labels as $label): ?>
                 <img src="<?php echo $label['image']; ?>" alt="<?php echo $label['alt'] ?? ''; ?>" title="<?php echo $label['alt'] ?? ''; ?>"/>
             <?php endforeach ;?>
         </div>

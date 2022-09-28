@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -17,7 +19,6 @@ namespace Smile\ProductLabel\Api\Data;
  * Product Label Data Interface
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 interface ProductLabelInterface
@@ -102,35 +103,35 @@ interface ProductLabelInterface
      *
      * @return int[]
      */
-    public function getStores();
+    public function getStores(): array;
 
     /**
      * Get product label status
      *
      * @return bool
      */
-    public function isActive();
+    public function isActive(): bool;
 
     /**
      * Get product label Id
      *
      * @return int
      */
-    public function getProductLabelId();
+    public function getProductLabelId(): int;
 
     /**
      * Get product label Id
      *
      * @return int
      */
-    public function getId();
+    public function getId(): int;
 
     /**
      * Get Name
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Get attribute Id
@@ -151,123 +152,113 @@ interface ProductLabelInterface
      *
      * @return string
      */
-    public function getProductLabelImage();
+    public function getProductLabelImage(): string;
 
     /**
      * Get position of image in category list
      *
      * @return string
      */
-    public function getPositionCategoryList();
+    public function getPositionCategoryList(): string;
 
     /**
      * Get position of image in product view
      *
      * @return string
      */
-    public function getPositionProductView();
+    public function getPositionProductView(): string;
 
     /**
      * Get display_on
      *
      * @return array
      */
-    public function getDisplayOn();
+    public function getDisplayOn(): array;
 
     /**
      * Get Alternative caption
      *
      * @return string
      */
-    public function getAlt();
+    public function getAlt(): string;
 
     /**
      * Set product label status
      *
      * @param bool $status The product label status
-     *
      * @return ProductLabelInterface
      */
-    public function setIsActive(bool $status);
+    public function setIsActive(bool $status): ProductLabelInterface;
 
     /**
      * Set product label Id
      *
      * @param int $value The value
-     *
      * @return ProductLabelInterface
      */
-    public function setProductLabelId($value);
+    public function setProductLabelId(int $value): ProductLabelInterface;
 
     /**
      * Set Name
      *
      * @param string $value The value
-     *
      * @return ProductLabelInterface
      */
-    public function setName($value);
+    public function setName(string $value): ProductLabelInterface;
 
     /**
      * Set attribute Id.
      *
      * @param int $value The attribute Id
-     *
      * @return ProductLabelInterface
      */
-    public function setAttributeId(int $value);
+    public function setAttributeId(int $value): ProductLabelInterface;
 
     /**
      * Set option Id.
      *
      * @param int $value The option Id
-     *
      * @return ProductLabelInterface
      */
-    public function setOptionId(int $value);
+    public function setOptionId(int $value): ProductLabelInterface;
 
     /**
      * Set Image.
      *
      * @param string $value The product label Image
-     *
      * @return ProductLabelInterface
      */
-    public function setImage($value);
+    public function setImage(string $value): ProductLabelInterface;
 
     /**
      * Set position_category_list.
      *
      * @param int $value The option Id
-     *
      * @return ProductLabelInterface
      */
-    public function setPositionCategoryList($value);
+    public function setPositionCategoryList(int $value): ProductLabelInterface;
 
     /**
      * Set position_product_view.
      *
      * @param int $value The position product view
-     *
      * @return ProductLabelInterface
      */
-    public function setPositionProductView($value);
+    public function setPositionProductView(int $value): ProductLabelInterface;
 
     /**
      * Set position_product_view.
      *
      * @param array $value The position product view
-     *
      * @return ProductLabelInterface
      */
-    public function setDisplayOn($value);
+    public function setDisplayOn(array $value): ProductLabelInterface;
 
     /**
      * Set Alternative Caption
      *
      * @param string $value The value
-     *
      * @return ProductLabelInterface
      */
-    public function setAlt($value);
+    public function setAlt(string $value): ProductLabelInterface;
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -19,15 +21,11 @@ namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
  * Used to add the proper value for reloadUrl inside UI component configuration.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class System implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
-    /**
-     * @var \Magento\Backend\Model\UrlInterface
-     */
-    private $urlBuilder;
+    private \Magento\Backend\Model\UrlInterface $urlBuilder;
 
     /**
      * Search Terms constructor.

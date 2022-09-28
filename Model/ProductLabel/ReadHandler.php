@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -21,17 +23,12 @@ use Smile\ProductLabel\Helper\Data as DataHelper;
  * Class ReadHandler
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <hoelr@smile.fr>
  * @copyright 2019 Smile
  */
 class ReadHandler implements ExtensionInterface
 {
-
-    /**
-     * @var DataHelper
-     */
-    protected $dataHelper;
+    protected DataHelper $dataHelper;
 
     /**
      * ReadHandler constructor.
@@ -47,13 +44,11 @@ class ReadHandler implements ExtensionInterface
      * Perform action on relation/extension attribute
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     *
      * @param ProductInterface $product   Catalog Product Object
      * @param array            $arguments Array of Arguments
-     *
      * @return ProductInterface|object
      */
-    public function execute($product, $arguments = [])
+    public function execute(ProductInterface $product, array $arguments = [])
     {
         /** @var ProductInterface $product */
         $extension = $product->getExtensionAttributes();

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -18,7 +20,6 @@ namespace Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes;
  * Product Label Attributes Collection
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection
@@ -26,12 +27,12 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
     /**
      * @var array
      */
-    private $defaultAvailableFrontendInputs = ['select', 'multiselect'];
+    private array $defaultAvailableFrontendInputs = ['select', 'multiselect'];
 
     /**
      * @var array
      */
-    private $availableFrontendInputs = [];
+    private array $availableFrontendInputs = [];
 
     /**
      * Collection constructor.
@@ -53,9 +54,9 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Eav\Model\EntityFactory $eavEntityFactory,
-        \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
-        \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null,
-        $availableFrontendInputs = []
+        ?\Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
+        ?\Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null,
+        array $availableFrontendInputs = []
     ) {
         $this->availableFrontendInputs = array_merge($this->defaultAvailableFrontendInputs, $availableFrontendInputs);
 

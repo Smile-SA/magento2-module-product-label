@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -13,14 +15,13 @@
 
 namespace Smile\ProductLabel\Ui\Component\Listing\Column;
 
-use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Framework\View\Element\UiComponentFactory;
 
 /**
  * Class Thumbnail
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
@@ -56,10 +57,9 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
      * Prepare Data Source
      *
      * @param array $dataSource Data source
-     *
      * @return array
      */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
@@ -79,13 +79,11 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
 
     /**
      * @param array $row The row
-     *
-     * @return null|string
      */
-    protected function getAlt($row)
+    protected function getAlt(array $row): ?string
     {
         $altField = $this->getData('config/altField') ?: self::ALT_FIELD;
 
-        return isset($row[$altField]) ? $row[$altField] : null;
+        return $row[$altField] ?? null;
     }
 }

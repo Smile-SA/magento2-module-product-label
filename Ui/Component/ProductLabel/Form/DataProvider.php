@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -21,37 +23,22 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
  * Class Form DataProvider
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class DataProvider extends AbstractDataProvider
 {
+    protected \Smile\ProductLabel\Model\ImageLabel\FileInfo $fileInfo;
 
-    /**
-     * @var \Smile\ProductLabel\Model\ImageLabel\FileInfo
-     */
-    protected $fileInfo;
+    private \Magento\Ui\DataProvider\Modifier\PoolInterface $modifierPool;
 
-    /**
-     * @var \Magento\Ui\DataProvider\Modifier\PoolInterface
-     */
-    private $modifierPool;
+    private DataPersistorInterface $dataPersistor;
 
-    /**
-     * @var DataPersistorInterface
-     */
-    private $dataPersistor;
-
-    /**
-     * @var \Magento\Framework\App\RequestInterface
-     */
-    protected $request;
+    protected \Magento\Framework\App\RequestInterface $request;
 
     /**
      * DataProvider constructor.
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     *
      * @param string                                          $name              Component Name
      * @param string                                          $primaryFieldName  Primary Field Name
      * @param string                                          $requestFieldName  Request Field Name
@@ -64,9 +51,9 @@ class DataProvider extends AbstractDataProvider
      * @param array                                           $data              Component Data
      */
     public function __construct(
-        $name,
-        $primaryFieldName,
-        $requestFieldName,
+        string $name,
+        string $primaryFieldName,
+        string $requestFieldName,
         CollectionFactory $collectionFactory,
         DataPersistorInterface $dataPersistor,
         \Magento\Framework\App\RequestInterface $request,
@@ -126,10 +113,9 @@ class DataProvider extends AbstractDataProvider
      *
      * @param \Smile\ProductLabel\Model\ProductLabel $productLabel Product Label
      * @param array                                  $data         Product Label Data
-     *
      * @return array
      */
-    private function convertValues($productLabel, $data)
+    private function convertValues(\Smile\ProductLabel\Model\ProductLabel $productLabel, array $data): array
     {
         $fileName = $productLabel->getData('image');
 

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -20,15 +22,11 @@ namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
  * Used to populate "store_id" field according to current value of "store_id" for current product label.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
-    /**
-     * @var \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface
-     */
-    private $locator;
+    private \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator;
 
     /**
      * AttributeOptions constructor.
@@ -48,7 +46,8 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     {
         $productLabel = $this->locator->getProductLabel();
 
-        if ($productLabel
+        if (
+            $productLabel
             && $productLabel->getId()
             && !empty($productLabel->getStores())
             && empty($data[$productLabel->getId()]['store_id'])

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -18,16 +20,14 @@ namespace Smile\ProductLabel\Ui\Component\Source\Location;
  * Locations values for product label edit form.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Options implements \Magento\Framework\Data\OptionSourceInterface
 {
-
     /**
      * @var array|null
      */
-    private $locationsList;
+    private ?array $locationsList = null;
 
     /**
      * {@inheritdoc}
@@ -42,7 +42,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
      *
      * @return array
      */
-    private function getLocationsList()
+    private function getLocationsList(): array
     {
         $this->locationsList[0] = [
             'id'      => 0,

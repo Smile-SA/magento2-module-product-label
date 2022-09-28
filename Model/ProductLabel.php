@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -13,8 +15,8 @@
 
 namespace Smile\ProductLabel\Model;
 
-use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Model\AbstractModel;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
 
@@ -23,46 +25,28 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class ProductLabel extends AbstractModel implements IdentityInterface, ProductLabelInterface
 {
-    /**
-     * @var string
-     */
     const CACHE_TAG = 'smile_productlabel';
 
     /**
      * Store manager
-     *
-     * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $storeManager;
+    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
 
-    /**
-     * @var \Magento\Catalog\Model\ImageUploader
-     */
-    private $imageUploader;
+    private \Magento\Catalog\Model\ImageUploader $imageUploader;
 
-    /**
-     * @var \Smile\ProductLabel\Model\ImageLabel\FileInfo
-     */
-    protected $fileInfo;
+    protected \Smile\ProductLabel\Model\ImageLabel\FileInfo $fileInfo;
 
     /**
      * Media directory object (writable).
-     *
-     * @var \Magento\Framework\Filesystem\Directory\WriteInterface
      */
-    protected $mediaDirectory;
+    protected \Magento\Framework\Filesystem\Directory\WriteInterface $mediaDirectory;
 
-    /**
-     * @var string
-     */
-    protected $_cacheTag = self::CACHE_TAG;
+    protected string $_cacheTag = self::CACHE_TAG;
 
     /**
      * ProductLabel constructor.
@@ -80,8 +64,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
         \Magento\Framework\Registry $registry,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Filesystem $filesystem,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->storeManager   = $storeManager;
@@ -100,36 +84,33 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      *
      * @return string[]
      */
-    public function getIdentities()
+    public function getIdentities(): array
     {
-        return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG ];
+        return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG];
     }
 
     /**
      * Get field: is_active.
-     *
-     * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return (bool) $this->getData(self::IS_ACTIVE);
     }
 
     /**
      * Get field: product_label_id.
-     *
-     * @return int|null
      */
-    public function getProductLabelId()
+    public function getProductLabelId(): ?int
     {
         return $this->getId();
     }
 
     /**
      * Get field: store_id.
+     *
      * @return int[]
      */
-    public function getStores()
+    public function getStores(): array
     {
         $stores = $this->hasData('stores') ? $this->getData('stores') : $this->getData('store_id');
 
@@ -142,18 +123,14 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Get field: name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return (int) $this->getData(self::PRODUCTLABEL_NAME);
     }
 
     /**
      * Get field: attribute_id
-     *
-     * @return int
      */
     public function getAttributeId(): int
     {
@@ -162,8 +139,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Get field: option_id
-     *
-     * @return int
      */
     public function getOptionId(): int
     {
@@ -172,30 +147,24 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Get field: image
-     *
-     * @return string
      */
-    public function getProductLabelImage()
+    public function getProductLabelImage(): string
     {
         return (string) $this->getData(self::PRODUCTLABEL_IMAGE);
     }
 
     /**
      * Get field: position_category_list
-     *
-     * @return string
      */
-    public function getPositionCategoryList()
+    public function getPositionCategoryList(): string
     {
         return (string) $this->getData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST);
     }
 
     /**
      * Get field: position_product_view
-     *
-     * @return string
      */
-    public function getPositionProductView()
+    public function getPositionProductView(): string
     {
         return (string) $this->getData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW);
     }
@@ -205,7 +174,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      *
      * @return array
      */
-    public function getDisplayOn()
+    public function getDisplayOn(): array
     {
         $values = $this->getData(self::PRODUCTLABEL_DISPLAY_ON);
         if (is_numeric($values)) {
@@ -218,10 +187,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Get field: alt.
-     *
-     * @return string
      */
-    public function getAlt()
+    public function getAlt(): string
     {
         return (int) $this->getData(self::PRODUCTLABEL_ALT);
     }
@@ -229,8 +196,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     /**
      * Set field: is_active
      *
-     * @param boolean $status The status
-     *
+     * @param bool $status The status
      * @return $this
      */
     public function setIsActive(bool $status)
@@ -242,10 +208,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: product_label_id.
      *
      * @param int $value Field value
-     *
      * @return $this
      */
-    public function setProductLabelId($value)
+    public function setProductLabelId(int $value)
     {
         return $this->setId((int) $value);
     }
@@ -254,10 +219,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: name.
      *
      * @param string $value Field value
-     *
      * @return $this
      */
-    public function setName($value)
+    public function setName(string $value)
     {
         return $this->setData(self::PRODUCTLABEL_NAME, (string) $value);
     }
@@ -266,7 +230,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: attribute_id.
      *
      * @param int $value Field value
-     *
      * @return $this
      */
     public function setAttributeId(int $value)
@@ -278,7 +241,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: option_id.
      *
      * @param int $value Field value
-     *
      * @return $this
      */
     public function setOptionId(int $value)
@@ -290,10 +252,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: image.
      *
      * @param string $value Field value
-     *
      * @return $this
      */
-    public function setImage($value)
+    public function setImage(string $value)
     {
         return $this->setData(self::PRODUCTLABEL_IMAGE, $value);
     }
@@ -302,10 +263,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: position_category_list.
      *
      * @param string $value Field value
-     *
      * @return $this
      */
-    public function setPositionCategoryList($value)
+    public function setPositionCategoryList(string $value)
     {
         return $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, $value);
     }
@@ -314,10 +274,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: position_product_view.
      *
      * @param string $value Field value
-     *
      * @return $this
      */
-    public function setPositionProductView($value)
+    public function setPositionProductView(string $value)
     {
         return $this->setData(self::PRODUCTLABEL_IMAGE, $value);
     }
@@ -326,10 +285,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: display_on.
      *
      * @param array $value Field value
-     *
      * @return $this
      */
-    public function setDisplayOn($value)
+    public function setDisplayOn(array $value)
     {
         return $this->setData(self::PRODUCTLABEL_DISPLAY_ON, $value);
     }
@@ -338,10 +296,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
      * Set field: alt.
      *
      * @param string $value Field value
-     *
      * @return $this
      */
-    public function setAlt($value)
+    public function setAlt(string $value)
     {
         return $this->setData(self::PRODUCTLABEL_ALT, (string) $value);
     }
@@ -349,7 +306,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     /**
      * @param array $values Form values
      */
-    public function populateFromArray(array $values)
+    public function populateFromArray(array $values): void
     {
         $this->setData(self::IS_ACTIVE, (bool) $values['is_active']);
         $this->setData(self::PRODUCTLABEL_NAME, (string) $values['name']);
@@ -419,10 +376,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
         $this->_init(ProductLabelResource::class);
     }
 
-    /**
-     * @return \Magento\Catalog\Model\ImageUploader
-     */
-    private function getImageUploader()
+    private function getImageUploader(): \Magento\Catalog\Model\ImageUploader
     {
         if ($this->imageUploader === null) {
             $this->imageUploader = \Magento\Framework\App\ObjectManager::getInstance()

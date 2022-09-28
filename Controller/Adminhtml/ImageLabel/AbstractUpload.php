@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -19,17 +21,14 @@ use Magento\Framework\Controller\ResultFactory;
  * Class AbstractUpload
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 abstract class AbstractUpload extends \Magento\Backend\App\Action
 {
     /**
      * Image uploader
-     *
-     * @var \Magento\Catalog\Model\ImageUploader
      */
-    protected $imageUploader;
+    protected \Magento\Catalog\Model\ImageUploader $imageUploader;
 
     /**
      * AbstractUpload constructor.
@@ -47,10 +46,8 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
 
     /**
      * Upload file controller action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    public function execute(): \Magento\Framework\Controller\ResultInterface
     {
         try {
             $result = $this->imageUploader->saveFileToTmpDir($this->getFileId());
@@ -61,8 +58,5 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getFileId();
+    abstract protected function getFileId(): string;
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  *
@@ -6,7 +9,6 @@
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -18,7 +20,6 @@ namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
  * Adminhtml block: Button Delete
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class DeleteButton extends AbstractButton
@@ -45,10 +46,8 @@ class DeleteButton extends AbstractButton
 
     /**
      * Get URL for delete button
-     *
-     * @return string
      */
-    public function getDeleteUrl()
+    public function getDeleteUrl(): string
     {
         return $this->getUrl('*/*/delete', ['product_label_id' => $this->getObjectId()]);
     }

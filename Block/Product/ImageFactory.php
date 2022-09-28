@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * DISCLAIMER
  * Do not edit or add to this file if you wish to upgrade this module to newer
  * versions in the future.
  *
  * @category  Smile
- * @package   Smile\ProductLabel
  * @author    Romain Ruaud <romain.ruaud@smile.fr>
  * @copyright 2019 Smile
  * @license   Open Software License ("OSL") v. 3.0
@@ -27,40 +29,21 @@ use Magento\Framework\View\ConfigInterface;
  * It's a copy paste of the legacy image factory. Override is only in create() method and is highlighted.
  *
  * @category Smile
- * @package  Smile\ProductLabel
  * @author   Romain Ruaud <romain.ruaud@smile.fr>
  */
 class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
 {
-    /**
-     * @var ConfigInterface
-     */
-    private $presentationConfig;
+    private ConfigInterface $presentationConfig;
 
-    /**
-     * @var AssetImageFactory
-     */
-    private $viewAssetImageFactory;
+    private AssetImageFactory $viewAssetImageFactory;
 
-    /**
-     * @var ParamsBuilder
-     */
-    private $imageParamsBuilder;
+    private ParamsBuilder $imageParamsBuilder;
 
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
+    private ObjectManagerInterface $objectManager;
 
-    /**
-     * @var PlaceholderFactory
-     */
-    private $viewAssetPlaceholderFactory;
+    private PlaceholderFactory $viewAssetPlaceholderFactory;
 
-    /**
-     * @var string
-     */
-    private $template;
+    private string $template;
 
     /**
      * @param ObjectManagerInterface $objectManager               Object Manager
@@ -90,14 +73,11 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
      * Create image block from product
      *
      * @SuppressWarnings(PHPMD.ElseExpression) Method is inherited
-     *
      * @param Product    $product    The Product
      * @param string     $imageId    Image Id
      * @param array|null $attributes Attributes
-     *
-     * @return ImageBlock
      */
-    public function create(Product $product, string $imageId, array $attributes = null): ImageBlock
+    public function create(Product $product, string $imageId, ?array $attributes = null): ImageBlock
     {
         $viewImageConfig = $this->presentationConfig->getViewConfig()->getMediaAttributes(
             'Magento_Catalog',
@@ -154,8 +134,6 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
      * Retrieve image custom attributes for HTML element
      *
      * @param array $attributes Attributes
-     *
-     * @return string
      */
     private function getStringCustomAttributes(array $attributes): string
     {
@@ -172,8 +150,6 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
      *
      * @param int $width  Width
      * @param int $height Height
-     *
-     * @return float
      */
     private function getRatio(int $width, int $height): float
     {
@@ -187,8 +163,6 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
     /**
      * @param Product $product   The product
      * @param string  $imageType The image type
-     *
-     * @return string
      */
     private function getLabel(Product $product, string $imageType): string
     {
