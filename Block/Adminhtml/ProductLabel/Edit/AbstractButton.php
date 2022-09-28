@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Block\Adminhtml\ProductLabel\Edit;
 
 use Magento\Backend\Block\Widget\Context;
@@ -22,9 +11,6 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
 
 /**
  * Adminhtml block: Abstract Button
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 abstract class AbstractButton implements ButtonProviderInterface
 {
@@ -47,6 +33,8 @@ abstract class AbstractButton implements ButtonProviderInterface
     }
 
     /**
+     * Get button data
+     *
      * @return mixed
      */
     abstract public function getButtonData();
@@ -64,6 +52,7 @@ abstract class AbstractButton implements ButtonProviderInterface
 
             return $model->getProductLabelId();
         } catch (NoSuchEntityException $e) {
+            $e->getMessage();
         }
 
         return null;

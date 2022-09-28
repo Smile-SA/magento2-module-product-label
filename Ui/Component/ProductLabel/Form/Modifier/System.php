@@ -2,26 +2,11 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
 
 /**
  * Smile Product label edit form data provider modifier :
  * Used to add the proper value for reloadUrl inside UI component configuration.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class System implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
@@ -38,7 +23,7 @@ class System implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyData(array $data)
     {
@@ -53,7 +38,7 @@ class System implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyMeta(array $meta)
     {

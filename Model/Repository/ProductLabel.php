@@ -2,22 +2,12 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\Repository;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory;
+use Smile\ProductLabel\Api\Data\ProductLabelSearchResultsInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelSearchResultsInterfaceFactory;
 use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
 use Smile\ProductLabel\Model\Repository\Manager as RepositoryManager;
@@ -27,9 +17,6 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as Pro
 
 /**
  * ProductLabel Repository
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class ProductLabel implements ProductLabelRepositoryInterface
 {
@@ -53,11 +40,11 @@ class ProductLabel implements ProductLabelRepositoryInterface
     ) {
         $this->productLabelRepositoryManager = $repositoryManagerFactory->create(
             [
-                'objectFactory'              => $objectFactory,
-                'objectResource'             => $objectResource,
-                'objectCollectionFactory'    => $objectCollectionFactory,
+                'objectFactory' => $objectFactory,
+                'objectResource' => $objectResource,
+                'objectCollectionFactory' => $objectCollectionFactory,
                 'objectSearchResultsFactory' => $objectSearchResultsFactory,
-                'identifierFieldName'        => ProductLabelInterface::PRODUCTLABEL_ID,
+                'identifierFieldName' => ProductLabelInterface::PRODUCTLABEL_ID,
             ]
         );
     }
@@ -87,9 +74,9 @@ class ProductLabel implements ProductLabelRepositoryInterface
     /**
      * Retrieve productLabels which match a specified criteria.
      *
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria Search Criteria
+     * @param SearchCriteriaInterface|null $searchCriteria Search Criteria
      */
-    public function getList(?SearchCriteriaInterface $searchCriteria = null): \Smile\ProductLabel\Api\Data\ProductLabelSearchResultsInterface
+    public function getList(?SearchCriteriaInterface $searchCriteria = null): ProductLabelSearchResultsInterface
     {
         return $this->productLabelRepositoryManager->getEntities($searchCriteria);
     }

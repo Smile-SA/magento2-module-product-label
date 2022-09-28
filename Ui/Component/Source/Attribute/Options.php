@@ -2,31 +2,16 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Ui\Component\Source\Attribute;
 
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory;
 
 /**
  * Attributes options values for virtual attribute product label edit form.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Options implements \Magento\Framework\Data\OptionSourceInterface
 {
-    private \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory $attributesCollectionFactory;
+    private CollectionFactory $attributesCollectionFactory;
 
     /**
      * @var array|null
@@ -44,7 +29,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {

@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Romain Ruaud <romain.ruaud@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Block\Product;
 
 use Magento\Catalog\Block\Product\Image as ImageBlock;
@@ -27,9 +16,6 @@ use Magento\Framework\View\ConfigInterface;
 /**
  * Custom Image Factory.
  * It's a copy paste of the legacy image factory. Override is only in create() method and is highlighted.
- *
- * @category Smile
- * @author   Romain Ruaud <romain.ruaud@smile.fr>
  */
 class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
 {
@@ -110,7 +96,10 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
                 'width'             => $imageMiscParams['image_width'],
                 'height'            => $imageMiscParams['image_height'],
                 'label'             => $this->getLabel($product, $imageMiscParams['image_type']),
-                'ratio'             => $this->getRatio($imageMiscParams['image_width'], $imageMiscParams['image_height']),
+                'ratio'             => $this->getRatio(
+                    $imageMiscParams['image_width'],
+                    $imageMiscParams['image_height']
+                ),
                 'custom_attributes' => $this->getStringCustomAttributes($attributes),
                 'product_id'        => $product->getId(),
             ],
@@ -161,12 +150,15 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
     }
 
     /**
+     * Get label
+     *
      * @param Product $product   The product
      * @param string  $imageType The image type
      */
     private function getLabel(Product $product, string $imageType): string
     {
-        $label = $product->getData($imageType . '_' . 'label');
+        $concat = $imageType . '_label';
+        $label = $product->getData($concat);
         if (empty($label)) {
             $label = $product->getName();
         }

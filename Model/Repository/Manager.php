@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\Repository;
 
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface as CollectionProcessor;
@@ -27,9 +16,6 @@ use Magento\Framework\Phrase;
 
 /**
  * Repository Manager
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Manager
 {
@@ -237,7 +223,6 @@ class Manager
         /** @var \Magento\Framework\Api\SearchResults $searchResults */
         $searchResults = $this->objectSearchResultsFactory->create();
 
-
         if ($searchCriteria) {
             $searchResults->setSearchCriteria($searchCriteria);
             $this->collectionProcessor->process($searchCriteria, $collection);
@@ -245,7 +230,6 @@ class Manager
 
         // Load the collection.
         $collection->load();
-
 
         // Build the result.
         $searchResults->setTotalCount($collection->getSize());

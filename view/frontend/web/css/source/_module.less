@@ -1,85 +1,74 @@
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
-.product-image-wrapper {
-    .top_left {
-        position: absolute;
-        top: 0;
-        z-index: 2;
-        left: 0;
-        max-width: 25%;
-    }
-
-    .top_right {
-        position: absolute;
-        top: 0;
-        z-index: 2;
-        right: 0;
-        max-width: 25%;
-    }
-
-    .lower_left {
-        position: absolute;
-        bottom: 0;
-        z-index: 2;
-        left: 0;
-        max-width: 25%;
-    }
-
-    .lower_right {
-        position: absolute;
-        bottom: 0;
-        z-index: 2;
-        right: 0;
-        max-width: 25%;
-    }
-}
-
-.product {
-    &.media {
-
-        position: relative;
-
-        .top_left {
+& when (@media-common = true) {
+    .product-image-wrapper {
+        .top-left {
+            left: 0;
+            max-width: 25%;
             position: absolute;
             top: 0;
             z-index: 2;
-            left: 0;
-            max-width: 10%;
         }
 
-        .top_right {
+        .top-right {
+            max-width: 25%;
             position: absolute;
+            right: 0;
             top: 0;
             z-index: 2;
-            right: 0;
-            max-width: 10%;
         }
 
-        .lower_left {
-            position: absolute;
-            bottom: 110px;
-            z-index: 2;
+        .lower-left {
+            bottom: 0;
             left: 0;
-            max-width: 10%;
+            max-width: 25%;
+            position: absolute;
+            z-index: 2;
         }
 
-        .lower_right {
+        .lower-right {
+            bottom: 0;
+            max-width: 25%;
             position: absolute;
-            bottom: 110px;
-            z-index: 2;
             right: 0;
-            max-width: 10%;
+            z-index: 2;
+        }
+    }
+
+    .product {
+        &.media {
+
+            position: relative;
+
+            .top-left {
+                left: 0;
+                max-width: 10%;
+                position: absolute;
+                top: 0;
+                z-index: 2;
+            }
+
+            .top-right {
+                max-width: 10%;
+                position: absolute;
+                right: 0;
+                top: 0;
+                z-index: 2;
+            }
+
+            .lower-left {
+                bottom: 110px;
+                left: 0;
+                max-width: 10%;
+                position: absolute;
+                z-index: 2;
+            }
+
+            .lower-right {
+                bottom: 110px;
+                max-width: 10%;
+                position: absolute;
+                right: 0;
+                z-index: 2;
+            }
         }
     }
 }

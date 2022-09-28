@@ -2,18 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Backend\App\Action\Context;
@@ -22,15 +10,14 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
+use Magento\Ui\Component\MassAction\Filter;
 use Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory as ProductLabelFactory;
 use Smile\ProductLabel\Api\ProductLabelRepositoryInterface as ProductLabelRepository;
 use Smile\ProductLabel\Model\ProductLabel;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
 
 /**
  * Admin Action: productlabel/save
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Save extends AbstractAction
 {
@@ -39,13 +26,13 @@ class Save extends AbstractAction
     /**
      * Save constructor.
      *
-     * @param Context                                                                $context           UI Component context
-     * @param Registry                                                               $coreRegistry      Core Registry
-     * @param ProductLabelFactory                                                    $modelFactory      Product Label Factory
-     * @param ProductLabelRepository                                                 $modelRepository   Product Label Repository
-     * @param DataPersistorInterface                                                 $dataPersistor     Data Persistor
-     * @param \Magento\Ui\Component\MassAction\Filter                                $filter            Action Filter
-     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory Product Label Collection Factory
+     * @param Context $context UI Component context
+     * @param Registry $coreRegistry Core Registry
+     * @param ProductLabelFactory $modelFactory Product Label Factory
+     * @param ProductLabelRepository $modelRepository Product Label Repository
+     * @param DataPersistorInterface $dataPersistor Data Persistor
+     * @param Filter $filter Action Filter
+     * @param CollectionFactory $collectionFactory Product Label Collection Factory
      */
     public function __construct(
         Context $context,
@@ -53,8 +40,8 @@ class Save extends AbstractAction
         ProductLabelFactory $modelFactory,
         ProductLabelRepository $modelRepository,
         DataPersistorInterface $dataPersistor,
-        \Magento\Ui\Component\MassAction\Filter $filter,
-        \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory
+        Filter $filter,
+        CollectionFactory $collectionFactory
     ) {
         parent::__construct($context, $coreRegistry, $modelFactory, $modelRepository, $filter, $collectionFactory);
 
@@ -62,7 +49,7 @@ class Save extends AbstractAction
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function execute()
     {
@@ -85,8 +72,6 @@ class Save extends AbstractAction
 
         // Load the product label.
         $model = $this->initModel($productlabelId);
-
-
 
         // By default, redirect to the edit page of the product label.
         $resultRedirect->setPath('*/*/edit', ['product_label_id' => $productlabelId]);

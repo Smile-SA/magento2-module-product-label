@@ -2,26 +2,15 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\ImageLabel;
 
+use Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend;
 use Magento\Framework\UrlInterface;
 
 /**
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * Image label class
  */
-class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
+class Image extends AbstractBackend
 {
     /**
      * media sub folder
@@ -45,7 +34,7 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     }
 
     /**
-     * get images base url
+     * Get images base url
      */
     public function getBaseUrl(): string
     {

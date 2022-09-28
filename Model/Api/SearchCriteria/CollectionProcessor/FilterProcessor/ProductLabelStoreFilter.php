@@ -2,33 +2,24 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor;
+
+use Magento\Framework\Api\Filter;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor\CustomFilterInterface;
+use Magento\Framework\Data\Collection\AbstractDb;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection;
 
 /**
  * Apply store filter on a product label collection.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-class ProductLabelStoreFilter implements \Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor\CustomFilterInterface
+class ProductLabelStoreFilter implements CustomFilterInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function apply(\Magento\Framework\Api\Filter $filter, \Magento\Framework\Data\Collection\AbstractDb $collection)
+    public function apply(Filter $filter, AbstractDb $collection)
     {
-        /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection $collection */
+        /** @var Collection $collection */
         $collection->addStoreFilter($filter->getValue());
 
         return true;

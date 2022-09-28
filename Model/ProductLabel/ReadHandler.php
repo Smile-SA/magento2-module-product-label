@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\ProductLabel;
 
 use Magento\Catalog\Api\Data\ProductInterface;
@@ -20,11 +9,7 @@ use Magento\Framework\EntityManager\Operation\ExtensionInterface;
 use Smile\ProductLabel\Helper\Data as DataHelper;
 
 /**
- * Class ReadHandler
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * Class ReadHandler Locator
  */
 class ReadHandler implements ExtensionInterface
 {
@@ -57,7 +42,7 @@ class ReadHandler implements ExtensionInterface
             return $product;
         }
 
-        $productLabels = $this->dataHelper->getProductPLabels($product);
+        $productLabels = $this->dataHelper->getProductLabels($product);
 
         $extension->setProductLabels($productLabels);
 

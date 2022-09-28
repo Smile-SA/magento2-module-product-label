@@ -2,28 +2,17 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\ResourceModel\ProductLabel\Grid;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection as SmileProductLabelCollection;
 
 /**
  * Product Label Grid Collection
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection implements SearchResultInterface
+class Collection extends SmileProductLabelCollection implements SearchResultInterface
 {
     /**
      * @var \Magento\Framework\Api\Search\AggregationInterface[]
@@ -31,7 +20,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     private array $aggregations;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function setItems(?array $items = null)
     {
@@ -39,7 +28,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAggregations()
     {
@@ -47,7 +36,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function setAggregations($aggregations)
     {
@@ -57,7 +46,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getSearchCriteria()
     {
@@ -65,15 +54,15 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria)
     {
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getTotalCount()
     {
@@ -81,7 +70,7 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function setTotalCount($totalCount)
     {
@@ -89,18 +78,22 @@ class Collection extends \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Co
     }
 
     /**
+     * Construct.
+     *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function _construct()
     {
         parent::_construct();
-        $this->setModel('Magento\Framework\View\Element\UiComponent\DataProvider\Document');
+        $this->setModel(Document::class);
     }
 
     /**
+     * Render filters before
+     *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function _renderFiltersBefore()
     {

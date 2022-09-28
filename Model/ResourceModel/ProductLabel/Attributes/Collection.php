@@ -2,25 +2,19 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes;
+
+use Magento\Eav\Model\Config;
+use Magento\Eav\Model\EntityFactory as EavEntityFactory;
+use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
+use Magento\Framework\Data\Collection\EntityFactory;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+use Psr\Log\LoggerInterface;
 
 /**
  * Product Label Attributes Collection
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection
 {
@@ -37,26 +31,26 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
     /**
      * Collection constructor.
      *
-     * @param \Magento\Framework\Data\Collection\EntityFactory             $entityFactory           Entity Factory
-     * @param \Psr\Log\LoggerInterface                                     $logger                  Logger Interface
-     * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy           Fetch Strategy Interface
-     * @param \Magento\Framework\Event\ManagerInterface                    $eventManager            Event Manager Interface
-     * @param \Magento\Eav\Model\Config                                    $eavConfig               EAV Config
-     * @param \Magento\Eav\Model\EntityFactory                             $eavEntityFactory        EAV Entity Factory
-     * @param \Magento\Framework\DB\Adapter\AdapterInterface|null          $connection              Adapter Interface
-     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null    $resource                Resource Model
-     * @param array                                                        $availableFrontendInputs Array of Available Frontend Inputs
+     * @param EntityFactory $entityFactory Entity Factory
+     * @param LoggerInterface $logger Logger Interface
+     * @param FetchStrategyInterface $fetchStrategy Fetch Strategy Interface
+     * @param ManagerInterface $eventManager Event Manager Interface
+     * @param Config $eavConfig EAV Config
+     * @param EavEntityFactory $eavEntityFactory EAV Entity Factory
+     * @param AdapterInterface|null $connection Adapter Interface
+     * @param AbstractDb|null $resource Resource Model
+     * @param array $availableFrontendInputs Array of Available Frontend Inputs
      */
     public function __construct(
-        \Magento\Framework\Data\Collection\EntityFactory $entityFactory,
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
-        \Magento\Framework\Event\ManagerInterface $eventManager,
-        \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Eav\Model\EntityFactory $eavEntityFactory,
-        ?\Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
-        ?\Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null,
-        array $availableFrontendInputs = []
+        EntityFactory          $entityFactory,
+        LoggerInterface        $logger,
+        FetchStrategyInterface $fetchStrategy,
+        ManagerInterface       $eventManager,
+        Config                 $eavConfig,
+        EavEntityFactory       $eavEntityFactory,
+        ?AdapterInterface      $connection = null,
+        ?AbstractDb            $resource = null,
+        array                  $availableFrontendInputs = []
     ) {
         $this->availableFrontendInputs = array_merge($this->defaultAvailableFrontendInputs, $availableFrontendInputs);
 
@@ -73,9 +67,10 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
     }
 
     /**
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * Init select
      *
-     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * @inheritdoc
      */
     protected function _initSelect()
     {

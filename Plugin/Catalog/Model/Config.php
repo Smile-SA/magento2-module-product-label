@@ -2,24 +2,15 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Plugin\Catalog\Model;
 
+use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use Magento\Eav\Model\Config as EavConfigModel;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
+
 /**
- * Plugin on Catalog Configuration to enforce loading of all attributes used for product labels rules to be loaded on listing pages.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * Plugin on Catalog Configuration
+ * to enforce loading of all attributes used for product labels rules to be loaded on listing pages.
  */
 class Config
 {
@@ -33,23 +24,23 @@ class Config
     /**
      * Eav config
      */
-    private \Magento\Eav\Model\Config $eavConfig;
+    private EavConfigModel $eavConfig;
 
-    private \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory;
+    private Attribute $attributeFactory;
 
-    private \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $productLabelCollectionFactory;
+    private CollectionFactory $productLabelCollectionFactory;
 
     /**
      * Config constructor.
      *
-     * @param \Magento\Eav\Model\Config                                              $eavConfig                     EAV Config
-     * @param \Magento\Catalog\Model\ResourceModel\Eav\Attribute                     $attributeFactory              Attributes Factory
-     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $productLabelCollectionFactory Product Label Factory
+     * @param EavConfigModel $eavConfig EAV Config
+     * @param Attribute $attributeFactory Attributes Factory
+     * @param CollectionFactory $productLabelCollectionFactory Product Label Factory
      */
     public function __construct(
-        \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory,
-        \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $productLabelCollectionFactory
+        EavConfigModel    $eavConfig,
+        Attribute         $attributeFactory,
+        CollectionFactory $productLabelCollectionFactory
     ) {
         $this->eavConfig                     = $eavConfig;
         $this->attributeFactory              = $attributeFactory;
@@ -70,7 +61,7 @@ class Config
             $this->usedInProductListing = $result;
             $entityType                 = \Magento\Catalog\Model\Product::ENTITY;
 
-            /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
+            /** @var CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
             // Here you have all the attribute ids that are used to build product label rules.
             $attributeIds = $productLabelsCollection->getAllAttributeIds();

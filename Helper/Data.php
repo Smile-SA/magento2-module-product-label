@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Helper;
 
 use Magento\Catalog\Api\Data\ProductInterface;
@@ -28,9 +17,6 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
 
 /**
  * Product Label Data helper
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Data extends AbstractHelper
 {
@@ -67,6 +53,8 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Get product label ids
+     *
      * @param ProductInterface $product The product
      * @return int[]
      */
@@ -85,6 +73,8 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Get search criteria on product label ids
+     *
      * @param int[] $plabelIds Product Label ids
      */
     public function getSearchCriteriaOnProductLabelIds(array $plabelIds): SearchCriteria
@@ -108,10 +98,12 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Get product labels
+     *
      * @param ProductInterface $product The Product
      * @return ProductLabelInterface[]
      */
-    public function getProductPLabels(ProductInterface $product): array
+    public function getProductLabels(ProductInterface $product): array
     {
         $plabelIds      = $this->getProductLabelIds($product);
         $searchCriteria = $this->getSearchCriteriaOnProductLabelIds($plabelIds);

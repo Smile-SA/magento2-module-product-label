@@ -2,31 +2,20 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\ResourceModel\ProductLabel;
 
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+use Smile\ProductLabel\Model\ProductLabel;
 
 /**
  * Product Label Collection
- *
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-    protected string $_idFieldName = ProductLabelInterface::PRODUCTLABEL_ID;
+    /**
+     * @inheritdoc
+     */
+    protected $_idFieldName = ProductLabelInterface::PRODUCTLABEL_ID;
 
     /**
      * @var int[]
@@ -115,7 +104,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function addFieldToFilter($field, $condition = null)
     {
@@ -157,14 +146,16 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     }
 
     /**
+     * Construct.
+     *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function _construct()
     {
         $this->_init(
-            'Smile\ProductLabel\Model\ProductLabel',
-            'Smile\ProductLabel\Model\ResourceModel\ProductLabel'
+            ProductLabel::class,
+            \Smile\ProductLabel\Model\ResourceModel\ProductLabel::class
         );
 
         /* @see self::_renderFiltersBefore() */
@@ -173,8 +164,10 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     }
 
     /**
+     * After load
+     *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function _afterLoad()
     {
@@ -209,9 +202,10 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     }
 
     /**
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * Render filter before
      *
-     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * @inheritdoc
      */
     protected function _renderFiltersBefore()
     {

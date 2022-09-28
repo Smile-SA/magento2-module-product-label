@@ -2,26 +2,12 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Controller\Adminhtml\ImageLabel;
 
 use Magento\Framework\Controller\ResultFactory;
 
 /**
  * Class AbstractUpload
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 abstract class AbstractUpload extends \Magento\Backend\App\Action
 {
@@ -58,5 +44,8 @@ abstract class AbstractUpload extends \Magento\Backend\App\Action
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
 
+    /**
+     * Get file id
+     */
     abstract protected function getFileId(): string;
 }

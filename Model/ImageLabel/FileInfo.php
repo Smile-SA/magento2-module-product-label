@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model\ImageLabel;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
@@ -24,16 +13,13 @@ use Magento\Framework\Filesystem\Directory\WriteInterface;
 /**
  * Class FileInfo
  * Provides information about requested file
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class FileInfo
 {
     /**
      * Path in /pub/media directory
      */
-    const ENTITY_MEDIA_PATH = '/smile_productlabel/imagelabel';
+    private const ENTITY_MEDIA_PATH = '/smile_productlabel/imagelabel';
 
     private Filesystem $filesystem;
 

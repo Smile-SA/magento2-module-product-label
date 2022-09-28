@@ -2,29 +2,13 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
 
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
  * Smile Product Label edit form data provider modifier :
- *
  * Used to set "attribute_id" field to disabled in case of already existing product label.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
@@ -42,7 +26,7 @@ class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyData(array $data)
     {
@@ -58,7 +42,7 @@ class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyMeta(array $meta)
     {

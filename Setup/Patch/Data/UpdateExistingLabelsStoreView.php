@@ -2,27 +2,14 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Romain Ruaud <romain.ruaud@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Store\Model\Store;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
  * Populate Label/Store link table with default store view for all existing labels.
- *
- * @category Smile
- * @author   Romain Ruaud <romain.ruaud@smile.fr>
  */
 class UpdateExistingLabelsStoreView implements DataPatchInterface
 {
@@ -38,7 +25,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
@@ -49,7 +36,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
             ProductLabelInterface::TABLE_NAME,
             [
                 ProductLabelInterface::PRODUCTLABEL_ID => ProductLabelInterface::PRODUCTLABEL_ID,
-                new \Zend_Db_Expr(\Magento\Store\Model\Store::DEFAULT_STORE_ID . ' as ' . ProductLabelInterface::STORE_ID),
+                new \Zend_Db_Expr(Store::DEFAULT_STORE_ID . ' as ' . ProductLabelInterface::STORE_ID),
             ]
         );
 
@@ -64,7 +51,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -72,7 +59,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {

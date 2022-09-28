@@ -2,74 +2,71 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Model;
 
+use Magento\Catalog\Model\ImageUploader;
+use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Filesystem;
+use Magento\Framework\Filesystem\Directory\WriteInterface;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
+use Magento\Store\Model\StoreManagerInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+use Smile\ProductLabel\Model\ImageLabel\FileInfo;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
 
 /**
  * Product Label Model
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class ProductLabel extends AbstractModel implements IdentityInterface, ProductLabelInterface
 {
-    const CACHE_TAG = 'smile_productlabel';
+    public const CACHE_TAG = 'smile_productlabel';
 
     /**
      * Store manager
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected StoreManagerInterface $storeManager;
 
-    private \Magento\Catalog\Model\ImageUploader $imageUploader;
+    private ImageUploader $imageUploader;
 
-    protected \Smile\ProductLabel\Model\ImageLabel\FileInfo $fileInfo;
+    protected FileInfo $fileInfo;
 
     /**
      * Media directory object (writable).
      */
-    protected \Magento\Framework\Filesystem\Directory\WriteInterface $mediaDirectory;
+    protected WriteInterface $mediaDirectory;
 
-    protected string $_cacheTag = self::CACHE_TAG;
+    /**
+     * @var string|array|bool
+     */
+    protected $_cacheTag = self::CACHE_TAG;
 
     /**
      * ProductLabel constructor.
      *
-     * @param \Magento\Framework\Model\Context                             $context            Context
-     * @param \Magento\Framework\Registry                                  $registry           Registry
-     * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager       Store Manager
-     * @param \Magento\Framework\Filesystem                                $filesystem         FileSystem Helper
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource           Resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection Resource Collection
-     * @param array                                                        $data               Object Data
+     * @param Context $context Context
+     * @param Registry $registry Registry
+     * @param StoreManagerInterface $storeManager Store Manager
+     * @param Filesystem $filesystem FileSystem Helper
+     * @param AbstractResource|null $resource Resource
+     * @param AbstractDb|null $resourceCollection Resource Collection
+     * @param array $data Object Data
      */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\Filesystem $filesystem,
-        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = []
+        Context               $context,
+        Registry              $registry,
+        StoreManagerInterface $storeManager,
+        Filesystem            $filesystem,
+        ?AbstractResource     $resource = null,
+        ?AbstractDb           $resourceCollection = null,
+        array                 $data = []
     ) {
         $this->storeManager   = $storeManager;
-        $this->mediaDirectory = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+        $this->mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::MEDIA);
         parent::__construct(
             $context,
             $registry,
@@ -183,7 +180,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
         return $values ? $values : [];
     }
-
 
     /**
      * Get field: alt.
@@ -304,6 +300,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
+     * Populate from array
+     *
      * @param array $values Form values
      */
     public function populateFromArray(array $values): void
@@ -321,6 +319,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
+     * Get image url
+     *
      * @return bool|string
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -339,7 +339,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
                 );
 
                 $url = $mediaBaseUrl
-                    . ltrim(\Smile\ProductLabel\Model\ImageLabel\FileInfo::ENTITY_MEDIA_PATH, '/')
+                    . ltrim(FileInfo::ENTITY_MEDIA_PATH, '/')
                     . '/'
                     . $image;
 
@@ -353,6 +353,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
+     * After save
+     *
      * @return $this
      */
     public function afterSave()
@@ -368,15 +370,20 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     }
 
     /**
+     * Construct.
+     *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function _construct()
     {
         $this->_init(ProductLabelResource::class);
     }
 
-    private function getImageUploader(): \Magento\Catalog\Model\ImageUploader
+    /**
+     * Get image uploader
+     */
+    private function getImageUploader(): ImageUploader
     {
         if ($this->imageUploader === null) {
             $this->imageUploader = \Magento\Framework\App\ObjectManager::getInstance()

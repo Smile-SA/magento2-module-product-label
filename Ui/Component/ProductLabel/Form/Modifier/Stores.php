@@ -2,27 +2,12 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
 
 /**
  * Smile Product Label edit form data provider modifier :
  *
  * Used to populate "store_id" field according to current value of "store_id" for current product label.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
@@ -40,7 +25,7 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyData(array $data)
     {
@@ -59,7 +44,7 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyMeta(array $meta)
     {

@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Block\ProductLabel;
 
 use Magento\Catalog\Api\Data\ProductInterface;
@@ -24,10 +13,7 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as ProductLabelCollectionFactory;
 
 /**
- * Class ProductLabel
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * Class ProductLabel template
  */
 class ProductLabel extends Template implements IdentityInterface
 {
@@ -153,6 +139,7 @@ class ProductLabel extends Template implements IdentityInterface
 
     /**
      * Check if product has product labels
+     *
      * If it has, return an array of product labels
      *
      * @return array
@@ -172,7 +159,10 @@ class ProductLabel extends Template implements IdentityInterface
                     if (!is_array($options)) {
                         $options = explode(',', $options);
                     }
-                    if (in_array($optionIdLabel, $options) && in_array($this->getCurrentView(), $productLabel['display_on'])) {
+                    if (
+                        in_array($optionIdLabel, $options) &&
+                        in_array($this->getCurrentView(), $productLabel['display_on'])
+                    ) {
                         $productLabel['class'] = $this->getCssClass($productLabel);
                         $productLabel['image'] = $this->getImageUrl($productLabel['image']);
                         $class = $this->getCssClass($productLabel);
@@ -207,7 +197,11 @@ class ProductLabel extends Template implements IdentityInterface
         /** @var IdentityInterface $product */
         $product = $this->getProduct();
         if ($product) {
-            $identities = array_merge($identities, $product->getIdentities(), [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]);
+            $identities = array_merge(
+                $identities,
+                $product->getIdentities(),
+                [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]
+            );
         }
 
         return $identities;
@@ -235,6 +229,7 @@ class ProductLabel extends Template implements IdentityInterface
 
     /**
      * Fetch product labels list : the list of all enabled product labels.
+     *
      * Fetched only once and put in cache.
      *
      * @return array
@@ -263,7 +258,11 @@ class ProductLabel extends Template implements IdentityInterface
                 return $label;
             }, $productLabelList);
 
-            $this->cache->save(json_encode($productLabelList), $cacheKey, [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]);
+            $this->cache->save(
+                json_encode($productLabelList),
+                $cacheKey,
+                [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]
+            );
         }
 
         return $productLabelList;

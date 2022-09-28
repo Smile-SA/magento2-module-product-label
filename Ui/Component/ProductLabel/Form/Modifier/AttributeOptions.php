@@ -2,18 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
 
 /**
@@ -21,9 +9,6 @@ namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
  * Smile Product Label edit form data provider modifier :
  *
  * Used to populate "option_id" field according to current value of "attribute_id" for current product label.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
 {
@@ -46,7 +31,7 @@ class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInte
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyData(array $data)
     {
@@ -54,7 +39,7 @@ class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInte
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyMeta(array $meta)
     {

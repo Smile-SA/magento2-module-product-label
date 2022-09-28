@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Framework\Controller\Result\Redirect as ResultRedirect;
@@ -21,14 +10,12 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Admin Action: productlabel/delete
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class Delete extends AbstractAction
 {
     /**
      * Execute action based on request and return result
+     *
      * Note: Request will be added as operation argument in future
      *
      * @throws \Magento\Framework\Exception\NotFoundException

@@ -2,33 +2,20 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Ui\Component\Listing\Column;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Ui\Component\Listing\Columns\Column;
 
 /**
- * Class Thumbnail
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * Class Thumbnail for Ui component
  */
-class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
+class Thumbnail extends Column
 {
-    const NAME = 'thumbnail';
+    protected const NAME = 'thumbnail';
 
-    const ALT_FIELD = 'name';
+    protected const ALT_FIELD = 'name';
 
     /**
      * Thumbnail constructor.
@@ -78,6 +65,8 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
     }
 
     /**
+     * Get alt
+     *
      * @param array $row The row
      */
     protected function getAlt(array $row): ?string

@@ -2,48 +2,36 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Plugin\Catalog\Ui\DataProvider\Product\Form\Modifier;
 
+use Magento\Catalog\Api\Data\ProductAttributeInterface;
+use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav;
+use Magento\Framework\Stdlib\ArrayManager;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as ProductLabelCollectionFactory;
 
 /**
  * Smile Product Label form Ui component plugin.
  * Used to add a tooltip around virtual attributes.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class EavPlugin
 {
     /**
      * Template for tooltip added to virtual attributes in product edit form.
      */
-    const TOOLTIP_TEMPLATE = 'Smile_ProductLabel/form/element/helper/tooltip';
+    private const TOOLTIP_TEMPLATE = 'Smile_ProductLabel/form/element/helper/tooltip';
 
-    private \Magento\Framework\Stdlib\ArrayManager $arrayManager;
+    private ArrayManager $arrayManager;
 
     private ProductLabelCollectionFactory $plabelCollectionFactory;
 
     /**
      * EavPlugin constructor.
      *
-     * @param \Magento\Framework\Stdlib\ArrayManager $arrayManager            Array Manager
+     * @param ArrayManager $arrayManager            Array Manager
      * @param ProductLabelCollectionFactory          $plabelCollectionFactory Collection Factory
      */
     public function __construct(
-        \Magento\Framework\Stdlib\ArrayManager $arrayManager,
+        ArrayManager $arrayManager,
         ProductLabelCollectionFactory $plabelCollectionFactory
     ) {
         $this->arrayManager          = $arrayManager;
@@ -53,24 +41,27 @@ class EavPlugin
     /**
      * Fix custom entity field meta.
      *
-     * @param \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav $subject   Object.
-     * @param callable                                                   $proceed   Original method.
-     * @param \Magento\Catalog\Api\Data\ProductAttributeInterface        $attribute Attribute.
-     * @param string                                                     $groupCode Group code.
-     * @param int                                                        $sortOrder Sort order.
+     * @param Eav $subject   Object.
+     * @param callable $proceed Original method.
+     * @param ProductAttributeInterface $attribute Attribute.
+     * @param string $groupCode Group code.
+     * @param int $sortOrder Sort order.
      * @return array
      */
     public function aroundSetupAttributeMeta(
-        \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav $subject,
+        Eav $subject,
         callable $proceed,
-        \Magento\Catalog\Api\Data\ProductAttributeInterface $attribute,
+        ProductAttributeInterface $attribute,
         string $groupCode,
         int $sortOrder
     ): array {
         $meta = $proceed($attribute, $groupCode, $sortOrder);
 
         if ($this->hasCalculatedValues($attribute)) {
-            $configPath = ltrim($subject::META_CONFIG_PATH, \Magento\Framework\Stdlib\ArrayManager::DEFAULT_PATH_DELIMITER);
+            $configPath = ltrim(
+                $subject::META_CONFIG_PATH,
+                ArrayManager::DEFAULT_PATH_DELIMITER
+            );
 
             $fieldConfig = [
                 'tooltip' => [
@@ -88,9 +79,9 @@ class EavPlugin
     /**
      * Check if an attribute has calculated values. (true if it has product labels based on this attribute).
      *
-     * @param \Magento\Catalog\Api\Data\ProductAttributeInterface $attribute Attribute
+     * @param ProductAttributeInterface $attribute Attribute
      */
-    private function hasCalculatedValues(\Magento\Catalog\Api\Data\ProductAttributeInterface $attribute): bool
+    private function hasCalculatedValues(ProductAttributeInterface $attribute): bool
     {
         $result = false;
 

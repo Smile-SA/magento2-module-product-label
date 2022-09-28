@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
-
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -21,9 +10,6 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
 
 /**
  * Class Form DataProvider
- *
- * @category  Smile
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class DataProvider extends AbstractDataProvider
 {
@@ -72,7 +58,7 @@ class DataProvider extends AbstractDataProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getData()
     {
@@ -94,7 +80,7 @@ class DataProvider extends AbstractDataProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getMeta()
     {
