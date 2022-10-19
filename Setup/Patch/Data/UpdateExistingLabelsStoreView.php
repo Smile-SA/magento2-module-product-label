@@ -7,6 +7,7 @@ namespace Smile\ProductLabel\Setup\Patch\Data;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Store\Model\Store;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+use Zend_Db_Expr;
 
 /**
  * Populate Label/Store link table with default store view for all existing labels.
@@ -36,7 +37,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
             ProductLabelInterface::TABLE_NAME,
             [
                 ProductLabelInterface::PRODUCTLABEL_ID => ProductLabelInterface::PRODUCTLABEL_ID,
-                new \Zend_Db_Expr(Store::DEFAULT_STORE_ID . ' as ' . ProductLabelInterface::STORE_ID),
+                new Zend_Db_Expr(Store::DEFAULT_STORE_ID . ' as ' . ProductLabelInterface::STORE_ID),
             ]
         );
 

@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Backend\Model\View\Result\Page as ResultPage;
+use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 
 /**
  * Admin Action: productlabel/edit
  */
-class Edit extends AbstractAction
+class Edit extends AbstractAction implements HttpGetActionInterface
 {
     /**
      * Execute action based on request and return result

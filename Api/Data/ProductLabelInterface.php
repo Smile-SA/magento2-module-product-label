@@ -103,14 +103,14 @@ interface ProductLabelInterface
      *
      * @return int
      */
-    public function getProductLabelId(): int;
+    public function getProductLabelId(): ?int;
 
     /**
      * Get product label Id
      *
-     * @return int
+     * @return mixed
      */
-    public function getId(): int;
+    public function getId();
 
     /**
      * Get Name

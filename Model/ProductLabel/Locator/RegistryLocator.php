@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Smile\ProductLabel\Model\ProductLabel\Locator;
 
 use Magento\Framework\Registry;
+use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
  * Rule Registry Locator.
@@ -32,17 +33,13 @@ class RegistryLocator implements LocatorInterface
     /**
      * @inheritdoc
      */
-    public function getProductLabel()
+    public function getProductLabel(): ProductLabelInterface
     {
         if (!empty($this->productLabel)) {
             return $this->productLabel;
         }
 
         $productLabel = $this->registry->registry('current_productlabel');
-        if ($productLabel) {
-            return $this->productLabel = $productLabel;
-        }
-
-        return null;
+        return $productLabel ? ($this->productLabel = $productLabel) : $this->productLabel;
     }
 }

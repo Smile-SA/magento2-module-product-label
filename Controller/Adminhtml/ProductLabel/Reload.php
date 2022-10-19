@@ -6,6 +6,8 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Registry;
@@ -18,7 +20,7 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
 /**
  * Reload controller for product label edition : used to refresh the form after attribute_id is chosen.
  */
-class Reload extends Action
+class Reload extends Action implements HttpPostActionInterface
 {
     /**
      * Authorization level of a basic admin session

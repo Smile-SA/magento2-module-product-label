@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Block\ProductLabel;
 
+use Magento\Backend\Block\Template\Context;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
+use Magento\Framework\App\CacheInterface;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
+use Magento\Store\Model\StoreManagerInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+use Smile\ProductLabel\Model\ImageLabel\Image;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as ProductLabelCollectionFactory;
 
 /**
@@ -21,45 +25,46 @@ class ProductLabel extends Template implements IdentityInterface
 
     protected ProductLabelCollectionFactory $productLabelCollectionFactory;
 
-    protected \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper;
+    protected Image $imageHelper;
 
     protected ProductInterface $product;
 
-    private \Magento\Framework\App\CacheInterface $cache;
+    private CacheInterface $cache;
 
-    private \Magento\Store\Model\StoreManagerInterface $storeManager;
+    private StoreManagerInterface $storeManager;
 
     /**
      * ProductLabel constructor.
      *
-     * @param \Magento\Backend\Block\Template\Context    $context                       Block context
-     * @param Registry                                   $registry                      Registry
-     * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper                   Image Helper
-     * @param ProductLabelCollectionFactory              $productLabelCollectionFactory Product Label Collection Factory
-     * @param \Magento\Framework\App\CacheInterface      $cache                         Cache Interface
-     * @param array                                      $data                          Block data
+     * @param Context $context Block context
+     * @param Registry $registry Registry
+     * @param Image $imageHelper Image Helper
+     * @param ProductLabelCollectionFactory $productLabelCollectionFactory Product Label Collection Factory
+     * @param CacheInterface $cache Cache Interface
+     * @param array $data Block data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper,
+        Context                       $context,
+        Registry                      $registry,
+        Image                         $imageHelper,
         ProductLabelCollectionFactory $productLabelCollectionFactory,
-        \Magento\Framework\App\CacheInterface $cache,
-        array $data = []
+        CacheInterface                $cache,
+        ProductInterface              $product,
+        array                         $data = []
     ) {
         $this->registry                      = $registry;
         $this->imageHelper                   = $imageHelper;
         $this->productLabelCollectionFactory = $productLabelCollectionFactory;
         $this->cache                         = $cache;
         $this->storeManager                  = $context->getStoreManager();
-
+        $this->product                       = $product;
         parent::__construct($context, $data);
     }
 
     /**
      * Get Current View
      */
-    public function getCurrentView(): string
+    public function getCurrentView(): int
     {
         $view = ProductLabelInterface::PRODUCTLABEL_DISPLAY_LISTING;
         if ($this->getRequest()->getControllerName('controller') == 'product') {
@@ -103,7 +108,7 @@ class ProductLabel extends Template implements IdentityInterface
      */
     public function getProduct()
     {
-        if (null === $this->product) {
+        if (empty($this->product->getId())) {
             $this->product = $this->registry->registry('current_product');
         }
 
@@ -273,6 +278,6 @@ class ProductLabel extends Template implements IdentityInterface
      */
     private function getStoreId(): int
     {
-        return $this->storeManager->getStore()->getId();
+        return (int) $this->storeManager->getStore()->getId();
     }
 }

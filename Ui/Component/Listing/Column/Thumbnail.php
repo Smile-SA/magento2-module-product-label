@@ -4,34 +4,36 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\Listing\Column;
 
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
+use Smile\ProductLabel\Model\ImageLabel\Image;
 
 /**
  * Class Thumbnail for Ui component
  */
 class Thumbnail extends Column
 {
-    protected const NAME = 'thumbnail';
+    public const NAME = 'thumbnail';
 
-    protected const ALT_FIELD = 'name';
+    public const ALT_FIELD = 'name';
 
     /**
      * Thumbnail constructor.
      *
      * @param ContextInterface                           $context            Context
      * @param UiComponentFactory                         $uiComponentFactory UI Component Factory
-     * @param \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper        Image Helper
-     * @param \Magento\Framework\UrlInterface            $urlBuilder         URL Builder
+     * @param Image $imageHelper        Image Helper
+     * @param UrlInterface            $urlBuilder         URL Builder
      * @param array                                      $components         Components
      * @param array                                      $data               Column Data
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        \Smile\ProductLabel\Model\ImageLabel\Image $imageHelper,
-        \Magento\Framework\UrlInterface $urlBuilder,
+        Image $imageHelper,
+        UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {

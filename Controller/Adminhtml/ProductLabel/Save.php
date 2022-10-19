@@ -6,6 +6,7 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect as ResultRedirect;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
@@ -19,7 +20,7 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
 /**
  * Admin Action: productlabel/save
  */
-class Save extends AbstractAction
+class Save extends AbstractAction implements HttpPostActionInterface
 {
     protected DataPersistorInterface $dataPersistor;
 

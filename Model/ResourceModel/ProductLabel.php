@@ -12,22 +12,36 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
-use Magento\Framework\Serialize\SerializerInterface;
+use Magento\Framework\Phrase;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
  * Collection Resource Model Class: ProductLabel
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProductLabel extends AbstractDb
 {
+    /**
+     * @var Json
+     */
+    protected $serializer;
+
+    /**
+     * @var EntityManager
+     */
     protected EntityManager $entityManager;
 
+    /**
+     * @var MetadataPool
+     */
     protected MetadataPool $metadataPool;
 
-    protected SerializerInterface $serializer;
-
+    /**
+     * @var StoreManagerInterface
+     */
     private StoreManagerInterface $storeManager;
 
     /**
@@ -37,7 +51,7 @@ class ProductLabel extends AbstractDb
      * @param EntityManager $entityManager Entity Manager
      * @param MetadataPool $metadataPool Metadata Pool
      * @param StoreManagerInterface $storeManager Store Manager
-     * @param SerializerInterface $serializer Serializer
+     * @param Json $serializer Serializer
      * @param null $connectionName Connection Name
      */
     public function __construct(
@@ -45,7 +59,7 @@ class ProductLabel extends AbstractDb
         EntityManager $entityManager,
         MetadataPool $metadataPool,
         StoreManagerInterface $storeManager,
-        SerializerInterface $serializer,
+        Json $serializer,
         $connectionName = null
     ) {
         parent::__construct($context, $connectionName);
@@ -220,7 +234,7 @@ class ProductLabel extends AbstractDb
 
         $row = $this->getConnection()->fetchRow($select);
         if ($row) {
-            $error = new \Magento\Framework\Phrase(
+            $error = new Phrase(
                 'Label for attribute %1, option %2, and store %3  already exist.',
                 [
                     $object->getData(ProductLabelInterface::ATTRIBUTE_ID),

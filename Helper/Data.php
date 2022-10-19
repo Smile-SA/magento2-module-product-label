@@ -62,7 +62,7 @@ class Data extends AbstractHelper
     {
         $plabelIds = $product->getSmileProductLabelIds();
         if (!is_array($plabelIds)) {
-            $plabelIds = explode(',', $plabelIds);
+            $plabelIds = explode(',', (string) $plabelIds);
         }
 
         foreach ($plabelIds as $key => $value) {

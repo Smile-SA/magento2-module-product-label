@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Plugin\Catalog\Model;
 
+use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Eav\Model\Config as EavConfigModel;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
@@ -42,9 +43,10 @@ class Config
         Attribute         $attributeFactory,
         CollectionFactory $productLabelCollectionFactory
     ) {
-        $this->eavConfig                     = $eavConfig;
-        $this->attributeFactory              = $attributeFactory;
+        $this->eavConfig = $eavConfig;
+        $this->attributeFactory = $attributeFactory;
         $this->productLabelCollectionFactory = $productLabelCollectionFactory;
+        $this->usedInProductListing = [];
     }
 
     /**
@@ -59,7 +61,7 @@ class Config
     {
         if ($this->usedInProductListing === null) {
             $this->usedInProductListing = $result;
-            $entityType                 = \Magento\Catalog\Model\Product::ENTITY;
+            $entityType = Product::ENTITY;
 
             /** @var CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
@@ -73,7 +75,7 @@ class Config
             $this->eavConfig->importAttributesData($entityType, $attributesDataExtra);
 
             foreach ($attributesDataExtra as $attributeData) {
-                $attributeCode                              = $attributeData['attribute_code'];
+                $attributeCode = $attributeData['attribute_code'];
                 $this->usedInProductListing[$attributeCode] = $this->eavConfig->getAttribute(
                     $entityType,
                     $attributeCode

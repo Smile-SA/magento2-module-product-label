@@ -32,18 +32,18 @@ interface ProductLabelRepositoryInterface
      * Retrieve list of product label
      *
      * @param SearchCriteriaInterface $searchCriteria Search criteria
-     * @return ProductLabelInterface
+     * @return mixed
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): ProductLabelInterface;
+    public function getList(SearchCriteriaInterface $searchCriteria);
 
     /**
      * Save a product label
      *
-     * @param ProductLabelInterface $plabel product label
+     * @param ProductLabelInterface $label product label
      * @return ProductLabelInterface
      * @throws NoSuchEntityException
      */
-    public function save(ProductLabelInterface $plabel): ProductLabelInterface;
+    public function save(ProductLabelInterface $label): ProductLabelInterface;
 
     /**
      * Delete a product label by given ID
@@ -58,10 +58,10 @@ interface ProductLabelRepositoryInterface
     /**
      * Delete a product label by its identifier.
      *
-     * @param string $plabel Identifier of the product label
+     * @param string $label Identifier of the product label
      * @return bool
      * @throws NoSuchEntityException
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function deleteByIdentifier(string $plabel): bool;
+    public function deleteByIdentifier(string $label): bool;
 }

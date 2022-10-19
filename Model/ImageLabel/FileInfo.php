@@ -19,7 +19,7 @@ class FileInfo
     /**
      * Path in /pub/media directory
      */
-    private const ENTITY_MEDIA_PATH = '/smile_productlabel/imagelabel';
+    public const ENTITY_MEDIA_PATH = '/smile_productlabel/imagelabel';
 
     private Filesystem $filesystem;
 

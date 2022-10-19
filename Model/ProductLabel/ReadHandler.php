@@ -26,28 +26,23 @@ class ReadHandler implements ExtensionInterface
     }
 
     /**
-     * Perform action on relation/extension attribute
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @param ProductInterface $product   Catalog Product Object
-     * @param array            $arguments Array of Arguments
-     * @return ProductInterface|object
+     * @inheritDoc
      */
-    public function execute(ProductInterface $product, array $arguments = [])
+    public function execute($entity, $arguments = [])
     {
-        /** @var ProductInterface $product */
-        $extension = $product->getExtensionAttributes();
+        /** @var ProductInterface $entity */
+        $extension = $entity->getExtensionAttributes();
 
         if ($extension->getProductLabels() !== null) {
-            return $product;
+            return $entity;
         }
 
-        $productLabels = $this->dataHelper->getProductLabels($product);
+        $productLabels = $this->dataHelper->getProductLabels($entity);
 
         $extension->setProductLabels($productLabels);
 
-        $product->setExtensionAttributes($extension);
+        $entity->setExtensionAttributes($extension);
 
-        return $product;
+        return $entity;
     }
 }

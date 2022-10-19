@@ -16,5 +16,6 @@
 
     <rule ref="SmileLab"/>
 
+    <file>.</file>
     <exclude-pattern>vendor/*</exclude-pattern>
 </ruleset>
