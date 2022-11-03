@@ -4,20 +4,26 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
 
+use Magento\Backend\Model\UrlInterface;
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
+
 /**
  * Smile Product label edit form data provider modifier :
  * Used to add the proper value for reloadUrl inside UI component configuration.
  */
-class System implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
+class System implements ModifierInterface
 {
-    private \Magento\Backend\Model\UrlInterface $urlBuilder;
+    /**
+     * @var UrlInterface
+     */
+    private UrlInterface $urlBuilder;
 
     /**
      * Search Terms constructor.
      *
-     * @param \Magento\Backend\Model\UrlInterface $urlBuilder URL Builder
+     * @param UrlInterface $urlBuilder URL Builder
      */
-    public function __construct(\Magento\Backend\Model\UrlInterface $urlBuilder)
+    public function __construct(UrlInterface $urlBuilder)
     {
         $this->urlBuilder = $urlBuilder;
     }

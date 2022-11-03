@@ -60,7 +60,9 @@ class ProductLabel implements ProductLabelRepositoryInterface
      */
     public function getById(int $objectId): ProductLabelInterface
     {
-        return $this->productLabelRepositoryManager->getEntityById($objectId);
+        /** @var ProductLabelInterface $productLabel */
+        $productLabel = $this->productLabelRepositoryManager->getEntityById($objectId);
+        return $productLabel;
     }
 
     /**
@@ -71,7 +73,9 @@ class ProductLabel implements ProductLabelRepositoryInterface
      */
     public function getByIdentifier(string $objectIdentifier): ProductLabelInterface
     {
-        return $this->productLabelRepositoryManager->getEntityByIdentifier($objectIdentifier);
+        /** @var ProductLabelInterface $productLabel */
+        $productLabel = $this->productLabelRepositoryManager->getEntityByIdentifier($objectIdentifier);
+        return $productLabel;
     }
 
     /**
@@ -92,7 +96,10 @@ class ProductLabel implements ProductLabelRepositoryInterface
      */
     public function save(ProductLabelInterface $object): ProductLabelInterface
     {
-        return $this->productLabelRepositoryManager->saveEntity($object);
+        /** @var \Magento\Framework\Model\AbstractModel $object */
+        /** @var ProductLabelInterface $productLabel */
+        $productLabel = $this->productLabelRepositoryManager->saveEntity($object);
+        return $productLabel;
     }
 
     /**

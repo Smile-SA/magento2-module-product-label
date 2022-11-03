@@ -144,10 +144,7 @@ class FileInfo
      */
     private function getMediaDirectory(): WriteInterface
     {
-        if ($this->mediaDirectory === null) {
-            $this->mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
-        }
-
+        $this->mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
         return $this->mediaDirectory;
     }
 

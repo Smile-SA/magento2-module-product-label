@@ -60,6 +60,7 @@ class Data extends AbstractHelper
      */
     public function getProductLabelIds(ProductInterface $product): array
     {
+        // @phpstan-ignore-next-line
         $plabelIds = $product->getSmileProductLabelIds();
         if (!is_array($plabelIds)) {
             $plabelIds = explode(',', (string) $plabelIds);
@@ -105,7 +106,7 @@ class Data extends AbstractHelper
      */
     public function getProductLabels(ProductInterface $product): array
     {
-        $plabelIds      = $this->getProductLabelIds($product);
+        $plabelIds = $this->getProductLabelIds($product);
         $searchCriteria = $this->getSearchCriteriaOnProductLabelIds($plabelIds);
 
         return $this->plabelRepository->getList($searchCriteria)->getItems();

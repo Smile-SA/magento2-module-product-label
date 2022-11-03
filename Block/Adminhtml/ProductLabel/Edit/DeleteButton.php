@@ -16,7 +16,7 @@ class DeleteButton extends AbstractButton
     {
         $data = [];
         if ($this->getObjectId()) {
-            $message = htmlentities(__('Are you sure you want to delete this product label?'));
+            $message = __('Are you sure you want to delete this product label?');
 
             $data = [
                 'label' => __('Delete Product Label'),

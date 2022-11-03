@@ -19,9 +19,8 @@ class ProductLabelStoreFilter implements CustomFilterInterface
      */
     public function apply(Filter $filter, AbstractDb $collection)
     {
-        /** @var Collection $collection */
+        // @phpstan-ignore-next-line
         $collection->addStoreFilter($filter->getValue());
-
         return true;
     }
 }

@@ -88,7 +88,7 @@ class Save extends AbstractAction implements HttpPostActionInterface
             }
 
             // Display success message.
-            $this->messageManager->addSuccessMessage(__('The product label has been saved.'));
+            $this->messageManager->addSuccessMessage((string) __('The product label has been saved.'));
             $this->dataPersistor->clear('smile_productlabel');
 
             // If requested => redirect to the list.
@@ -101,7 +101,7 @@ class Save extends AbstractAction implements HttpPostActionInterface
         } catch (\Exception $e) {
             $this->messageManager->addExceptionMessage(
                 $e,
-                __('Something went wrong while saving the product label. "%1"', $e->getMessage())
+                (string) __('Something went wrong while saving the product label. "%1"', $e->getMessage())
             );
             $this->dataPersistor->set('smile_productlabel', $data);
         }

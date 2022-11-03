@@ -6,8 +6,10 @@ namespace Smile\ProductLabel\Block\ProductLabel;
 
 use Magento\Backend\Block\Template\Context;
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Model\AbstractModel;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\App\CacheInterface;
+use Magento\Framework\App\Request\Http\Proxy;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
@@ -67,7 +69,14 @@ class ProductLabel extends Template implements IdentityInterface
     public function getCurrentView(): int
     {
         $view = ProductLabelInterface::PRODUCTLABEL_DISPLAY_LISTING;
-        if ($this->getRequest()->getControllerName('controller') == 'product') {
+
+        /** @var \Magento\Framework\View\Element\AbstractBlock $request */
+        $request = $this->getRequest();
+
+        /** @var \Magento\Framework\Webapi\Rest\Request\Proxy $request */
+        $controller = $request->getControllerName();
+
+        if ($controller == 'product') {
             $view = ProductLabelInterface::PRODUCTLABEL_DISPLAY_PRODUCT;
         }
 
@@ -124,7 +133,11 @@ class ProductLabel extends Template implements IdentityInterface
     {
         $attributesList = [];
         $attributeIds   = array_column($this->getProductLabelsList(), 'attribute_id');
-        $productEntity  = $this->getProduct()->getResourceCollection()->getEntity();
+        $product = $this->getProduct();
+
+        // @phpstan-ignore-next-line
+        $collection = $product->getResourceCollection();
+        $productEntity  = $collection->getEntity();
 
         foreach ($attributeIds as $attributeId) {
             $attribute = $productEntity->getAttribute($attributeId);
@@ -201,15 +214,12 @@ class ProductLabel extends Template implements IdentityInterface
 
         /** @var IdentityInterface $product */
         $product = $this->getProduct();
-        if ($product) {
-            $identities = array_merge(
-                $identities,
-                $product->getIdentities(),
-                [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]
-            );
-        }
 
-        return $identities;
+        return array_merge(
+            $identities,
+            $product->getIdentities(),
+            [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG]
+        );
     }
 
     /**
@@ -252,12 +262,14 @@ class ProductLabel extends Template implements IdentityInterface
         if ($productLabelList === false) {
             /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
-            $productLabelList        = $productLabelsCollection
+
+            // @phpstan-ignore-next-line
+            $productLabelList = $productLabelsCollection
                 ->addStoreFilter($storeId)
                 ->addFieldToFilter('is_active', true)
                 ->getData();
 
-            $productLabelList        = array_map(function ($label) {
+            $productLabelList = array_map(function ($label) {
                 $label['display_on'] = explode(',', $label['display_on']);
 
                 return $label;

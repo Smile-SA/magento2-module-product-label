@@ -18,9 +18,9 @@ class Image extends AbstractBackend
     protected string $subDir = 'smile_productlabel/imagelabel';
 
     /**
-     * url builder
+     * @var UrlInterface
      */
-    protected \Magento\Framework\UrlInterface $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * Image constructor.

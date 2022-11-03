@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\App\RequestInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
+use Magento\Ui\DataProvider\Modifier\PoolInterface;
+use Smile\ProductLabel\Model\ImageLabel\FileInfo;
+use Smile\ProductLabel\Model\ProductLabel;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
 
 /**
@@ -13,43 +18,38 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
  */
 class DataProvider extends AbstractDataProvider
 {
-    protected \Smile\ProductLabel\Model\ImageLabel\FileInfo $fileInfo;
+    protected FileInfo $fileInfo;
 
-    private \Magento\Ui\DataProvider\Modifier\PoolInterface $modifierPool;
+    private PoolInterface $modifierPool;
 
-    private DataPersistorInterface $dataPersistor;
-
-    protected \Magento\Framework\App\RequestInterface $request;
+    protected RequestInterface $request;
 
     /**
      * DataProvider constructor.
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     * @param string                                          $name              Component Name
-     * @param string                                          $primaryFieldName  Primary Field Name
-     * @param string                                          $requestFieldName  Request Field Name
-     * @param CollectionFactory                               $collectionFactory Collection Factory
-     * @param DataPersistorInterface                          $dataPersistor     Data Persistor
-     * @param \Magento\Framework\App\RequestInterface         $request           HTTP Request
-     * @param \Smile\ProductLabel\Model\ImageLabel\FileInfo   $fileInfo          File Info helper
-     * @param \Magento\Ui\DataProvider\Modifier\PoolInterface $modifierPool      Modifier Pool
-     * @param array                                           $meta              Component Meta
-     * @param array                                           $data              Component Data
+     * @param string $name Component Name
+     * @param string $primaryFieldName Primary Field Name
+     * @param string $requestFieldName  Request Field Name
+     * @param CollectionFactory $collectionFactory Collection Factory
+     * @param RequestInterface $request HTTP Request
+     * @param FileInfo $fileInfo File Info helper
+     * @param PoolInterface $modifierPool Modifier Pool
+     * @param array $meta Component Meta
+     * @param array $data Component Data
      */
     public function __construct(
         string $name,
         string $primaryFieldName,
         string $requestFieldName,
         CollectionFactory $collectionFactory,
-        DataPersistorInterface $dataPersistor,
-        \Magento\Framework\App\RequestInterface $request,
-        \Smile\ProductLabel\Model\ImageLabel\FileInfo $fileInfo,
-        \Magento\Ui\DataProvider\Modifier\PoolInterface $modifierPool,
+        RequestInterface $request,
+        FileInfo $fileInfo,
+        PoolInterface $modifierPool,
         array $meta = [],
         array $data = []
     ) {
         $this->collection    = $collectionFactory->create();
-        $this->dataPersistor = $dataPersistor;
         $this->modifierPool  = $modifierPool;
         $this->fileInfo      = $fileInfo;
         $this->request       = $request;
@@ -63,7 +63,7 @@ class DataProvider extends AbstractDataProvider
     public function getData()
     {
         $requestId = $this->request->getParam($this->requestFieldName);
-        /** @var \Smile\ProductLabel\Model\ProductLabel $productLabel */
+        /** @var ProductLabel $productLabel */
         $productLabel = $this->collection->addFieldToFilter($this->requestFieldName, $requestId)->getFirstItem();
 
         if ($productLabel->getId()) {
@@ -71,7 +71,7 @@ class DataProvider extends AbstractDataProvider
             $this->data[$productLabel->getId()] = $data;
         }
 
-        /** @var \Magento\Ui\DataProvider\Modifier\ModifierInterface $modifier */
+        /** @var ModifierInterface $modifier */
         foreach ($this->modifierPool->getModifiersInstances() as $modifier) {
             $this->data = $modifier->modifyData($this->data);
         }
@@ -86,7 +86,7 @@ class DataProvider extends AbstractDataProvider
     {
         $this->meta = parent::getMeta();
 
-        /** @var \Magento\Ui\DataProvider\Modifier\ModifierInterface $modifier */
+        /** @var ModifierInterface $modifier */
         foreach ($this->modifierPool->getModifiersInstances() as $modifier) {
             $this->meta = $modifier->modifyMeta($this->meta);
         }
@@ -97,11 +97,11 @@ class DataProvider extends AbstractDataProvider
     /**
      * Converts category image data to acceptable for rendering format
      *
-     * @param \Smile\ProductLabel\Model\ProductLabel $productLabel Product Label
-     * @param array                                  $data         Product Label Data
+     * @param ProductLabel $productLabel Product Label
+     * @param array $data Product Label Data
      * @return array
      */
-    private function convertValues(\Smile\ProductLabel\Model\ProductLabel $productLabel, array $data): array
+    private function convertValues(ProductLabel $productLabel, array $data): array
     {
         $fileName = $productLabel->getData('image');
 
@@ -117,7 +117,7 @@ class DataProvider extends AbstractDataProvider
                 $data['image'][0]['url'] = $fileName;
             }
 
-            $data['image'][0]['size'] = isset($stat) ? $stat['size'] : 0;
+            $data['image'][0]['size'] = $stat['size'] ?? 0;
             $data['image'][0]['type'] = $mime;
         }
 

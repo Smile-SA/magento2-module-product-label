@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\Repository;
 
+use Magento\Framework\Api\AbstractExtensibleObject;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface as CollectionProcessor;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Data\Collection\AbstractDb as AbstractCollection;
@@ -117,7 +118,7 @@ class Manager
     public function getEntityByIdentifier(string $objectIdentifier): \Magento\Framework\Model\AbstractModel
     {
         if ($this->identifierFieldName === null) {
-            throw new NoSuchEntityException('The identifier field name is not set');
+            throw new NoSuchEntityException(__('The identifier field name is not set'));
         }
 
         if (!isset($this->cacheByIdentifier[$objectIdentifier])) {
@@ -233,7 +234,10 @@ class Manager
 
         // Build the result.
         $searchResults->setTotalCount($collection->getSize());
-        $searchResults->setItems($collection->getItems());
+
+        /** @var AbstractExtensibleObject[] $items */
+        $items = $collection->getItems();
+        $searchResults->setItems($items);
 
         return $searchResults;
     }

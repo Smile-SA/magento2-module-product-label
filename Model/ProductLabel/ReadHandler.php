@@ -37,7 +37,9 @@ class ReadHandler implements ExtensionInterface
             return $entity;
         }
 
-        $productLabels = $this->dataHelper->getProductLabels($entity);
+        /** @var DataHelper $dataHelper */
+        $dataHelper = $this->dataHelper;
+        $productLabels = $dataHelper->getProductLabels($entity);
 
         $extension->setProductLabels($productLabels);
 

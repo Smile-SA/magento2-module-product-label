@@ -7,6 +7,7 @@ namespace Smile\ProductLabel\Plugin\Catalog\Model;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Eav\Model\Config as EavConfigModel;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
 
 /**
@@ -59,13 +60,15 @@ class Config
      */
     public function afterGetAttributesUsedInProductListing(\Magento\Catalog\Model\Config $subject, array $result): array
     {
-        if ($this->usedInProductListing === null) {
+        if ($this->usedInProductListing == null) {
             $this->usedInProductListing = $result;
             $entityType = Product::ENTITY;
 
             /** @var CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
             // Here you have all the attribute ids that are used to build product label rules.
+
+            // @phpstan-ignore-next-line
             $attributeIds = $productLabelsCollection->getAllAttributeIds();
 
             // Filter the collection on these attributes only.

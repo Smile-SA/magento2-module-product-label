@@ -30,7 +30,7 @@ class MassDelete extends AbstractAction implements HttpPostActionInterface
         }
 
         $this->messageManager->addSuccessMessage(
-            __('A total of %1 product label(s) have been deleted.', $collectionSize)
+            (string) __('A total of %1 product label(s) have been deleted.', $collectionSize)
         );
 
         $resultRedirect = $this->resultRedirectFactory->create();

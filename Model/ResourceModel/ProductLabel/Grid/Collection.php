@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\ResourceModel\ProductLabel\Grid;
 
+use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
@@ -15,9 +16,9 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection as SmileProdu
 class Collection extends SmileProductLabelCollection implements SearchResultInterface
 {
     /**
-     * @var \Magento\Framework\Api\Search\AggregationInterface[]
+     * @var AggregationInterface
      */
-    private array $aggregations;
+    private $aggregations;
 
     /**
      * @inheritdoc
@@ -38,11 +39,10 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function setAggregations($aggregations)
+    public function setAggregations($aggregations): AggregationInterface
     {
         $this->aggregations = $aggregations;
-
-        return $this;
+        return $this->aggregations;
     }
 
     /**
@@ -50,6 +50,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
      */
     public function getSearchCriteria()
     {
+        // @phpstan-ignore-next-line
         return null;
     }
 
@@ -129,7 +130,5 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
         }
 
         $this->getSelect()->where('eaov.store_id = ?', $storeCondition);
-
-        return $this;
     }
 }

@@ -6,6 +6,7 @@ namespace Smile\ProductLabel\Model;
 
 use Magento\Catalog\Model\ImageUploader;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Exception\LocalizedException;
@@ -15,10 +16,13 @@ use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
+use Magento\Framework\UrlInterface;
+use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Model\ImageLabel\FileInfo;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
+use Smile\ProductLabel\ProductLabelImageUpload;
 
 /**
  * Product Label Model
@@ -323,12 +327,13 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
         $image = $this->getData('image');
         if ($image) {
             if (is_string($image)) {
+                /** @var Store $store */
                 $store = $this->storeManager->getStore();
 
                 $isRelativeUrl = substr($image, 0, 1) === '/';
 
                 $mediaBaseUrl = $store->getBaseUrl(
-                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+                    UrlInterface::URL_TYPE_MEDIA
                 );
 
                 $url = $mediaBaseUrl
@@ -353,7 +358,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     public function afterSave()
     {
         $imageName = $this->getData('image');
-        $path      = $this->getImageUploader()->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
+        $path = $this->getImageUploader()->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
 
         if ($this->mediaDirectory->isExist($path)) {
             $this->getImageUploader()->moveFileFromTmp($imageName);
@@ -379,8 +384,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     private function getImageUploader(): ImageUploader
     {
         if ($this->imageUploader === null) {
-            $this->imageUploader = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Smile\ProductLabel\ProductLabelImageUpload::class);
+            // @phpstan-ignore-next-line
+            $this->imageUploader = ObjectManager::getInstance()->get(ProductLabelImageUpload::class);
         }
 
         return $this->imageUploader;

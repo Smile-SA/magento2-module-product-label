@@ -7,6 +7,8 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 use Magento\Backend\Model\View\Result\Page as ResultPage;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\NotFoundException;
 
 /**
  * Admin Action: productlabel/edit
@@ -14,12 +16,7 @@ use Magento\Framework\Controller\ResultFactory;
 class Edit extends AbstractAction implements HttpGetActionInterface
 {
     /**
-     * Execute action based on request and return result
-     *
-     * Note: Request will be added as operation argument in future
-     *
-     * @return \Magento\Framework\Controller\ResultInterface|ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * {@inheritdoc}
      */
     public function execute()
     {
@@ -29,16 +26,17 @@ class Edit extends AbstractAction implements HttpGetActionInterface
         /** @var ResultPage $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        $breadcrumbTitle = $model->getProductLabelId() ? __('Edit Product Label') : __('New Product Label');
+        $breadcrumbTitle = $model->getProductLabelId() ?
+            (string) __('Edit Product Label') : (string) __('New Product Label');
         $resultPage
             ->setActiveMenu('Smile_ProductLabel::manage')
-            ->addBreadcrumb(__('Smile Product Label'), __('Smile Product Label'))
+            ->addBreadcrumb((string) __('Smile Product Label'), (string) __('Smile Product Label'))
             ->addBreadcrumb($breadcrumbTitle, $breadcrumbTitle);
 
         $title = $model->getProductLabelId() ?
-            __("Edit product label #%1", $model->getProductLabelId()) : __('New product label');
+            (string) __("Edit product label #%1", $model->getProductLabelId()) : (string) __('New product label');
 
-        $resultPage->getConfig()->getTitle()->prepend(__('Manage Smile_ProductLabel'));
+        $resultPage->getConfig()->getTitle()->prepend((string) __('Manage Smile_ProductLabel'));
         $resultPage->getConfig()->getTitle()->prepend($title);
 
         return $resultPage;

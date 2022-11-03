@@ -12,6 +12,7 @@ use Magento\Catalog\Model\View\Asset\ImageFactory as AssetImageFactory;
 use Magento\Catalog\Model\View\Asset\PlaceholderFactory;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\View\ConfigInterface;
+use Smile\ProductLabel\Block\ProductLabel\ProductLabel;
 
 /**
  * Custom Image Factory.
@@ -29,30 +30,25 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
 
     private PlaceholderFactory $viewAssetPlaceholderFactory;
 
-    private string $template;
-
     /**
      * @param ObjectManagerInterface $objectManager               Object Manager
      * @param ConfigInterface        $presentationConfig          Presentation Config
      * @param AssetImageFactory      $viewAssetImageFactory       Images Asset Factory
      * @param PlaceholderFactory     $viewAssetPlaceholderFactory Assets Placeholder Factory
      * @param ParamsBuilder          $imageParamsBuilder          Images Param builer
-     * @param string                 $template                    Image block template
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
         ConfigInterface $presentationConfig,
         AssetImageFactory $viewAssetImageFactory,
         PlaceholderFactory $viewAssetPlaceholderFactory,
-        ParamsBuilder $imageParamsBuilder,
-        string $template = 'Smile_ProductLabel::product/image_with_pictos.phtml'
+        ParamsBuilder $imageParamsBuilder
     ) {
         $this->objectManager               = $objectManager;
         $this->presentationConfig          = $presentationConfig;
         $this->viewAssetPlaceholderFactory = $viewAssetPlaceholderFactory;
         $this->viewAssetImageFactory       = $viewAssetImageFactory;
         $this->imageParamsBuilder          = $imageParamsBuilder;
-        $this->template                    = $template;
     }
 
     /**
@@ -106,12 +102,12 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
         ];
 
         // Override starts here.
-        /** @var \Smile\ProductLabel\Block\ProductLabel\ProductLabel $labelsRenderer */
-        $labelsRenderer = $this->objectManager->create(\Smile\ProductLabel\Block\ProductLabel\ProductLabel::class);
+        /** @var ProductLabel $labelsRenderer */
+        $labelsRenderer = $this->objectManager->create(ProductLabel::class);
         $labelsRenderer->setProduct($product);
 
-        $data['data']['product_labels']               = $labelsRenderer->getProductLabels() ?? [];
-        $data['data']['product_labels_wrapper_class'] = $labelsRenderer->getWrapperClass() ?? [];
+        $data['data']['product_labels'] = $labelsRenderer->getProductLabels();
+        $data['data']['product_labels_wrapper_class'] = $labelsRenderer->getWrapperClass();
 
         /** @var ImageBlock $block */
         $block = $this->objectManager->create(ImageBlock::class, $data);

@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\ResourceModel\ProductLabel;
 
+use Magento\Catalog\Api\Data\ProductAttributeInterface;
+use Magento\Framework\DB\Select;
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use Magento\Store\Model\Store;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Model\ProductLabel;
 
 /**
  * Product Label Collection
  */
-class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+class Collection extends AbstractCollection
 {
     /**
      * @inheritdoc
@@ -40,10 +44,10 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     public function getAllAttributeIds(): array
     {
         $optionIdsSelect = clone $this->getSelect();
-        $optionIdsSelect->reset(\Magento\Framework\DB\Select::ORDER);
-        $optionIdsSelect->reset(\Magento\Framework\DB\Select::LIMIT_COUNT);
-        $optionIdsSelect->reset(\Magento\Framework\DB\Select::LIMIT_OFFSET);
-        $optionIdsSelect->reset(\Magento\Framework\DB\Select::COLUMNS);
+        $optionIdsSelect->reset(Select::ORDER);
+        $optionIdsSelect->reset(Select::LIMIT_COUNT);
+        $optionIdsSelect->reset(Select::LIMIT_OFFSET);
+        $optionIdsSelect->reset(Select::COLUMNS);
         $optionIdsSelect->distinct(true)->columns(ProductLabelInterface::ATTRIBUTE_ID, 'main_table');
 
         return $this->getConnection()->fetchCol($optionIdsSelect, $this->_bindParams);
@@ -57,10 +61,10 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     public function getAllOptionIds(): array
     {
         $optionIdsSelect = clone $this->getSelect();
-        $optionIdsSelect->reset(\Magento\Framework\DB\Select::ORDER);
-        $optionIdsSelect->reset(\Magento\Framework\DB\Select::LIMIT_COUNT);
-        $optionIdsSelect->reset(\Magento\Framework\DB\Select::LIMIT_OFFSET);
-        $optionIdsSelect->reset(\Magento\Framework\DB\Select::COLUMNS);
+        $optionIdsSelect->reset(Select::ORDER);
+        $optionIdsSelect->reset(Select::LIMIT_COUNT);
+        $optionIdsSelect->reset(Select::LIMIT_OFFSET);
+        $optionIdsSelect->reset(Select::COLUMNS);
         $optionIdsSelect->distinct(true)->columns(ProductLabelInterface::OPTION_ID, 'main_table');
 
         return $this->getConnection()->fetchCol($optionIdsSelect, $this->_bindParams);
@@ -69,12 +73,13 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     /**
      * Filter productlabel collection for a given attribute.
      *
-     * @param \Magento\Catalog\Api\Data\ProductAttributeInterface $attribute The attribute
+     * @param ProductAttributeInterface $attribute The attribute
      * @return $this
      */
-    public function addAttributeFilter(\Magento\Catalog\Api\Data\ProductAttributeInterface $attribute)
+    public function addAttributeFilter(ProductAttributeInterface $attribute)
     {
         if ($attribute->getAttributeId()) {
+            // @phpstan-ignore-next-line
             $this->addFieldToFilter(ProductLabelInterface::ATTRIBUTE_ID, (int) $attribute->getAttributeId());
         }
 
@@ -118,14 +123,14 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     /**
      * Perform adding filter by store
      *
-     * @param int|array|\Magento\Store\Model\Store $store The store
+     * @param int|array|Store $store The store
      * @return $this
      */
     public function addStoreFilter($store)
     {
-        $defaultStoreId = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
+        $defaultStoreId = Store::DEFAULT_STORE_ID;
 
-        if ($store instanceof \Magento\Store\Model\Store) {
+        if ($store instanceof Store) {
             $store = [$store->getId()];
         }
 
@@ -140,6 +145,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         }
 
         $this->storeIds = $store;
+
+        // @phpstan-ignore-next-line
         $this->addFilter('store', ['in' => $store], 'public');
 
         return $this;

@@ -31,9 +31,9 @@ class Delete extends AbstractAction implements HttpGetActionInterface
             $productLabelId = (int) $this->getRequest()->getParam('product_label_id');
             $this->modelRepository->deleteById($productLabelId);
 
-            $this->messageManager->addSuccessMessage(__('The product label "%1" has been deleted.', $productLabelId));
+            $this->messageManager->addSuccessMessage((string) __('The product label "%1" has been deleted.', $productLabelId));
         } catch (NoSuchEntityException $e) {
-            $this->messageManager->addErrorMessage(__('The product label to delete does not exist.'));
+            $this->messageManager->addErrorMessage((string) __('The product label to delete does not exist.'));
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }

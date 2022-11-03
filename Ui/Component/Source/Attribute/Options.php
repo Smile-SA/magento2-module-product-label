@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\Source\Attribute;
 
+use Magento\Framework\Data\OptionSourceInterface;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory;
 
 /**
  * Attributes options values for virtual attribute product label edit form.
  */
-class Options implements \Magento\Framework\Data\OptionSourceInterface
+class Options implements OptionSourceInterface
 {
+    /**
+     * @var CollectionFactory
+     */
     private CollectionFactory $attributesCollectionFactory;
 
     /**

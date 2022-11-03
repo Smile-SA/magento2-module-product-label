@@ -20,14 +20,24 @@ class Thumbnail extends Column
     public const ALT_FIELD = 'name';
 
     /**
+     * @var Image
+     */
+    protected $imageHelper;
+
+    /**
+     * @var UrlInterface
+     */
+    protected $urlBuilder;
+
+    /**
      * Thumbnail constructor.
      *
-     * @param ContextInterface                           $context            Context
-     * @param UiComponentFactory                         $uiComponentFactory UI Component Factory
-     * @param Image $imageHelper        Image Helper
-     * @param UrlInterface            $urlBuilder         URL Builder
-     * @param array                                      $components         Components
-     * @param array                                      $data               Column Data
+     * @param ContextInterface $context Context
+     * @param UiComponentFactory $uiComponentFactory UI Component Factory
+     * @param Image $imageHelper Image Helper
+     * @param UrlInterface $urlBuilder URL Builder
+     * @param array $components Components
+     * @param array $data Column Data
      */
     public function __construct(
         ContextInterface $context,
@@ -53,9 +63,9 @@ class Thumbnail extends Column
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
-                $item[$fieldName . '_src']      = $this->imageHelper->getBaseUrl() . '/' . $item['image'];
-                $item[$fieldName . '_alt']      = $this->getAlt($item) ?: $this->imageHelper->getLabel();
-                $item[$fieldName . '_link']     = $this->urlBuilder->getUrl(
+                $item[$fieldName . '_src'] = $this->imageHelper->getBaseUrl() . '/' . $item['image'];
+                $item[$fieldName . '_alt'] = $this->getAlt($item) ?: $item['image'];
+                $item[$fieldName . '_link'] = $this->urlBuilder->getUrl(
                     'smile_productlabel/productlabel/edit',
                     ['product_label_id' => $item['product_label_id']]
                 );

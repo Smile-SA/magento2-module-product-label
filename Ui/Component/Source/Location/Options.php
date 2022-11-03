@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\Source\Location;
 
+use Magento\Framework\Data\OptionSourceInterface;
+
 /**
  * Locations values for product label edit form.
  */
-class Options implements \Magento\Framework\Data\OptionSourceInterface
+class Options implements OptionSourceInterface
 {
     /**
      * @var array|null

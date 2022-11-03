@@ -35,11 +35,7 @@ class RegistryLocator implements LocatorInterface
      */
     public function getProductLabel(): ProductLabelInterface
     {
-        if (!empty($this->productLabel)) {
-            return $this->productLabel;
-        }
-
-        $productLabel = $this->registry->registry('current_productlabel');
-        return $productLabel ? ($this->productLabel = $productLabel) : $this->productLabel;
+        $this->productLabel = $this->registry->registry('current_productlabel');
+        return $this->productLabel;
     }
 }

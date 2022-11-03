@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Setup\Patch\Data;
 
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Store\Model\Store;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
@@ -14,13 +15,16 @@ use Zend_Db_Expr;
  */
 class UpdateExistingLabelsStoreView implements DataPatchInterface
 {
-    private \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup;
+    /**
+     * @var ModuleDataSetupInterface
+     */
+    private ModuleDataSetupInterface $moduleDataSetup;
 
     /**
-     * @param \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup Module Data Setup
+     * @param ModuleDataSetupInterface $moduleDataSetup Module Data Setup
      */
     public function __construct(
-        \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup
+        ModuleDataSetupInterface $moduleDataSetup
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
     }
@@ -49,6 +53,8 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
         );
 
         $this->moduleDataSetup->getConnection()->endSetup();
+
+        return $this;
     }
 
     /**

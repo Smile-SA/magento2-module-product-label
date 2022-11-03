@@ -33,7 +33,7 @@ class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
         $productLabel = $this->locator->getProductLabel();
 
         // @codingStandardsIgnoreStart
-        if ($productLabel && $productLabel->getId() && isset($data[$productLabel->getId()][ProductLabelInterface::ATTRIBUTE_ID])) {
+        if ($productLabel->getId() && isset($data[$productLabel->getId()][ProductLabelInterface::ATTRIBUTE_ID])) {
             $data[$productLabel->getId()]['attribute_label'] = $data[$productLabel->getId()][ProductLabelInterface::ATTRIBUTE_ID];
         }
         // @codingStandardsIgnoreEnd
@@ -48,7 +48,7 @@ class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     {
         $productLabel = $this->locator->getProductLabel();
 
-        $isNew = (!$productLabel || !$productLabel->getId());
+        $isNew = !$productLabel->getId();
 
         $meta['general']['children']['attribute_id']['arguments']['data']['config']['disabled'] = !$isNew;
         $meta['general']['children']['attribute_id']['arguments']['data']['config']['visible']  = $isNew;

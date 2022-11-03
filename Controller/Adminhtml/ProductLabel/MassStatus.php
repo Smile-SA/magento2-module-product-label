@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
+use Exception;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Controller\Result\Redirect;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
@@ -15,9 +17,9 @@ class MassStatus extends AbstractAction implements HttpPostActionInterface
     /**
      * Execute action
      *
-     * @throws \Magento\Framework\Exception\LocalizedException|\Exception
+     * @throws \Magento\Framework\Exception\LocalizedException|Exception
      */
-    public function execute(): \Magento\Backend\Model\View\Result\Redirect
+    public function execute(): Redirect
     {
         $collection     = $this->filter->getCollection($this->collectionFactory->create());
         $collectionSize = $collection->getSize();
@@ -32,7 +34,7 @@ class MassStatus extends AbstractAction implements HttpPostActionInterface
             $this->modelRepository->save($plabel);
         }
 
-        $this->messageManager->addSuccessMessage(__($message, $collectionSize));
+        $this->messageManager->addSuccessMessage((string) __($message, $collectionSize));
 
         $resultRedirect = $this->resultRedirectFactory->create();
 

@@ -4,27 +4,37 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
 
+use Magento\Catalog\Api\ProductAttributeRepositoryInterface;
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
+use Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface;
+
 /**
  * Class AttributeOptions
  * Smile Product Label edit form data provider modifier :
  *
  * Used to populate "option_id" field according to current value of "attribute_id" for current product label.
  */
-class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
+class AttributeOptions implements ModifierInterface
 {
-    private \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator;
+    /**
+     * @var LocatorInterface
+     */
+    private LocatorInterface $locator;
 
-    private \Magento\Catalog\Api\ProductAttributeRepositoryInterface $attributeRepository;
+    /**
+     * @var ProductAttributeRepositoryInterface
+     */
+    private ProductAttributeRepositoryInterface $attributeRepository;
 
     /**
      * AttributeOptions constructor.
      *
-     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator             Label Locatory
-     * @param \Magento\Catalog\Api\ProductAttributeRepositoryInterface        $attributeRepository Attribute Repository
+     * @param LocatorInterface $locator             Label Locatory
+     * @param ProductAttributeRepositoryInterface        $attributeRepository Attribute Repository
      */
     public function __construct(
-        \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator,
-        \Magento\Catalog\Api\ProductAttributeRepositoryInterface $attributeRepository
+        LocatorInterface $locator,
+        ProductAttributeRepositoryInterface $attributeRepository
     ) {
         $this->locator             = $locator;
         $this->attributeRepository = $attributeRepository;
@@ -46,15 +56,15 @@ class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInte
         $productLabel = $this->locator->getProductLabel();
 
         $options = [];
-        if ($productLabel && $productLabel->getAttributeId()) {
-            $options = $this->getAttributeOptions((int) $productLabel->getAttributeId());
+        if ($productLabel->getAttributeId()) {
+            $options = $this->getAttributeOptions($productLabel->getAttributeId());
         }
 
         $meta['general']['children']['option_id']['arguments']['data']['options']    = $options;
         $meta['general']['children']['option_label']['arguments']['data']['options'] = $options;
 
-        $isNew          = (!$productLabel || !$productLabel->getId());
-        $optionFieldVisible = $isNew && $productLabel && $productLabel->getAttributeId();
+        $isNew = !$productLabel->getId();
+        $optionFieldVisible = $isNew && $productLabel->getAttributeId();
 
         $meta['general']['children']['option_id']['arguments']['data']['config']['disabled'] = !$isNew;
         $meta['general']['children']['option_id']['arguments']['data']['config']['visible']  = $optionFieldVisible;
@@ -71,13 +81,20 @@ class AttributeOptions implements \Magento\Ui\DataProvider\Modifier\ModifierInte
      * @param int $attributeId The attribute Id
      * @return array
      */
-    private function getAttributeOptions(int $attributeId): array
+    private function getAttributeOptions($attributeId): array
     {
+        /** @var string $attributeId */
         $attribute = $this->attributeRepository->get($attributeId);
         $options   = [];
 
-        if ($attribute && $attribute->getAttributeId() && $attribute->getSource()) {
-            $options = $attribute->getSource()->getAllOptions(false);
+        /** @var  \Magento\Eav\Model\Entity\Attribute\AbstractAttribute $attribute */
+        $source = $attribute->getSource();
+
+        /** @var \Magento\Eav\Api\Data\AttributeInterface $attribute */
+        $attributeId = $attribute->getAttributeId();
+
+        if ($attributeId) {
+            $options = $source->getAllOptions();
         }
 
         return $options;

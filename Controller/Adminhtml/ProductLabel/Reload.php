@@ -6,7 +6,7 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\Controller\Result\ForwardFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\ResultFactory;
@@ -40,9 +40,11 @@ class Reload extends Action implements HttpPostActionInterface
 
     protected Filter $filter;
 
-    protected \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory;
+    protected CollectionFactory $collectionFactory;
 
     protected ProductLabelRepositoryInterface $productLabelRepository;
+
+    protected ForwardFactory $resultForwardFactory;
 
     /**
      * Product Label Factory
@@ -62,18 +64,20 @@ class Reload extends Action implements HttpPostActionInterface
      * @param ProductLabelInterfaceFactory $productLabelFactory Product Label Factory
      */
     public function __construct(
-        Context $context,
-        PageFactory $resultPageFactory,
-        Registry $coreRegistry,
-        DataPersistorInterface $dataPersistor,
-        Filter $filter,
-        \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $collectionFactory,
+        Context                         $context,
+        PageFactory                     $resultPageFactory,
+        Registry                        $coreRegistry,
+        DataPersistorInterface          $dataPersistor,
+        Filter                          $filter,
+        CollectionFactory               $collectionFactory,
         ProductLabelRepositoryInterface $productLabelRepository,
-        ProductLabelInterfaceFactory $productLabelFactory
+        ProductLabelInterfaceFactory    $productLabelFactory,
+        ForwardFactory $resultForwardFactory
     ) {
         parent::__construct($context);
 
         $this->resultPageFactory      = $resultPageFactory;
+        $this->resultForwardFactory   = $resultForwardFactory;
         $this->coreRegistry           = $coreRegistry;
         $this->dataPersistor          = $dataPersistor;
         $this->filter                 = $filter;
@@ -88,7 +92,7 @@ class Reload extends Action implements HttpPostActionInterface
     public function execute()
     {
         if (!$this->getRequest()->getParam('set')) {
-            return $this->resultFactory->create(ResultFactory::TYPE_FORWARD)->forward('noroute');
+            return $this->resultForwardFactory->create()->forward('noroute');
         }
 
         $identifier = $this->getRequest()->getParam('product_label_id');
@@ -118,7 +122,8 @@ class Reload extends Action implements HttpPostActionInterface
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
 
-        $resultPage->setActiveMenu('Smile_ProductLabel::rule')->addBreadcrumb(__('Product Label'), __('Product Label'));
+        $resultPage->setActiveMenu('Smile_ProductLabel::rule')
+            ->addBreadcrumb((string) __('Product Label'), (string) __('Product Label'));
 
         return $resultPage;
     }
