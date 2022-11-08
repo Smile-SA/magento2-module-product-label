@@ -1,23 +1,18 @@
 <?php
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\Repository;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
+use Magento\Framework\Api\SearchResults;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory;
 use Smile\ProductLabel\Api\Data\ProductLabelSearchResultsInterfaceFactory;
+use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
 use Smile\ProductLabel\Model\Repository\Manager as RepositoryManager;
 use Smile\ProductLabel\Model\Repository\ManagerFactory as RepositoryManagerFactory;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResourceModel;
@@ -25,26 +20,18 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as Pro
 
 /**
  * ProductLabel Repository
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class ProductLabel implements ProductLabelRepositoryInterface
 {
-
-    /**
-     * @var RepositoryManager
-     */
-    protected $productLabelRepositoryManager;
+    protected RepositoryManager $productLabelRepositoryManager;
 
     /**
      * ProductLabel constructor.
      *
-     * @param ManagerFactory                            $repositoryManagerFactory   Repository Manager
-     * @param ProductLabelInterfaceFactory              $objectFactory              Object Factory
-     * @param ProductLabelResourceModel                 $objectResource             Object Resource
-     * @param ProductLabelCollectionFactory             $objectCollectionFactory    Object Collection Factory
+     * @param ManagerFactory $repositoryManagerFactory Repository Manager
+     * @param ProductLabelInterfaceFactory $objectFactory Object Factory
+     * @param ProductLabelResourceModel $objectResource Object Resource
+     * @param ProductLabelCollectionFactory $objectCollectionFactory Object Collection Factory
      * @param ProductLabelSearchResultsInterfaceFactory $objectSearchResultsFactory Object Search Result Factory
      */
     public function __construct(
@@ -56,11 +43,11 @@ class ProductLabel implements ProductLabelRepositoryInterface
     ) {
         $this->productLabelRepositoryManager = $repositoryManagerFactory->create(
             [
-                'objectFactory'              => $objectFactory,
-                'objectResource'             => $objectResource,
-                'objectCollectionFactory'    => $objectCollectionFactory,
+                'objectFactory' => $objectFactory,
+                'objectResource' => $objectResource,
+                'objectCollectionFactory' => $objectCollectionFactory,
                 'objectSearchResultsFactory' => $objectSearchResultsFactory,
-                'identifierFieldName'        => ProductLabelInterface::PRODUCTLABEL_ID,
+                'identifierFieldName' => ProductLabelInterface::PRODUCTLABEL_ID,
             ]
         );
     }
@@ -69,36 +56,34 @@ class ProductLabel implements ProductLabelRepositoryInterface
      * Retrieve a productLabel by its id
      *
      * @param int $objectId Product Label identifier.
-     *
-     * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
-    public function getById($objectId)
+    public function getById(int $objectId): ProductLabelInterface
     {
-        return $this->productLabelRepositoryManager->getEntityById($objectId);
+        /** @var ProductLabelInterface $productLabel */
+        $productLabel = $this->productLabelRepositoryManager->getEntityById($objectId);
+        return $productLabel;
     }
 
     /**
      * Retrieve a productLabel by its identifier.
      *
      * @param string $objectIdentifier Product Label identifier.
-     *
-     * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
-    public function getByIdentifier($objectIdentifier)
+    public function getByIdentifier(string $objectIdentifier): ProductLabelInterface
     {
-        return $this->productLabelRepositoryManager->getEntityByIdentifier($objectIdentifier);
+        /** @var ProductLabelInterface $productLabel */
+        $productLabel = $this->productLabelRepositoryManager->getEntityByIdentifier($objectIdentifier);
+        return $productLabel;
     }
 
     /**
      * Retrieve productLabels which match a specified criteria.
      *
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria Search Criteria
-     *
-     * @return \Smile\ProductLabel\Api\Data\ProductLabelSearchResultsInterface
+     * @param SearchCriteriaInterface|null $searchCriteria Search Criteria
      */
-    public function getList(SearchCriteriaInterface $searchCriteria = null)
+    public function getList(?SearchCriteriaInterface $searchCriteria = null): SearchResults
     {
         return $this->productLabelRepositoryManager->getEntities($searchCriteria);
     }
@@ -106,26 +91,25 @@ class ProductLabel implements ProductLabelRepositoryInterface
     /**
      * Save a productLabel.
      *
-     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterface $object Product Label
-     *
-     * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @param ProductLabelInterface $object Product Label
+     * @throws CouldNotSaveException
      */
-    public function save(ProductLabelInterface $object)
+    public function save(ProductLabelInterface $object): ProductLabelInterface
     {
-        return $this->productLabelRepositoryManager->saveEntity($object);
+        /** @var \Magento\Framework\Model\AbstractModel $object */
+        /** @var ProductLabelInterface $productLabel */
+        $productLabel = $this->productLabelRepositoryManager->saveEntity($object);
+        return $productLabel;
     }
 
     /**
      * Delete a productLabel by its id.
      *
      * @param int $objectId The object Id
-     *
-     * @return bool
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     * @throws NoSuchEntityException
+     * @throws CouldNotDeleteException
      */
-    public function deleteById($objectId)
+    public function deleteById(int $objectId): bool
     {
         return $this->productLabelRepositoryManager->deleteEntityById($objectId);
     }
@@ -133,14 +117,12 @@ class ProductLabel implements ProductLabelRepositoryInterface
     /**
      * Delete a productLabel by its identifier.
      *
-     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterface $object Product Label
-     *
-     * @return bool
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     * @param string $label Product Label
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
      */
-    public function deleteByIdentifier($object)
+    public function deleteByIdentifier(string $label): bool
     {
-        return $this->productLabelRepositoryManager->deleteEntityByIdentifier($object);
+        return $this->productLabelRepositoryManager->deleteEntityByIdentifier($label);
     }
 }

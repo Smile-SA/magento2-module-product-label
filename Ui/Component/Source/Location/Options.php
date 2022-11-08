@@ -1,36 +1,23 @@
 <?php
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\Source\Location;
 
+use Magento\Framework\Data\OptionSourceInterface;
+
 /**
  * Locations values for product label edit form.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-class Options implements \Magento\Framework\Data\OptionSourceInterface
+class Options implements OptionSourceInterface
 {
-
     /**
      * @var array|null
      */
-    private $locationsList;
+    private ?array $locationsList = null;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {
@@ -42,26 +29,26 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
      *
      * @return array
      */
-    private function getLocationsList()
+    private function getLocationsList(): array
     {
         $this->locationsList[0] = [
             'id'      => 0,
-            'value'   => 'top_right',
+            'value'   => 'top-right',
             'label'   => 'Top Right',
         ];
         $this->locationsList[1] = [
             'id'      => 1,
-            'value'   => 'top_left',
+            'value'   => 'top-left',
             'label'   => 'Top Left',
         ];
         $this->locationsList[2] = [
             'id'      => 2,
-            'value'   => 'lower_right',
+            'value'   => 'lower-right',
             'label'   => 'Lower Right',
         ];
         $this->locationsList[3] = [
             'id'      => 3,
-            'value'   => 'lower_left',
+            'value'   => 'lower-left',
             'label'   => 'Lower Left',
         ];
 

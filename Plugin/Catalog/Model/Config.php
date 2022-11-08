@@ -1,24 +1,18 @@
 <?php
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Plugin\Catalog\Model;
 
+use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use Magento\Eav\Model\Config as EavConfigModel;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
+
 /**
- * Plugin on Catalog Configuration to enforce loading of all attributes used for product labels rules to be loaded on listing pages.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * Plugin on Catalog Configuration
+ * to enforce loading of all attributes used for product labels rules to be loaded on listing pages.
  */
 class Config
 {
@@ -27,61 +21,54 @@ class Config
      *
      * @var array
      */
-    private $usedInProductListing;
+    private array $usedInProductListing;
 
     /**
      * Eav config
-     *
-     * @var \Magento\Eav\Model\Config
      */
-    private $eavConfig;
+    private EavConfigModel $eavConfig;
 
-    /**
-     * @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute
-     */
-    private $attributeFactory;
+    private Attribute $attributeFactory;
 
-    /**
-     * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory
-     */
-    private $productLabelCollectionFactory;
+    private CollectionFactory $productLabelCollectionFactory;
 
     /**
      * Config constructor.
      *
-     * @param \Magento\Eav\Model\Config                                              $eavConfig                     EAV Config
-     * @param \Magento\Catalog\Model\ResourceModel\Eav\Attribute                     $attributeFactory              Attributes Factory
-     * @param \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $productLabelCollectionFactory Product Label Factory
+     * @param EavConfigModel $eavConfig EAV Config
+     * @param Attribute $attributeFactory Attributes Factory
+     * @param CollectionFactory $productLabelCollectionFactory Product Label Factory
      */
     public function __construct(
-        \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory,
-        \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory $productLabelCollectionFactory
+        EavConfigModel    $eavConfig,
+        Attribute         $attributeFactory,
+        CollectionFactory $productLabelCollectionFactory
     ) {
-        $this->eavConfig                     = $eavConfig;
-        $this->attributeFactory              = $attributeFactory;
+        $this->eavConfig = $eavConfig;
+        $this->attributeFactory = $attributeFactory;
         $this->productLabelCollectionFactory = $productLabelCollectionFactory;
+        $this->usedInProductListing = [];
     }
 
     /**
      * Add all attributes used for picto/labels into the list of attributes used in product listing.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     *
      * @param \Magento\Catalog\Model\Config $subject The Catalog config
      * @param array                         $result  The result of $subject->getAttributesUsedInProductListing
-     *
      * @return array
      */
-    public function afterGetAttributesUsedInProductListing(\Magento\Catalog\Model\Config $subject, $result)
+    public function afterGetAttributesUsedInProductListing(\Magento\Catalog\Model\Config $subject, array $result): array
     {
-        if ($this->usedInProductListing === null) {
+        if ($this->usedInProductListing == null) {
             $this->usedInProductListing = $result;
-            $entityType                 = \Magento\Catalog\Model\Product::ENTITY;
+            $entityType = Product::ENTITY;
 
-            /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
+            /** @var CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
             // Here you have all the attribute ids that are used to build product label rules.
+
+            // @phpstan-ignore-next-line
             $attributeIds = $productLabelsCollection->getAllAttributeIds();
 
             // Filter the collection on these attributes only.
@@ -91,7 +78,7 @@ class Config
             $this->eavConfig->importAttributesData($entityType, $attributesDataExtra);
 
             foreach ($attributesDataExtra as $attributeData) {
-                $attributeCode                              = $attributeData['attribute_code'];
+                $attributeCode = $attributeData['attribute_code'];
                 $this->usedInProductListing[$attributeCode] = $this->eavConfig->getAttribute(
                     $entityType,
                     $attributeCode

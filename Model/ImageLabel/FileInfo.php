@@ -1,58 +1,33 @@
 <?php
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\ImageLabel;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\File\Mime;
 use Magento\Framework\Filesystem;
-use Magento\Framework\Filesystem\Directory\WriteInterface;
 use Magento\Framework\Filesystem\Directory\ReadInterface;
+use Magento\Framework\Filesystem\Directory\WriteInterface;
 
 /**
  * Class FileInfo
  * Provides information about requested file
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class FileInfo
 {
     /**
      * Path in /pub/media directory
      */
-    const ENTITY_MEDIA_PATH = '/smile_productlabel/imagelabel';
+    public const ENTITY_MEDIA_PATH = '/smile_productlabel/imagelabel';
 
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    private Filesystem $filesystem;
 
-    /**
-     * @var Mime
-     */
-    private $mime;
+    private Mime $mime;
 
-    /**
-     * @var WriteInterface
-     */
-    private $mediaDirectory;
+    private WriteInterface $mediaDirectory;
 
-    /**
-     * @var ReadInterface
-     */
-    private $baseDirectory;
+    private ReadInterface $baseDirectory;
 
     /**
      * FileInfo constructor.
@@ -72,10 +47,8 @@ class FileInfo
      * Retrieve MIME type of requested file
      *
      * @param string $fileName The filename
-     *
-     * @return string
      */
-    public function getMimeType($fileName)
+    public function getMimeType(string $fileName): string
     {
         $filePath         = $this->getFilePath($fileName);
         $absoluteFilePath = $this->getMediaDirectory()->getAbsolutePath($filePath);
@@ -89,10 +62,9 @@ class FileInfo
      * Get file statistics data
      *
      * @param string $fileName The filename
-     *
      * @return array
      */
-    public function getStat($fileName)
+    public function getStat(string $fileName): array
     {
         $filePath = $this->getFilePath($fileName);
 
@@ -105,10 +77,8 @@ class FileInfo
      * Check if the file exists
      *
      * @param string $fileName The filename
-     *
-     * @return bool
      */
-    public function isExist($fileName)
+    public function isExist(string $fileName): bool
     {
         $filePath = $this->getFilePath($fileName);
         $result   = $this->getMediaDirectory()->isExist($filePath);
@@ -120,10 +90,8 @@ class FileInfo
      * Checks for whether $fileName string begins with media directory path
      *
      * @param string $fileName The filename
-     *
-     * @return bool
      */
-    public function isBeginsWithMediaDirectoryPath($fileName)
+    public function isBeginsWithMediaDirectoryPath(string $fileName): bool
     {
         $filePath = ltrim($fileName, '/');
 
@@ -137,12 +105,9 @@ class FileInfo
      * Construct and return file subpath based on filename relative to media directory
      *
      * @SuppressWarnings(PHPMD.ElseExpression)
-     *
      * @param string $fileName The filename
-     *
-     * @return string
      */
-    private function getFilePath($fileName)
+    private function getFilePath(string $fileName): string
     {
         $filePath = ltrim($fileName, '/');
 
@@ -163,10 +128,8 @@ class FileInfo
 
     /**
      * Get media directory subpath relative to base directory path
-     *
-     * @return string
      */
-    private function getMediaDirectoryPathRelativeToBaseDirectoryPath()
+    private function getMediaDirectoryPathRelativeToBaseDirectoryPath(): string
     {
         $baseDirectoryPath  = $this->getBaseDirectory()->getAbsolutePath();
         $mediaDirectoryPath = $this->getMediaDirectory()->getAbsolutePath();
@@ -178,24 +141,17 @@ class FileInfo
 
     /**
      * Get WriteInterface instance
-     *
-     * @return WriteInterface
      */
-    private function getMediaDirectory()
+    private function getMediaDirectory(): WriteInterface
     {
-        if ($this->mediaDirectory === null) {
-            $this->mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
-        }
-
+        $this->mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
         return $this->mediaDirectory;
     }
 
     /**
      * Get Base Directory read instance
-     *
-     * @return ReadInterface
      */
-    private function getBaseDirectory()
+    private function getBaseDirectory(): ReadInterface
     {
         if (!isset($this->baseDirectory)) {
             $this->baseDirectory = $this->filesystem->getDirectoryRead(DirectoryList::ROOT);

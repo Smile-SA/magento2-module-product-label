@@ -1,35 +1,25 @@
 <?php
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
+use Exception;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Controller\Result\Redirect;
+use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+
 /**
  * Smile Product Label status mass action controller.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-class MassStatus extends AbstractAction
+class MassStatus extends AbstractAction implements HttpPostActionInterface
 {
     /**
      * Execute action
      *
-     * @return \Magento\Backend\Model\View\Result\Redirect
-     * @throws \Magento\Framework\Exception\LocalizedException|\Exception
+     * @throws \Magento\Framework\Exception\LocalizedException|Exception
      */
-    public function execute()
+    public function execute(): Redirect
     {
         $collection     = $this->filter->getCollection($this->collectionFactory->create());
         $collectionSize = $collection->getSize();
@@ -38,13 +28,13 @@ class MassStatus extends AbstractAction
         $message        = ($status === 0) ? 'A total of %1 product label(s) have been disabled.' : 'A total of %1 product label(s) have been enabled.';
         // @codingStandardsIgnoreEnd
 
-        /** @var \Smile\ProductLabel\Api\Data\ProductLabelInterface $plabel */
+        /** @var ProductLabelInterface $plabel */
         foreach ($collection as $plabel) {
-            $plabel->setIsActive($status);
+            $plabel->setIsActive((bool) $status);
             $this->modelRepository->save($plabel);
         }
 
-        $this->messageManager->addSuccessMessage(__($message, $collectionSize));
+        $this->messageManager->addSuccessMessage((string) __($message, $collectionSize));
 
         $resultRedirect = $this->resultRedirectFactory->create();
 

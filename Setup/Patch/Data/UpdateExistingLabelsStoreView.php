@@ -1,46 +1,36 @@
 <?php
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Romain Ruaud <romain.ruaud@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Setup\Patch\Data;
 
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Store\Model\Store;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+use Zend_Db_Expr;
 
 /**
  * Populate Label/Store link table with default store view for all existing labels.
- *
- * @category Smile
- * @package  Smile\ProductLabel
- * @author   Romain Ruaud <romain.ruaud@smile.fr>
  */
 class UpdateExistingLabelsStoreView implements DataPatchInterface
 {
     /**
-     * @var \Magento\Framework\Setup\ModuleDataSetupInterface
+     * @var ModuleDataSetupInterface
      */
-    private $moduleDataSetup;
+    private ModuleDataSetupInterface $moduleDataSetup;
 
     /**
-     * @param \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup Module Data Setup
+     * @param ModuleDataSetupInterface $moduleDataSetup Module Data Setup
      */
     public function __construct(
-        \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup
+        ModuleDataSetupInterface $moduleDataSetup
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
@@ -51,7 +41,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
             ProductLabelInterface::TABLE_NAME,
             [
                 ProductLabelInterface::PRODUCTLABEL_ID => ProductLabelInterface::PRODUCTLABEL_ID,
-                new \Zend_Db_Expr(\Magento\Store\Model\Store::DEFAULT_STORE_ID . ' as ' . ProductLabelInterface::STORE_ID),
+                new Zend_Db_Expr(Store::DEFAULT_STORE_ID . ' as ' . ProductLabelInterface::STORE_ID),
             ]
         );
 
@@ -63,10 +53,12 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
         );
 
         $this->moduleDataSetup->getConnection()->endSetup();
+
+        return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -74,7 +66,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {

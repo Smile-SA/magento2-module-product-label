@@ -1,41 +1,26 @@
 <?php
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\ImageLabel;
 
+use Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend;
 use Magento\Framework\UrlInterface;
-use Magento\Framework\App\Filesystem\DirectoryList;
 
 /**
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * Image label class
  */
-class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
+class Image extends AbstractBackend
 {
     /**
      * media sub folder
-     *
-     * @var string
      */
-    protected $subDir = 'smile_productlabel/imagelabel';
+    protected string $subDir = 'smile_productlabel/imagelabel';
 
     /**
-     * url builder
-     *
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
-    protected $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * Image constructor.
@@ -49,11 +34,9 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     }
 
     /**
-     * get images base url
-     *
-     * @return string
+     * Get images base url
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): string
     {
         return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . $this->subDir;
     }
@@ -62,10 +45,8 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
      * Check if temporary file is available for new image upload.
      *
      * @param array $value The value
-     *
-     * @return bool
      */
-    public function isTmpFileAvailable($value)
+    public function isTmpFileAvailable(array $value): bool
     {
         return is_array($value) && isset($value[0]['tmp_name']);
     }

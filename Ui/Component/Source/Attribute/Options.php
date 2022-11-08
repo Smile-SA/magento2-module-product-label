@@ -1,38 +1,26 @@
 <?php
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
+
 namespace Smile\ProductLabel\Ui\Component\Source\Attribute;
 
-use \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory;
+use Magento\Framework\Data\OptionSourceInterface;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory;
 
 /**
  * Attributes options values for virtual attribute product label edit form.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-class Options implements \Magento\Framework\Data\OptionSourceInterface
+class Options implements OptionSourceInterface
 {
     /**
-     * @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFactory
+     * @var CollectionFactory
      */
-    private $attributesCollectionFactory;
+    private CollectionFactory $attributesCollectionFactory;
 
     /**
      * @var array|null
      */
-    private $attributesList;
+    private ?array $attributesList = null;
 
     /**
      * Options constructor.
@@ -45,7 +33,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {
@@ -57,7 +45,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
      *
      * @return array
      */
-    private function getAttributesList()
+    private function getAttributesList(): array
     {
         if (null === $this->attributesList) {
             $this->attributesList = [];

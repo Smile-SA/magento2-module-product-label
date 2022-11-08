@@ -1,46 +1,35 @@
 <?php
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
+
+use Magento\Backend\Model\UrlInterface;
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
 
 /**
  * Smile Product label edit form data provider modifier :
  * Used to add the proper value for reloadUrl inside UI component configuration.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-class System implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
+class System implements ModifierInterface
 {
     /**
-     * @var \Magento\Backend\Model\UrlInterface
+     * @var UrlInterface
      */
-    private $urlBuilder;
+    private UrlInterface $urlBuilder;
 
     /**
      * Search Terms constructor.
      *
-     * @param \Magento\Backend\Model\UrlInterface $urlBuilder URL Builder
+     * @param UrlInterface $urlBuilder URL Builder
      */
-    public function __construct(\Magento\Backend\Model\UrlInterface $urlBuilder)
+    public function __construct(UrlInterface $urlBuilder)
     {
         $this->urlBuilder = $urlBuilder;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyData(array $data)
     {
@@ -55,7 +44,7 @@ class System implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyMeta(array $meta)
     {

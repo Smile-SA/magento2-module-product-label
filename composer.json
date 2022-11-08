@@ -5,13 +5,14 @@
     "keywords": ["magento2", "product", "label", "image"],
     "license": "OSL-3.0",
     "require": {
+        "php": "^7.4 || ^8.1",
         "magento/framework": ">=103.0.0",
         "magento/module-catalog": ">=104.0.0",
         "magento/module-eav": ">=102.0.0",
         "magento/module-media-storage": ">=100.4.0"
     },
     "require-dev": {
-        "smile/magento2-smilelab-quality-suite": "^1.1.0"
+        "smile/magento2-smilelab-quality-suite": "^3.0"
     },
     "authors":[
         {

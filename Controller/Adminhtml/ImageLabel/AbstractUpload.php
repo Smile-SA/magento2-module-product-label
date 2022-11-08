@@ -1,68 +1,62 @@
 <?php
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ImageLabel;
 
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Catalog\Model\ImageUploader;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
 
 /**
  * Class AbstractUpload
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-abstract class AbstractUpload extends \Magento\Backend\App\Action
+abstract class AbstractUpload extends Action
 {
     /**
      * Image uploader
-     *
-     * @var \Magento\Catalog\Model\ImageUploader
      */
-    protected $imageUploader;
+    protected ImageUploader $imageUploader;
+
+    /**
+     * Image uploader
+     */
+    protected JsonFactory $resultJsonFactory;
 
     /**
      * AbstractUpload constructor.
      *
-     * @param \Magento\Backend\App\Action\Context  $context       UI Component context
-     * @param \Magento\Catalog\Model\ImageUploader $imageUploader Image uploader
+     * @param Context $context UI Component context
+     * @param ImageUploader $imageUploader Image uploader
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Catalog\Model\ImageUploader $imageUploader
+        Context $context,
+        ImageUploader $imageUploader,
+        JsonFactory $resultJsonFactory
     ) {
         parent::__construct($context);
         $this->imageUploader = $imageUploader;
+        $this->resultJsonFactory = $resultJsonFactory;
     }
 
     /**
      * Upload file controller action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    public function execute(): ResultInterface
     {
         try {
             $result = $this->imageUploader->saveFileToTmpDir($this->getFileId());
         } catch (\Exception $e) {
             $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
         }
-
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
+        return $this->resultJsonFactory->create()->setData($result);
     }
 
     /**
-     * @return string
+     * Get file id
      */
-    abstract protected function getFileId();
+    abstract protected function getFileId(): string;
 }

@@ -1,48 +1,35 @@
 <?php
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\Listing\Column;
 
+use Magento\Framework\Escaper;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
-use Magento\Framework\UrlInterface;
-use Magento\Framework\Escaper;
 
 /**
  * Class Product Label Actions
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class AttributeActions extends Column
 {
     /**
      * Url path
      */
-    const URL_PATH_EDIT = 'smile_productlabel/productlabel/edit';
-    const URL_PATH_DELETE = 'smile_productlabel/productlabel/delete';
+    protected const URL_PATH_EDIT = 'smile_productlabel/productlabel/edit';
+    protected const URL_PATH_DELETE = 'smile_productlabel/productlabel/delete';
 
     /**
      * @var UrlInterface
      */
-    protected $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * @var Escaper
      */
-    protected $escaper;
+    protected Escaper $escaper;
 
     /**
      * AttributeActions constructor.
@@ -69,7 +56,7 @@ class AttributeActions extends Column
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function prepareDataSource(array $dataSource)
     {

@@ -1,33 +1,19 @@
 <?php
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\ProductLabel\Locator;
+
+use Magento\Framework\Registry;
+use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
  * Rule Registry Locator.
  * Used by Ui Component modifiers.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
 class RegistryLocator implements LocatorInterface
 {
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    private $registry;
+    private Registry $registry;
 
     /**
      * @var null
@@ -37,26 +23,19 @@ class RegistryLocator implements LocatorInterface
     /**
      * RegistryLocator constructor.
      *
-     * @param \Magento\Framework\Registry $registry Registry
+     * @param Registry $registry Registry
      */
-    public function __construct(\Magento\Framework\Registry $registry)
+    public function __construct(Registry $registry)
     {
         $this->registry = $registry;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function getProductLabel()
+    public function getProductLabel(): ProductLabelInterface
     {
-        if (null !== $this->productLabel) {
-            return $this->productLabel;
-        }
-
-        if ($productLabel = $this->registry->registry('current_productlabel')) {
-            return $this->productLabel = $productLabel;
-        }
-
-        return null;
+        $this->productLabel = $this->registry->registry('current_productlabel');
+        return $this->productLabel;
     }
 }

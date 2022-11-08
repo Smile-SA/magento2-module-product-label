@@ -1,32 +1,20 @@
 <?php
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ImageLabel;
 
+use Magento\Framework\App\Action\HttpPostActionInterface;
+
 /**
- * Class Image
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
+ * Class Image admin
  */
-class Image extends AbstractUpload
+class Image extends AbstractUpload implements HttpPostActionInterface
 {
     /**
-     * @return string
+     * Get file id
      */
-    public function getFileId()
+    public function getFileId(): string
     {
         return 'image';
     }

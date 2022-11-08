@@ -1,55 +1,43 @@
 <?php
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
+
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
+use Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface;
 
 /**
  * Smile Product Label edit form data provider modifier :
  *
  * Used to populate "store_id" field according to current value of "store_id" for current product label.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
  */
-class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
+class Stores implements ModifierInterface
 {
     /**
-     * @var \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface
+     * @var LocatorInterface
      */
-    private $locator;
+    private LocatorInterface $locator;
 
     /**
      * AttributeOptions constructor.
      *
-     * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator Label Locatory
+     * @param LocatorInterface $locator Label Locatory
      */
     public function __construct(
-        \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator
+        LocatorInterface $locator
     ) {
         $this->locator = $locator;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyData(array $data)
     {
         $productLabel = $this->locator->getProductLabel();
 
-        if ($productLabel
-            && $productLabel->getId()
+        if ($productLabel->getId()
             && !empty($productLabel->getStores())
             && empty($data[$productLabel->getId()]['store_id'])
         ) {
@@ -60,7 +48,7 @@ class Stores implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyMeta(array $meta)
     {

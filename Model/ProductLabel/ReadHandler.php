@@ -1,15 +1,6 @@
 <?php
-/**
- * DISCLAIMER
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future.
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <houda.elrhozlane@smile.fr>
- * @copyright 2019 Smile
- * @license   Open Software License ("OSL") v. 3.0
- */
+
+declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\ProductLabel;
 
@@ -18,20 +9,11 @@ use Magento\Framework\EntityManager\Operation\ExtensionInterface;
 use Smile\ProductLabel\Helper\Data as DataHelper;
 
 /**
- * Class ReadHandler
- *
- * @category  Smile
- * @package   Smile\ProductLabel
- * @author    Houda EL RHOZLANE <hoelr@smile.fr>
- * @copyright 2019 Smile
+ * Class ReadHandler Locator
  */
 class ReadHandler implements ExtensionInterface
 {
-
-    /**
-     * @var DataHelper
-     */
-    protected $dataHelper;
+    protected DataHelper $dataHelper;
 
     /**
      * ReadHandler constructor.
@@ -44,30 +26,25 @@ class ReadHandler implements ExtensionInterface
     }
 
     /**
-     * Perform action on relation/extension attribute
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     *
-     * @param ProductInterface $product   Catalog Product Object
-     * @param array            $arguments Array of Arguments
-     *
-     * @return ProductInterface|object
+     * @inheritDoc
      */
-    public function execute($product, $arguments = [])
+    public function execute($entity, $arguments = [])
     {
-        /** @var ProductInterface $product */
-        $extension = $product->getExtensionAttributes();
+        /** @var ProductInterface $entity */
+        $extension = $entity->getExtensionAttributes();
 
         if ($extension->getProductLabels() !== null) {
-            return $product;
+            return $entity;
         }
 
-        $productLabels = $this->dataHelper->getProductPLabels($product);
+        /** @var DataHelper $dataHelper */
+        $dataHelper = $this->dataHelper;
+        $productLabels = $dataHelper->getProductLabels($entity);
 
         $extension->setProductLabels($productLabels);
 
-        $product->setExtensionAttributes($extension);
+        $entity->setExtensionAttributes($extension);
 
-        return $product;
+        return $entity;
     }
 }
