@@ -47,15 +47,16 @@ Documentation is available [here](https://github.com/Smile-SA/magento2-module-pr
 
 The User Guide is also available on PDF format [here](https://github.com/Smile-SA/magento2-module-product-label/wiki/static/UserGuide.pdf)
 
+## Contributing
+
+You can contribute to this module by submitting issues or pull requests.
+
+For more details, please take a look at the [contribution guidelines](CONTRIBUTING.md).
+
+## Changelog
+
+All notable changes are recorded in this [changelog](CHANGELOG.md).
+
 ## Standards & Code Quality
 
-Built on top of Magento2, our module respects all its prerequisites and code quality rules.
-
-You can also find our PHPCS Standards and PHPMD rulesets in the module directory.
-
-The module is also continuously tested on :
-
-Tools                           | Results
-------------------------------- |------------
-Code Climate                    | [![Maintainability](https://api.codeclimate.com/v1/badges/8801d15c1581ed3650bd/maintainability)](https://codeclimate.com/github/Smile-SA/magento2-module-product-label/maintainability)
-Travis                          | [![Build Status](https://travis-ci.org/Smile-SA/magento2-module-product-label.svg?branch=master)](https://travis-ci.org/Smile-SA/magento2-module-product-label)
+[Smile Lab Quality Suite (Magento)](https://github.com/Smile-SA/magento2-smilelab-quality-suite/) provides coding standards / rulesets that can be used on Magento projects.
