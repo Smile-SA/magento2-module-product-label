@@ -385,7 +385,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     {
         if ($this->imageUploader === null) {
             // @phpstan-ignore-next-line
-            $this->imageUploader = ObjectManager::getInstance()->get(ProductLabelImageUpload::class);
+            $this->imageUploader = ObjectManager::getInstance()->get(\Smile\ProductLabel\ProductLabelImageUpload::class);
         }
 
         return $this->imageUploader;
