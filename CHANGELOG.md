@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [1.2.1] - 2022-11-15
-[1.2.1]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.1.2...1.2.0
+[1.2.1]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.0...1.2.1
 
 - Update to fix gallery image uploader
 
