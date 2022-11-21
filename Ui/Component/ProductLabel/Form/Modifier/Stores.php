@@ -14,9 +14,6 @@ use Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface;
  */
 class Stores implements ModifierInterface
 {
-    /**
-     * @var LocatorInterface
-     */
     private LocatorInterface $locator;
 
     /**
@@ -37,7 +34,8 @@ class Stores implements ModifierInterface
     {
         $productLabel = $this->locator->getProductLabel();
 
-        if ($productLabel->getId()
+        if (
+            $productLabel->getId()
             && !empty($productLabel->getStores())
             && empty($data[$productLabel->getId()]['store_id'])
         ) {

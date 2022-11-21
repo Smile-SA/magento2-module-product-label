@@ -21,14 +21,8 @@ class AttributeActions extends Column
     protected const URL_PATH_EDIT = 'smile_productlabel/productlabel/edit';
     protected const URL_PATH_DELETE = 'smile_productlabel/productlabel/delete';
 
-    /**
-     * @var UrlInterface
-     */
     protected UrlInterface $urlBuilder;
 
-    /**
-     * @var Escaper
-     */
     protected Escaper $escaper;
 
     /**

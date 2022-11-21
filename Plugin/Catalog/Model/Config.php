@@ -7,7 +7,6 @@ namespace Smile\ProductLabel\Plugin\Catalog\Model;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Eav\Model\Config as EavConfigModel;
-use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
 
 /**

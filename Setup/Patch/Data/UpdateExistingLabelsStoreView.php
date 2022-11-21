@@ -15,9 +15,6 @@ use Zend_Db_Expr;
  */
 class UpdateExistingLabelsStoreView implements DataPatchInterface
 {
-    /**
-     * @var ModuleDataSetupInterface
-     */
     private ModuleDataSetupInterface $moduleDataSetup;
 
     /**

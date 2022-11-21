@@ -6,10 +6,8 @@ namespace Smile\ProductLabel\Block\ProductLabel;
 
 use Magento\Backend\Block\Template\Context;
 use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Model\AbstractModel;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\App\CacheInterface;
-use Magento\Framework\App\Request\Http\Proxy;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;

@@ -13,9 +13,6 @@ use Magento\Ui\DataProvider\Modifier\ModifierInterface;
  */
 class System implements ModifierInterface
 {
-    /**
-     * @var UrlInterface
-     */
     private UrlInterface $urlBuilder;
 
     /**

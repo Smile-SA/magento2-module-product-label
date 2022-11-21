@@ -17,9 +17,6 @@ class Image extends AbstractBackend
      */
     protected string $subDir = 'smile_productlabel/imagelabel';
 
-    /**
-     * @var UrlInterface
-     */
     protected UrlInterface $urlBuilder;
 
     /**

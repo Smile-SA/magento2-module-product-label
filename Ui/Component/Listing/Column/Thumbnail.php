@@ -19,15 +19,9 @@ class Thumbnail extends Column
 
     public const ALT_FIELD = 'name';
 
-    /**
-     * @var Image
-     */
-    protected $imageHelper;
+    protected Image $imageHelper;
 
-    /**
-     * @var UrlInterface
-     */
-    protected $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * Thumbnail constructor.

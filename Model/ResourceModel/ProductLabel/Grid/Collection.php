@@ -15,10 +15,7 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection as SmileProdu
  */
 class Collection extends SmileProductLabelCollection implements SearchResultInterface
 {
-    /**
-     * @var AggregationInterface
-     */
-    private $aggregations;
+    private AggregationInterface $aggregations;
 
     /**
      * @inheritdoc

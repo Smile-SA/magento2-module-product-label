@@ -12,9 +12,6 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFac
  */
 class Options implements OptionSourceInterface
 {
-    /**
-     * @var CollectionFactory
-     */
     private CollectionFactory $attributesCollectionFactory;
 
     /**
