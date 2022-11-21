@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form;
 
-use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 use Magento\Ui\DataProvider\Modifier\ModifierInterface;

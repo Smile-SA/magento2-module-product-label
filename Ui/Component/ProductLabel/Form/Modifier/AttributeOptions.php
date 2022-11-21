@@ -16,14 +16,8 @@ use Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface;
  */
 class AttributeOptions implements ModifierInterface
 {
-    /**
-     * @var LocatorInterface
-     */
     private LocatorInterface $locator;
 
-    /**
-     * @var ProductAttributeRepositoryInterface
-     */
     private ProductAttributeRepositoryInterface $attributeRepository;
 
     /**
@@ -81,7 +75,7 @@ class AttributeOptions implements ModifierInterface
      * @param int $attributeId The attribute Id
      * @return array
      */
-    private function getAttributeOptions($attributeId): array
+    private function getAttributeOptions(int $attributeId): array
     {
         /** @var string $attributeId */
         $attribute = $this->attributeRepository->get($attributeId);

@@ -22,10 +22,10 @@ use Magento\Store\Model\StoreManagerInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 use Smile\ProductLabel\Model\ImageLabel\FileInfo;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
-use Smile\ProductLabel\ProductLabelImageUpload;
 
 /**
  * Product Label Model
+ *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProductLabel extends AbstractModel implements IdentityInterface, ProductLabelInterface
@@ -385,7 +385,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     {
         if ($this->imageUploader === null) {
             // @phpstan-ignore-next-line
-            $this->imageUploader = ObjectManager::getInstance()->get(\Smile\ProductLabel\ProductLabelImageUpload::class);
+            $this->imageUploader = ObjectManager::getInstance()->get(
+                \Smile\ProductLabel\ProductLabelImageUpload::class
+            );
         }
 
         return $this->imageUploader;

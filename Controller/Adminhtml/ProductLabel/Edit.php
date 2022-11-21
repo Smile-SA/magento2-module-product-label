@@ -7,8 +7,6 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 use Magento\Backend\Model\View\Result\Page as ResultPage;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\NotFoundException;
 
 /**
  * Admin Action: productlabel/edit
@@ -16,7 +14,7 @@ use Magento\Framework\Exception\NotFoundException;
 class Edit extends AbstractAction implements HttpGetActionInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function execute()
     {

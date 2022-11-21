@@ -20,28 +20,17 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
  * Collection Resource Model Class: ProductLabel
+ *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProductLabel extends AbstractDb
 {
-    /**
-     * @var Json
-     */
-    protected $serializer;
+    protected Json $jsonSerializer;
 
-    /**
-     * @var EntityManager
-     */
     protected EntityManager $entityManager;
 
-    /**
-     * @var MetadataPool
-     */
     protected MetadataPool $metadataPool;
 
-    /**
-     * @var StoreManagerInterface
-     */
     private StoreManagerInterface $storeManager;
 
     /**
@@ -51,7 +40,7 @@ class ProductLabel extends AbstractDb
      * @param EntityManager $entityManager Entity Manager
      * @param MetadataPool $metadataPool Metadata Pool
      * @param StoreManagerInterface $storeManager Store Manager
-     * @param Json $serializer Serializer
+     * @param Json $jsonSerializer Serializer
      * @param null $connectionName Connection Name
      */
     public function __construct(
@@ -59,7 +48,7 @@ class ProductLabel extends AbstractDb
         EntityManager $entityManager,
         MetadataPool $metadataPool,
         StoreManagerInterface $storeManager,
-        Json $serializer,
+        Json $jsonSerializer,
         $connectionName = null
     ) {
         parent::__construct($context, $connectionName);
@@ -67,7 +56,7 @@ class ProductLabel extends AbstractDb
         $this->entityManager = $entityManager;
         $this->metadataPool  = $metadataPool;
         $this->storeManager  = $storeManager;
-        $this->serializer = $serializer;
+        $this->serializer = $jsonSerializer;
     }
 
     /**
