@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2022-11-21
+[1.2.2]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.1...1.2.2
+
+- Add github actions workflow
+
 ## [1.2.1] - 2022-11-15
 [1.2.1]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.0...1.2.1
 
