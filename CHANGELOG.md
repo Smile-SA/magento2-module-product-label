@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.3] - 2023-02-02
+[1.2.3]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.2...1.2.3
+
+- Allow smile directory to fix upload from media gallery
+
 ## [1.2.2] - 2022-11-21
 [1.2.2]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.1...1.2.2
 
