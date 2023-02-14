@@ -27,7 +27,7 @@ class ProductLabel extends Template implements IdentityInterface
 
     protected Image $imageHelper;
 
-    protected ProductInterface $product;
+    protected ProductInterface|null $product;
 
     private CacheInterface $cache;
 
@@ -210,8 +210,12 @@ class ProductLabel extends Template implements IdentityInterface
     {
         $identities = [];
 
-        /** @var IdentityInterface $product */
+        /** @var IdentityInterface|null $product */
         $product = $this->getProduct();
+
+        if ($product === null) {
+            return [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG];
+        }
 
         return array_merge(
             $identities,
