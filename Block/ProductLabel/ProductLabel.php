@@ -27,7 +27,7 @@ class ProductLabel extends Template implements IdentityInterface
 
     protected Image $imageHelper;
 
-    protected ProductInterface $product;
+    protected ?ProductInterface $product;
 
     private CacheInterface $cache;
 
@@ -41,23 +41,24 @@ class ProductLabel extends Template implements IdentityInterface
      * @param Image $imageHelper Image Helper
      * @param ProductLabelCollectionFactory $productLabelCollectionFactory Product Label Collection Factory
      * @param CacheInterface $cache Cache Interface
+     * @param ?ProductInterface $product Product interface
      * @param array $data Block data
      */
     public function __construct(
-        Context                       $context,
-        Registry                      $registry,
-        Image                         $imageHelper,
+        Context $context,
+        Registry $registry,
+        Image $imageHelper,
         ProductLabelCollectionFactory $productLabelCollectionFactory,
-        CacheInterface                $cache,
-        ProductInterface              $product,
-        array                         $data = []
+        CacheInterface $cache,
+        ?ProductInterface $product,
+        array $data = []
     ) {
-        $this->registry                      = $registry;
-        $this->imageHelper                   = $imageHelper;
+        $this->registry = $registry;
+        $this->imageHelper = $imageHelper;
         $this->productLabelCollectionFactory = $productLabelCollectionFactory;
-        $this->cache                         = $cache;
-        $this->storeManager                  = $context->getStoreManager();
-        $this->product                       = $product;
+        $this->cache = $cache;
+        $this->storeManager = $context->getStoreManager();
+        $this->product = $product;
         parent::__construct($context, $data);
     }
 
@@ -210,8 +211,12 @@ class ProductLabel extends Template implements IdentityInterface
     {
         $identities = [];
 
-        /** @var IdentityInterface $product */
+        /** @var IdentityInterface|null $product */
         $product = $this->getProduct();
+
+        if ($product === null) {
+            return [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG];
+        }
 
         return array_merge(
             $identities,

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.4] - 2023-02-15
+[1.2.3]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.3...1.2.4
+
+- Fix typing in ProductLabel block
+
 ## [1.2.3] - 2023-02-02
 [1.2.3]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.2...1.2.3
 
