@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.5] - 2023-02-15
+[1.2.5]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.4...1.2.5
+
+- Fix loading data product labels on admin grid
+
 ## [1.2.4] - 2023-02-15
 [1.2.4]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.3...1.2.4
 
