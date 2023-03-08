@@ -117,11 +117,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     {
         $stores = $this->hasData('stores') ? $this->getData('stores') : $this->getData('store_id');
 
-        if (is_numeric($stores)) {
-            $stores = [$stores];
-        }
-
-        return $stores ?? [];
+        return $stores ? array_map('intval', preg_split('/,/',$stores)) : [];
     }
 
     /**

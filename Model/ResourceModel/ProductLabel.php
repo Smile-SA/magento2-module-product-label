@@ -108,7 +108,7 @@ class ProductLabel extends AbstractDb
     {
         $oldStores = $this->getStoreIds($object);
         if (strpos($this->serializer->serialize($object->getStores()), ',') !== false) {
-            $newStores = explode(',', (string) $object->getStores());
+            $newStores = explode(',', implode(',', $object->getStores()));
         } else {
             $newStores = $object->getStores();
         }
