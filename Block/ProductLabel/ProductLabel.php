@@ -10,6 +10,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Registry;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\StoreManagerInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
@@ -42,6 +43,7 @@ class ProductLabel extends Template implements IdentityInterface
      * @param ProductLabelCollectionFactory $productLabelCollectionFactory Product Label Collection Factory
      * @param CacheInterface $cache Cache Interface
      * @param ?ProductInterface $product Product interface
+     * @param TimezoneInterface $timezoneInterface Timezone Interface
      * @param array $data Block data
      */
     public function __construct(
@@ -51,6 +53,7 @@ class ProductLabel extends Template implements IdentityInterface
         ProductLabelCollectionFactory $productLabelCollectionFactory,
         CacheInterface $cache,
         ?ProductInterface $product,
+        TimezoneInterface $timezoneInterface,
         array $data = []
     ) {
         $this->registry = $registry;
@@ -59,6 +62,7 @@ class ProductLabel extends Template implements IdentityInterface
         $this->cache = $cache;
         $this->storeManager = $context->getStoreManager();
         $this->product = $product;
+        $this->timezoneInterface = $timezoneInterface;
         parent::__construct($context, $data);
     }
 
@@ -168,6 +172,12 @@ class ProductLabel extends Template implements IdentityInterface
         $attributesProduct = $this->getAttributesOfCurrentProduct();
 
         foreach ($productLabelList as $productLabel) {
+            if (
+                $productLabel['from_date'] > $this->timezoneInterface->date()->format('Y-m-d') ||
+                $productLabel['to_date'] < $this->timezoneInterface->date()->format('Y-m-d')
+            ) {
+                continue;
+            }
             $attributeIdLabel = $productLabel['attribute_id'];
             $optionIdLabel    = $productLabel['option_id'];
             foreach ($attributesProduct as $attribute) {
