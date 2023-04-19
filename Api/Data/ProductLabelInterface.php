@@ -157,7 +157,7 @@ interface ProductLabelInterface
     /**
      * Get display_on
      *
-     * @return array
+     * @return int[]
      */
     public function getDisplayOn(): array;
 
