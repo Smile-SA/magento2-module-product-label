@@ -19,11 +19,6 @@ class Image extends AbstractBackend
 
     protected UrlInterface $urlBuilder;
 
-    /**
-     * Image constructor.
-     *
-     * @param UrlInterface $urlBuilder URL Builder
-     */
     public function __construct(
         UrlInterface $urlBuilder
     ) {
@@ -40,8 +35,6 @@ class Image extends AbstractBackend
 
     /**
      * Check if temporary file is available for new image upload.
-     *
-     * @param array $value The value
      */
     public function isTmpFileAvailable(array $value): bool
     {

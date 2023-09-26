@@ -16,17 +16,11 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
 abstract class AbstractButton implements ButtonProviderInterface
 {
     protected Context $context;
-
     protected ProductLabelRepositoryInterface $repository;
-
     protected LoggerInterface $logger;
 
     /**
      * AbstractButton constructor.
-     *
-     * @param Context $context UI Component context
-     * @param ProductLabelRepositoryInterface $repository Product Label Repository
-     * @param LoggerInterface $logger Logger
      */
     public function __construct(
         Context $context,
@@ -40,10 +34,8 @@ abstract class AbstractButton implements ButtonProviderInterface
 
     /**
      * Get button data
-     *
-     * @return mixed
      */
-    abstract public function getButtonData();
+    abstract public function getButtonData(): array;
 
     /**
      * Return object ID.
@@ -52,8 +44,6 @@ abstract class AbstractButton implements ButtonProviderInterface
     {
         try {
             $modelId = (int) $this->context->getRequest()->getParam('product_label_id');
-
-            /** @var \Smile\ProductLabel\Api\Data\ProductLabelInterface $model */
             $model = $this->repository->getById($modelId);
 
             return $model->getProductLabelId();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Smile\ProductLabel\Model\ImageLabel;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\File\Mime;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\ReadInterface;
@@ -22,19 +23,10 @@ class FileInfo
     public const ENTITY_MEDIA_PATH = '/smile_productlabel/imagelabel';
 
     private Filesystem $filesystem;
-
     private Mime $mime;
-
     private WriteInterface $mediaDirectory;
-
     private ReadInterface $baseDirectory;
 
-    /**
-     * FileInfo constructor.
-     *
-     * @param Filesystem $filesystem Filesystem Helper
-     * @param Mime       $mime       MIME type
-     */
     public function __construct(
         Filesystem $filesystem,
         Mime $mime
@@ -46,66 +38,49 @@ class FileInfo
     /**
      * Retrieve MIME type of requested file
      *
-     * @param string $fileName The filename
+     * @throws FileSystemException
      */
     public function getMimeType(string $fileName): string
     {
         $filePath         = $this->getFilePath($fileName);
         $absoluteFilePath = $this->getMediaDirectory()->getAbsolutePath($filePath);
 
-        $result = $this->mime->getMimeType($absoluteFilePath);
-
-        return $result;
+        return $this->mime->getMimeType($absoluteFilePath);
     }
 
     /**
      * Get file statistics data
-     *
-     * @param string $fileName The filename
-     * @return array
      */
     public function getStat(string $fileName): array
     {
         $filePath = $this->getFilePath($fileName);
 
-        $result = $this->getMediaDirectory()->stat($filePath);
-
-        return $result;
+        return $this->getMediaDirectory()->stat($filePath);
     }
 
     /**
      * Check if the file exists
-     *
-     * @param string $fileName The filename
      */
     public function isExist(string $fileName): bool
     {
         $filePath = $this->getFilePath($fileName);
-        $result   = $this->getMediaDirectory()->isExist($filePath);
 
-        return $result;
+        return $this->getMediaDirectory()->isExist($filePath);
     }
 
     /**
      * Checks for whether $fileName string begins with media directory path
-     *
-     * @param string $fileName The filename
      */
     public function isBeginsWithMediaDirectoryPath(string $fileName): bool
     {
         $filePath = ltrim($fileName, '/');
+        $mediaDirectoryRelativeSubpath = $this->getMediaDirectoryPathRelativeToBaseDirectoryPath();
 
-        $mediaDirectoryRelativeSubpath          = $this->getMediaDirectoryPathRelativeToBaseDirectoryPath();
-        $isFileNameBeginsWithMediaDirectoryPath = strpos($filePath, $mediaDirectoryRelativeSubpath) === 0;
-
-        return $isFileNameBeginsWithMediaDirectoryPath;
+        return strpos($filePath, $mediaDirectoryRelativeSubpath) === 0;
     }
 
     /**
      * Construct and return file subpath based on filename relative to media directory
-     *
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     * @param string $fileName The filename
      */
     private function getFilePath(string $fileName): string
     {
@@ -117,13 +92,9 @@ class FileInfo
         // If the file is not using a relative path, it resides in the catalog/category media directory.
         $fileIsInCategoryMediaDir = !$isFileNameBeginsWithMediaDirectoryPath;
 
-        if ($fileIsInCategoryMediaDir) {
-            $filePath = self::ENTITY_MEDIA_PATH . '/' . $filePath;
-        } else {
-            $filePath = substr($filePath, strlen($mediaDirectoryRelativeSubpath));
-        }
-
-        return $filePath;
+        return $fileIsInCategoryMediaDir
+            ? self::ENTITY_MEDIA_PATH . '/' . $filePath
+            : substr($filePath, strlen($mediaDirectoryRelativeSubpath));
     }
 
     /**
@@ -134,13 +105,13 @@ class FileInfo
         $baseDirectoryPath  = $this->getBaseDirectory()->getAbsolutePath();
         $mediaDirectoryPath = $this->getMediaDirectory()->getAbsolutePath();
 
-        $mediaDirectoryRelativeSubpath = substr($mediaDirectoryPath, strlen($baseDirectoryPath));
-
-        return $mediaDirectoryRelativeSubpath;
+        return substr($mediaDirectoryPath, strlen($baseDirectoryPath));
     }
 
     /**
      * Get WriteInterface instance
+     *
+     * @throws FileSystemException
      */
     private function getMediaDirectory(): WriteInterface
     {

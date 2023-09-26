@@ -17,19 +17,15 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
 {
     private ModuleDataSetupInterface $moduleDataSetup;
 
-    /**
-     * @param ModuleDataSetupInterface $moduleDataSetup Module Data Setup
-     */
-    public function __construct(
-        ModuleDataSetupInterface $moduleDataSetup
-    ) {
+    public function __construct(ModuleDataSetupInterface $moduleDataSetup)
+    {
         $this->moduleDataSetup = $moduleDataSetup;
     }
 
     /**
      * @inheritdoc
      */
-    public function apply()
+    public function apply(): self
     {
         $this->moduleDataSetup->getConnection()->startSetup();
 
@@ -57,7 +53,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
     /**
      * @inheritdoc
      */
-    public static function getDependencies()
+    public static function getDependencies(): array
     {
         return [];
     }
@@ -65,7 +61,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
     /**
      * @inheritdoc
      */
-    public function getAliases()
+    public function getAliases(): array
     {
         return [];
     }

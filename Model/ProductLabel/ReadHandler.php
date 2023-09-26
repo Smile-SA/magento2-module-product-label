@@ -15,11 +15,6 @@ class ReadHandler implements ExtensionInterface
 {
     protected DataHelper $dataHelper;
 
-    /**
-     * ReadHandler constructor.
-     *
-     * @param DataHelper $dataHelper Helper
-     */
     public function __construct(DataHelper $dataHelper)
     {
         $this->dataHelper = $dataHelper;
@@ -33,16 +28,15 @@ class ReadHandler implements ExtensionInterface
         /** @var ProductInterface $entity */
         $extension = $entity->getExtensionAttributes();
 
+        // @phpstan-ignore-next-line PHPStan can't deal with generated class
         if ($extension->getProductLabels() !== null) {
             return $entity;
         }
 
-        /** @var DataHelper $dataHelper */
         $dataHelper = $this->dataHelper;
         $productLabels = $dataHelper->getProductLabels($entity);
-
+        // @phpstan-ignore-next-line PHPStan can't deal with generated class
         $extension->setProductLabels($productLabels);
-
         $entity->setExtensionAttributes($extension);
 
         return $entity;

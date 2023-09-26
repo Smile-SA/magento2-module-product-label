@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Model\Repository;
 
+use Exception;
 use Magento\Framework\Api\AbstractExtensibleObject;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface as CollectionProcessor;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SearchResults;
 use Magento\Framework\Data\Collection\AbstractDb as AbstractCollection;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -21,45 +23,26 @@ use Magento\Framework\Phrase;
 class Manager
 {
     protected CollectionProcessor $collectionProcessor;
-
-    /**
-     * @var mixed
-     */
-    protected $objectFactory;
-
     protected AbstractResourceModel $objectResource;
-
-    /**
-     * @var mixed
-     */
-    protected $objectCollectionFactory;
-
-    /**
-     * @var mixed
-     */
-    protected $objectSearchResultsFactory;
-
     protected ?string $identifierFieldName = null;
-
-    /**
-     * @var array
-     */
     protected array $cacheById = [];
-
-    /**
-     * @var array
-     */
     protected array $cacheByIdentifier = [];
 
+    /** @var mixed */
+    protected $objectFactory;
+
+    /** @var mixed */
+    protected $objectCollectionFactory;
+
+    /** @var mixed */
+    protected $objectSearchResultsFactory;
+
     /**
-     * Manager constructor.
+     * Contructor
      *
-     * @param CollectionProcessor   $collectionProcessor        Collection Processor
-     * @param mixed                 $objectFactory              Object Factory
-     * @param AbstractResourceModel $objectResource             Object Resource
-     * @param mixed                 $objectCollectionFactory    CollectionFactory
-     * @param mixed                 $objectSearchResultsFactory Searchresult Factory
-     * @param null                  $identifierFieldName        Identifier Field Name
+     * @param mixed $objectFactory
+     * @param mixed $objectCollectionFactory
+     * @param mixed $objectSearchResultsFactory
      */
     public function __construct(
         CollectionProcessor $collectionProcessor,
@@ -67,10 +50,9 @@ class Manager
         AbstractResourceModel $objectResource,
         $objectCollectionFactory,
         $objectSearchResultsFactory,
-        $identifierFieldName = null
+        ?string $identifierFieldName = null
     ) {
-        $this->collectionProcessor = $collectionProcessor;
-
+        $this->collectionProcessor        = $collectionProcessor;
         $this->objectFactory              = $objectFactory;
         $this->objectResource             = $objectResource;
         $this->objectCollectionFactory    = $objectCollectionFactory;
@@ -81,14 +63,12 @@ class Manager
     /**
      * Retrieve a entity by its ID.
      *
-     * @param int $objectId The object Id
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @SuppressWarnings(PMD.StaticAccess)
+     * @throws NoSuchEntityException
      */
-    public function getEntityById(int $objectId): \Magento\Framework\Model\AbstractModel
+    public function getEntityById(int $objectId): AbstractModel
     {
         if (!isset($this->cacheById[$objectId])) {
-            /** @var \Magento\Framework\Model\AbstractModel $object */
+            /** @var AbstractModel $object */
             $object = $this->objectFactory->create();
             $this->objectResource->load($object, $objectId);
 
@@ -111,18 +91,16 @@ class Manager
     /**
      * Retrieve a entity by its identifier.
      *
-     * @param string $objectIdentifier The Object Id
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @SuppressWarnings(PMD.StaticAccess)
+     * @throws NoSuchEntityException
      */
-    public function getEntityByIdentifier(string $objectIdentifier): \Magento\Framework\Model\AbstractModel
+    public function getEntityByIdentifier(string $objectIdentifier): AbstractModel
     {
         if ($this->identifierFieldName === null) {
             throw new NoSuchEntityException(__('The identifier field name is not set'));
         }
 
         if (!isset($this->cacheByIdentifier[$objectIdentifier])) {
-            /** @var \Magento\Framework\Model\AbstractModel $object */
+            /** @var AbstractModel $object */
             $object = $this->objectFactory->create();
             $this->objectResource->load($object, $objectIdentifier, $this->identifierFieldName);
 
@@ -141,7 +119,6 @@ class Manager
     /**
      * Save entity.
      *
-     * @param AbstractModel $object The Object
      * @throws CouldNotSaveException
      */
     public function saveEntity(AbstractModel $object): AbstractModel
@@ -155,7 +132,7 @@ class Manager
                 $objectIdentifier = $object->getData($this->identifierFieldName);
                 unset($this->cacheByIdentifier[$objectIdentifier]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $msg = new Phrase($e->getMessage());
             throw new CouldNotSaveException($msg);
         }
@@ -166,7 +143,6 @@ class Manager
     /**
      * Delete entity.
      *
-     * @param AbstractModel $object The Object
      * @throws CouldNotDeleteException
      */
     public function deleteEntity(AbstractModel $object): bool
@@ -179,7 +155,7 @@ class Manager
                 $objectIdentifier = $object->getData($this->identifierFieldName);
                 unset($this->cacheByIdentifier[$objectIdentifier]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $msg = new Phrase($e->getMessage());
             throw new CouldNotDeleteException($msg);
         }
@@ -190,7 +166,6 @@ class Manager
     /**
      * Delete entity by id.
      *
-     * @param int $objectId Object Id
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
      */
@@ -202,7 +177,6 @@ class Manager
     /**
      * Delete entity by identifier.
      *
-     * @param string $objectIdentifier Object Id
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
      */
@@ -213,15 +187,13 @@ class Manager
 
     /**
      * Retrieve not eav entities which match a specified criteria.
-     *
-     * @param SearchCriteriaInterface $searchCriteria SearchCriteria
      */
-    public function getEntities(?SearchCriteriaInterface $searchCriteria = null): \Magento\Framework\Api\SearchResults
+    public function getEntities(?SearchCriteriaInterface $searchCriteria = null): SearchResults
     {
         /** @var AbstractCollection $collection */
         $collection = $this->objectCollectionFactory->create();
 
-        /** @var \Magento\Framework\Api\SearchResults $searchResults */
+        /** @var SearchResults $searchResults */
         $searchResults = $this->objectSearchResultsFactory->create();
 
         if ($searchCriteria) {

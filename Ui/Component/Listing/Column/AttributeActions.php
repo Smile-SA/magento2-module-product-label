@@ -22,19 +22,8 @@ class AttributeActions extends Column
     protected const URL_PATH_DELETE = 'smile_productlabel/productlabel/delete';
 
     protected UrlInterface $urlBuilder;
-
     protected Escaper $escaper;
 
-    /**
-     * AttributeActions constructor.
-     *
-     * @param ContextInterface   $context            Context
-     * @param UiComponentFactory $uiComponentFactory UI Component Factory
-     * @param UrlInterface       $urlBuilder         URL Builder
-     * @param Escaper            $escaper            Escaper
-     * @param array              $components         Components
-     * @param array              $data               Column Data
-     */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -43,16 +32,15 @@ class AttributeActions extends Column
         array $components = [],
         array $data = []
     ) {
+        parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->urlBuilder = $urlBuilder;
         $this->escaper    = $escaper;
-
-        parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
     /**
      * @inheritdoc
      */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {

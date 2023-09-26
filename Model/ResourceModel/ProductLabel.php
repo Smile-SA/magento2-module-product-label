@@ -12,7 +12,6 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
-use Magento\Framework\Phrase;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
@@ -20,39 +19,23 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 
 /**
  * Collection Resource Model Class: ProductLabel
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProductLabel extends AbstractDb
 {
     protected Json $jsonSerializer;
-
     protected EntityManager $entityManager;
-
     protected MetadataPool $metadataPool;
-
     private StoreManagerInterface $storeManager;
 
-    /**
-     * Resource initialization
-     *
-     * @param Context $context Context
-     * @param EntityManager $entityManager Entity Manager
-     * @param MetadataPool $metadataPool Metadata Pool
-     * @param StoreManagerInterface $storeManager Store Manager
-     * @param Json $jsonSerializer Serializer
-     * @param null $connectionName Connection Name
-     */
     public function __construct(
         Context $context,
         EntityManager $entityManager,
         MetadataPool $metadataPool,
         StoreManagerInterface $storeManager,
         Json $jsonSerializer,
-        $connectionName = null
+        ?string $connectionName = null
     ) {
         parent::__construct($context, $connectionName);
-
         $this->entityManager = $entityManager;
         $this->metadataPool  = $metadataPool;
         $this->storeManager  = $storeManager;
@@ -74,10 +57,9 @@ class ProductLabel extends AbstractDb
     /**
      * Save Product Label
      *
-     * @param AbstractModel $object Product Label
-     * @return $this
+     * @throws \Exception
      */
-    public function save(AbstractModel $object)
+    public function save(AbstractModel $object): self
     {
         $this->entityManager->save($object);
 
@@ -87,10 +69,9 @@ class ProductLabel extends AbstractDb
     /**
      * Delete Product Label
      *
-     * @param AbstractModel $object Product Label
-     * @return $this
+     * @throws \Exception
      */
-    public function delete(AbstractModel $object)
+    public function delete(AbstractModel $object): self
     {
         $this->entityManager->delete($object);
 
@@ -100,8 +81,6 @@ class ProductLabel extends AbstractDb
     /**
      * Persist relation between a given product label and his stores.
      *
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     * @param AbstractModel $object The rule
      * @throws LocalizedException
      */
     public function saveStoreRelation(AbstractModel $object): AbstractModel
@@ -145,8 +124,6 @@ class ProductLabel extends AbstractDb
     /**
      * Retrieve store ids associated to a given product label.
      *
-     * @param AbstractModel $object The product label
-     * @return array
      * @throws LocalizedException
      */
     public function getStoreIds(AbstractModel $object): array
@@ -166,17 +143,11 @@ class ProductLabel extends AbstractDb
     }
 
     /**
-     * Construct.
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
     protected function _construct()
     {
-        $this->_init(
-            ProductLabelInterface::TABLE_NAME,
-            ProductLabelInterface::PRODUCTLABEL_ID
-        );
+        $this->_init(ProductLabelInterface::TABLE_NAME, ProductLabelInterface::PRODUCTLABEL_ID);
     }
 
     /**
@@ -184,9 +155,7 @@ class ProductLabel extends AbstractDb
      * Unique constraint is : product_label_id / attribute_id / option_id / store_id
      * A product label can also not be created for store 0 (all store views) if other exists for specific stores.
      *
-     * @param AbstractModel $object The product label
-     * @param array $stores The stores to be associated with
-     * @throws AlreadyExistsException
+     * @throws AlreadyExistsException|LocalizedException
      */
     private function checkUnicity(AbstractModel $object, array $stores): bool
     {
@@ -223,7 +192,7 @@ class ProductLabel extends AbstractDb
 
         $row = $this->getConnection()->fetchRow($select);
         if ($row) {
-            $error = new Phrase(
+            $error = __(
                 'Label for attribute %1, option %2, and store %3  already exist.',
                 [
                     $object->getData(ProductLabelInterface::ATTRIBUTE_ID),
