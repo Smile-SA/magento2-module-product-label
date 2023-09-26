@@ -12,7 +12,7 @@ class DeleteButton extends AbstractButton
     /**
      * @inheritdoc
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         $data = [];
         if ($this->getObjectId()) {

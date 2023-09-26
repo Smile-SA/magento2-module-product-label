@@ -24,12 +24,11 @@ class Edit extends AbstractAction implements HttpGetActionInterface
         /** @var ResultPage $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        $breadcrumbTitle = $model->getProductLabelId() ?
-            (string) __('Edit Product Label') : (string) __('New Product Label');
+        $breadcrumbTitle = $model->getProductLabelId() ? __('Edit Product Label') : __('New Product Label');
         $resultPage
             ->setActiveMenu('Smile_ProductLabel::manage')
             ->addBreadcrumb((string) __('Smile Product Label'), (string) __('Smile Product Label'))
-            ->addBreadcrumb($breadcrumbTitle, $breadcrumbTitle);
+            ->addBreadcrumb((string) $breadcrumbTitle, (string) $breadcrumbTitle);
 
         $title = $model->getProductLabelId() ?
             (string) __("Edit product label #%1", $model->getProductLabelId()) : (string) __('New product label');

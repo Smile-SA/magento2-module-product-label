@@ -21,9 +21,7 @@ class Collection extends AbstractCollection
      */
     protected $_idFieldName = ProductLabelInterface::PRODUCTLABEL_ID;
 
-    /**
-     * @var int[]
-     */
+    /** @var int[] */
     private array $storeIds = [];
 
     /**
@@ -38,8 +36,6 @@ class Collection extends AbstractCollection
 
     /**
      * Retrieve all distinct attribute ids of current collection.
-     *
-     * @return array
      */
     public function getAllAttributeIds(): array
     {
@@ -55,8 +51,6 @@ class Collection extends AbstractCollection
 
     /**
      * Retrieve all distinct options ids of current collection.
-     *
-     * @return array
      */
     public function getAllOptionIds(): array
     {
@@ -71,28 +65,24 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * Filter productlabel collection for a given attribute.
-     *
-     * @param ProductAttributeInterface $attribute The attribute
-     * @return $this
+     * Filter productLabel collection for a given attribute.
      */
-    public function addAttributeFilter(ProductAttributeInterface $attribute)
+    public function addAttributeFilter(ProductAttributeInterface $attribute): self
     {
         if ($attribute->getAttributeId()) {
-            // @phpstan-ignore-next-line
-            $this->addFieldToFilter(ProductLabelInterface::ATTRIBUTE_ID, (int) $attribute->getAttributeId());
+            $this->addFieldToFilter(ProductLabelInterface::ATTRIBUTE_ID, (string) $attribute->getAttributeId());
         }
 
         return $this;
     }
 
     /**
-     * Filter productlabel collection for a given list of attribute set ids.
+     * Filter productLabel collection for a given list of attribute set ids.
      *
      * @param array $attributeSetIds List of attribute set ids
      * @return $this
      */
-    public function addAttributeSetIdFilter(array $attributeSetIds)
+    public function addAttributeSetIdFilter(array $attributeSetIds): self
     {
         if (!is_array($attributeSetIds)) {
             $attributeSetIds = [$attributeSetIds];
@@ -146,24 +136,18 @@ class Collection extends AbstractCollection
 
         $this->storeIds = $store;
 
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line Native method has bad type
         $this->addFilter('store', ['in' => $store], 'public');
 
         return $this;
     }
 
     /**
-     * Construct.
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
     protected function _construct()
     {
-        $this->_init(
-            ProductLabel::class,
-            \Smile\ProductLabel\Model\ResourceModel\ProductLabel::class
-        );
+        $this->_init(ProductLabel::class, \Smile\ProductLabel\Model\ResourceModel\ProductLabel::class);
 
         /* @see self::_renderFiltersBefore() */
         $this->_map['fields']['store']        = ProductLabelInterface::STORE_TABLE_NAME . '.store_id';
@@ -171,9 +155,6 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * After load
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
     protected function _afterLoad()
@@ -209,9 +190,6 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * Render filter before
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
     protected function _renderFiltersBefore()

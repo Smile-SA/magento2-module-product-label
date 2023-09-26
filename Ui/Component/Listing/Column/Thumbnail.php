@@ -16,23 +16,11 @@ use Smile\ProductLabel\Model\ImageLabel\Image;
 class Thumbnail extends Column
 {
     public const NAME = 'thumbnail';
-
     public const ALT_FIELD = 'name';
 
     protected Image $imageHelper;
-
     protected UrlInterface $urlBuilder;
 
-    /**
-     * Thumbnail constructor.
-     *
-     * @param ContextInterface $context Context
-     * @param UiComponentFactory $uiComponentFactory UI Component Factory
-     * @param Image $imageHelper Image Helper
-     * @param UrlInterface $urlBuilder URL Builder
-     * @param array $components Components
-     * @param array $data Column Data
-     */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -48,9 +36,6 @@ class Thumbnail extends Column
 
     /**
      * Prepare Data Source
-     *
-     * @param array $dataSource Data source
-     * @return array
      */
     public function prepareDataSource(array $dataSource): array
     {
@@ -72,8 +57,6 @@ class Thumbnail extends Column
 
     /**
      * Get alt
-     *
-     * @param array $row The row
      */
     protected function getAlt(array $row): ?string
     {

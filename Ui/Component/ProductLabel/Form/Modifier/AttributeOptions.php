@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
 
 use Magento\Catalog\Api\ProductAttributeRepositoryInterface;
+use Magento\Eav\Api\Data\AttributeInterface;
+use Magento\Eav\Model\Entity\Attribute\AbstractAttribute;
 use Magento\Ui\DataProvider\Modifier\ModifierInterface;
 use Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface;
 
@@ -17,15 +19,8 @@ use Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface;
 class AttributeOptions implements ModifierInterface
 {
     private LocatorInterface $locator;
-
     private ProductAttributeRepositoryInterface $attributeRepository;
 
-    /**
-     * AttributeOptions constructor.
-     *
-     * @param LocatorInterface $locator             Label Locatory
-     * @param ProductAttributeRepositoryInterface        $attributeRepository Attribute Repository
-     */
     public function __construct(
         LocatorInterface $locator,
         ProductAttributeRepositoryInterface $attributeRepository
@@ -37,7 +32,7 @@ class AttributeOptions implements ModifierInterface
     /**
      * @inheritdoc
      */
-    public function modifyData(array $data)
+    public function modifyData(array $data): array
     {
         return $data;
     }
@@ -45,7 +40,7 @@ class AttributeOptions implements ModifierInterface
     /**
      * @inheritdoc
      */
-    public function modifyMeta(array $meta)
+    public function modifyMeta(array $meta): array
     {
         $productLabel = $this->locator->getProductLabel();
 
@@ -71,9 +66,6 @@ class AttributeOptions implements ModifierInterface
 
     /**
      * Retrieve attribute options for a given attribute Id.
-     *
-     * @param int $attributeId The attribute Id
-     * @return array
      */
     private function getAttributeOptions(int $attributeId): array
     {
@@ -81,12 +73,11 @@ class AttributeOptions implements ModifierInterface
         $attribute = $this->attributeRepository->get($attributeId);
         $options   = [];
 
-        /** @var  \Magento\Eav\Model\Entity\Attribute\AbstractAttribute $attribute */
+        /** @var  AbstractAttribute $attribute */
         $source = $attribute->getSource();
 
-        /** @var \Magento\Eav\Api\Data\AttributeInterface $attribute */
+        /** @var AttributeInterface $attribute */
         $attributeId = $attribute->getAttributeId();
-
         if ($attributeId) {
             $options = $source->getAllOptions();
         }

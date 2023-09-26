@@ -11,9 +11,6 @@ use Magento\Framework\Data\OptionSourceInterface;
  */
 class Options implements OptionSourceInterface
 {
-    /**
-     * @var array|null
-     */
     private ?array $locationsList = null;
 
     /**
@@ -26,8 +23,6 @@ class Options implements OptionSourceInterface
 
     /**
      * Retrieve list of attributes that can be used to define product labels.
-     *
-     * @return array
      */
     private function getLocationsList(): array
     {

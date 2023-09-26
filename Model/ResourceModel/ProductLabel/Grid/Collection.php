@@ -8,6 +8,7 @@ use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
+use Magento\Store\Model\Store;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection as SmileProductLabelCollection;
 
 /**
@@ -20,7 +21,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function setItems(?array $items = null)
+    public function setItems(?array $items = null): self
     {
         return $this;
     }
@@ -28,7 +29,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function getAggregations()
+    public function getAggregations(): AggregationInterface
     {
         return $this->aggregations;
     }
@@ -45,16 +46,15 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function getSearchCriteria()
+    public function getSearchCriteria(): ?SearchCriteriaInterface
     {
-        // @phpstan-ignore-next-line
         return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria): self
     {
         return $this;
     }
@@ -62,7 +62,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->getSize();
     }
@@ -70,15 +70,12 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function setTotalCount($totalCount)
+    public function setTotalCount($totalCount): self
     {
         return $this;
     }
 
     /**
-     * Construct.
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
     protected function _construct()
@@ -88,9 +85,6 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     }
 
     /**
-     * Render filters before
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
     protected function _renderFiltersBefore()
@@ -109,7 +103,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
             ['option_label' => 'value']
         );
 
-        $storeCondition = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
+        $storeCondition = Store::DEFAULT_STORE_ID;
 
         if ($this->getFilter('store')) {
             $storeId = current($this->getStoreIds());
@@ -120,10 +114,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
                 ['option_label' => 'value']
             );
 
-            $storeCondition = $this->getConnection()->getIfNullSql(
-                "eaov_s.store_id",
-                \Magento\Store\Model\Store::DEFAULT_STORE_ID
-            );
+            $storeCondition = $this->getConnection()->getIfNullSql("eaov_s.store_id", Store::DEFAULT_STORE_ID);
         }
 
         $this->getSelect()->where('eaov.store_id = ?', $storeCondition);

@@ -6,11 +6,13 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\Result\ForwardFactory;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Result\Layout;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use Smile\ProductLabel\Api\Data\ProductLabelInterfaceFactory;
@@ -30,39 +32,14 @@ class Reload extends Action implements HttpPostActionInterface
     public const ADMIN_RESOURCE = 'Smile_ProductLabel::manage';
 
     protected ?PageFactory $resultPageFactory = null;
-
-    /**
-     * Core registry
-     */
     protected Registry $coreRegistry;
-
     protected DataPersistorInterface $dataPersistor;
-
     protected Filter $filter;
-
     protected CollectionFactory $collectionFactory;
-
     protected ProductLabelRepositoryInterface $productLabelRepository;
-
     protected ForwardFactory $resultForwardFactory;
-
-    /**
-     * Product Label Factory
-     */
     protected ProductLabelInterfaceFactory $productLabelFactory;
 
-    /**
-     * Reload constructor.
-     *
-     * @param Context $context UI Component context
-     * @param PageFactory $resultPageFactory Result Page Factory
-     * @param Registry $coreRegistry Core Registry
-     * @param DataPersistorInterface $dataPersistor Data Persistor
-     * @param Filter $filter Action Filter
-     * @param CollectionFactory $collectionFactory Product Label Collection Factory
-     * @param ProductLabelRepositoryInterface $productLabelRepository Product Label Repository
-     * @param ProductLabelInterfaceFactory $productLabelFactory Product Label Factory
-     */
     public function __construct(
         Context                         $context,
         PageFactory                     $resultPageFactory,
@@ -72,7 +49,7 @@ class Reload extends Action implements HttpPostActionInterface
         CollectionFactory               $collectionFactory,
         ProductLabelRepositoryInterface $productLabelRepository,
         ProductLabelInterfaceFactory    $productLabelFactory,
-        ForwardFactory $resultForwardFactory
+        ForwardFactory                  $resultForwardFactory
     ) {
         parent::__construct($context);
 
@@ -105,7 +82,7 @@ class Reload extends Action implements HttpPostActionInterface
         $model->setAttributeId((int) $this->getRequest()->getParam('set'));
         $this->coreRegistry->register('current_productlabel', $model);
 
-        /** @var \Magento\Framework\View\Result\Layout $resultLayout */
+        /** @var Layout $resultLayout */
         $resultLayout = $this->resultFactory->create(ResultFactory::TYPE_LAYOUT);
 
         $resultLayout->getLayout()->getUpdate()->removeHandle('default');
@@ -117,9 +94,9 @@ class Reload extends Action implements HttpPostActionInterface
     /**
      * Create result page
      */
-    protected function createPage(): \Magento\Backend\Model\View\Result\Page
+    protected function createPage(): Page
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
 
         $resultPage->setActiveMenu('Smile_ProductLabel::rule')

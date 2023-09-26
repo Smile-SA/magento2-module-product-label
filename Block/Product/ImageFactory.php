@@ -10,6 +10,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Image\ParamsBuilder;
 use Magento\Catalog\Model\View\Asset\ImageFactory as AssetImageFactory;
 use Magento\Catalog\Model\View\Asset\PlaceholderFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\View\ConfigInterface;
 use Smile\ProductLabel\Block\ProductLabel\ProductLabel;
@@ -21,22 +22,11 @@ use Smile\ProductLabel\Block\ProductLabel\ProductLabel;
 class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
 {
     private ConfigInterface $presentationConfig;
-
     private AssetImageFactory $viewAssetImageFactory;
-
     private ParamsBuilder $imageParamsBuilder;
-
     private ObjectManagerInterface $objectManager;
-
     private PlaceholderFactory $viewAssetPlaceholderFactory;
 
-    /**
-     * @param ObjectManagerInterface $objectManager               Object Manager
-     * @param ConfigInterface        $presentationConfig          Presentation Config
-     * @param AssetImageFactory      $viewAssetImageFactory       Images Asset Factory
-     * @param PlaceholderFactory     $viewAssetPlaceholderFactory Assets Placeholder Factory
-     * @param ParamsBuilder          $imageParamsBuilder          Images Param builer
-     */
     public function __construct(
         ObjectManagerInterface $objectManager,
         ConfigInterface $presentationConfig,
@@ -44,6 +34,13 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
         PlaceholderFactory $viewAssetPlaceholderFactory,
         ParamsBuilder $imageParamsBuilder
     ) {
+        parent::__construct(
+            $objectManager,
+            $presentationConfig,
+            $viewAssetImageFactory,
+            $viewAssetPlaceholderFactory,
+            $imageParamsBuilder
+        );
         $this->objectManager               = $objectManager;
         $this->presentationConfig          = $presentationConfig;
         $this->viewAssetPlaceholderFactory = $viewAssetPlaceholderFactory;
@@ -54,10 +51,7 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
     /**
      * Create image block from product
      *
-     * @SuppressWarnings(PHPMD.ElseExpression) Method is inherited
-     * @param Product    $product    The Product
-     * @param string     $imageId    Image Id
-     * @param array|null $attributes Attributes
+     * @throws LocalizedException
      */
     public function create(Product $product, string $imageId, ?array $attributes = null): ImageBlock
     {
@@ -71,17 +65,10 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
         $originalFilePath = $product->getData($imageMiscParams['image_type']);
 
         if ($originalFilePath === null || $originalFilePath === 'no_selection') {
-            $imageAsset = $this->viewAssetPlaceholderFactory->create(
-                [
-                    'type' => $imageMiscParams['image_type'],
-                ]
-            );
+            $imageAsset = $this->viewAssetPlaceholderFactory->create(['type' => $imageMiscParams['image_type']]);
         } else {
             $imageAsset = $this->viewAssetImageFactory->create(
-                [
-                    'miscParams' => $imageMiscParams,
-                    'filePath'   => $originalFilePath,
-                ]
+                ['miscParams' => $imageMiscParams, 'filePath'   => $originalFilePath]
             );
         }
 
@@ -117,8 +104,6 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
 
     /**
      * Retrieve image custom attributes for HTML element
-     *
-     * @param array $attributes Attributes
      */
     private function getStringCustomAttributes(array $attributes): string
     {
@@ -132,33 +117,17 @@ class ImageFactory extends \Magento\Catalog\Block\Product\ImageFactory
 
     /**
      * Calculate image ratio
-     *
-     * @param int $width  Width
-     * @param int $height Height
      */
     private function getRatio(int $width, int $height): float
     {
-        if ($width && $height) {
-            return $height / $width;
-        }
-
-        return 1.0;
+        return $width && $height ? $height / $width : 1.0;
     }
 
     /**
      * Get label
-     *
-     * @param Product $product   The product
-     * @param string  $imageType The image type
      */
     private function getLabel(Product $product, string $imageType): string
     {
-        $concat = $imageType . '_label';
-        $label = $product->getData($concat);
-        if (empty($label)) {
-            $label = $product->getName();
-        }
-
-        return (string) $label;
+        return (string) ($product->getData($imageType . '_label') ?: $product->getName());
     }
 }
