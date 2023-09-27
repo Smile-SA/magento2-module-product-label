@@ -12,7 +12,7 @@ class ResetButton extends AbstractButton
     /**
      * @inheritdoc
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         return [
             'label' => __('Reset'),

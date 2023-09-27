@@ -18,29 +18,9 @@ use Psr\Log\LoggerInterface;
  */
 class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection
 {
-    /**
-     * @var array
-     */
-    private array $defaultAvailableFrontendInputs = ['select', 'multiselect'];
+    private array $defaultAvailableFrontendInputs = ['select', 'multiselect', 'boolean'];
+    private array $availableFrontendInputs;
 
-    /**
-     * @var array
-     */
-    private array $availableFrontendInputs = [];
-
-    /**
-     * Collection constructor.
-     *
-     * @param EntityFactory $entityFactory Entity Factory
-     * @param LoggerInterface $logger Logger Interface
-     * @param FetchStrategyInterface $fetchStrategy Fetch Strategy Interface
-     * @param ManagerInterface $eventManager Event Manager Interface
-     * @param Config $eavConfig EAV Config
-     * @param EavEntityFactory $eavEntityFactory EAV Entity Factory
-     * @param AdapterInterface|null $connection Adapter Interface
-     * @param AbstractDb|null $resource Resource Model
-     * @param array $availableFrontendInputs Array of Available Frontend Inputs
-     */
     public function __construct(
         EntityFactory          $entityFactory,
         LoggerInterface        $logger,
@@ -53,7 +33,6 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
         array                  $availableFrontendInputs = []
     ) {
         $this->availableFrontendInputs = array_merge($this->defaultAvailableFrontendInputs, $availableFrontendInputs);
-
         parent::__construct(
             $entityFactory,
             $logger,
@@ -67,12 +46,9 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\
     }
 
     /**
-     * Init select
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
-    protected function _initSelect()
+    protected function _initSelect(): self
     {
         parent::_initSelect();
 

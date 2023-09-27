@@ -8,7 +8,7 @@
         <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Product Label Name"/>
         <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false" default="0"
                 comment="Attribute ID"/>
-        <column xsi:type="int" name="option_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Option Id"/>
+        <column xsi:type="varchar" length="255"  name="option_id" nullable="false" default="0" comment="Option Id"/>
         <column xsi:type="blob" name="image" nullable="true" comment="Image of Attribute or Option of Attribute"/>
         <column xsi:type="varchar" name="position_category_list" nullable="true" comment="Position of Image on Category List"/>
         <column xsi:type="varchar" name="position_product_view" nullable="true" comment="Position of Image on Product View"/>
@@ -19,8 +19,6 @@
         </constraint>
         <constraint xsi:type="foreign" referenceId="SMILE_PRODUCTLABEL_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID" table="smile_productlabel"
                     column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE"/>
-        <constraint xsi:type="foreign" referenceId="SMILE_PRODUCTLABEL_OPTION_ID_EAV_ATTRIBUTE_OPTION_OPTION_ID" table="smile_productlabel"
-                    column="option_id" referenceTable="eav_attribute_option" referenceColumn="option_id" onDelete="CASCADE"/>
         <index referenceId="IDX_SMILE_PRODUCTLABEL_IDENTIFIER" indexType="btree">
             <column name="product_label_id"/>
         </index>

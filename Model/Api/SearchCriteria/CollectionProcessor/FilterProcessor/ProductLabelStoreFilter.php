@@ -7,6 +7,7 @@ namespace Smile\ProductLabel\Model\Api\SearchCriteria\CollectionProcessor\Filter
 use Magento\Framework\Api\Filter;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor\CustomFilterInterface;
 use Magento\Framework\Data\Collection\AbstractDb;
+use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection;
 
 /**
  * Apply store filter on a product label collection.
@@ -16,10 +17,10 @@ class ProductLabelStoreFilter implements CustomFilterInterface
     /**
      * @inheritdoc
      */
-    public function apply(Filter $filter, AbstractDb $collection)
+    public function apply(Filter $filter, AbstractDb $collection): bool
     {
-        // @phpstan-ignore-next-line
-        $collection->addStoreFilter($filter->getValue());
+        /** @var Collection $collection */
+        $collection->addStoreFilter((int) $filter->getValue());
         return true;
     }
 }

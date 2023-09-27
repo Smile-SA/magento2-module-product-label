@@ -16,11 +16,6 @@ class Stores implements ModifierInterface
 {
     private LocatorInterface $locator;
 
-    /**
-     * AttributeOptions constructor.
-     *
-     * @param LocatorInterface $locator Label Locatory
-     */
     public function __construct(
         LocatorInterface $locator
     ) {
@@ -30,7 +25,7 @@ class Stores implements ModifierInterface
     /**
      * @inheritdoc
      */
-    public function modifyData(array $data)
+    public function modifyData(array $data): array
     {
         $productLabel = $this->locator->getProductLabel();
 
@@ -48,7 +43,7 @@ class Stores implements ModifierInterface
     /**
      * @inheritdoc
      */
-    public function modifyMeta(array $meta)
+    public function modifyMeta(array $meta): array
     {
         return $meta;
     }

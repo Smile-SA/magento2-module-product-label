@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Api\Data;
 
+use Magento\Framework\DataObject\IdentityInterface;
+
 /**
  * Product Label Data Interface
  */
-interface ProductLabelInterface
+interface ProductLabelInterface extends IdentityInterface
 {
     /**
      * Name of the main Mysql Table
@@ -108,7 +110,7 @@ interface ProductLabelInterface
     /**
      * Get product label Id
      *
-     * @return mixed
+     * @return ?int
      */
     public function getId();
 
@@ -129,9 +131,9 @@ interface ProductLabelInterface
     /**
      * Get option Id
      *
-     * @return int
+     * @return string
      */
-    public function getOptionId(): int;
+    public function getOptionId(): string;
 
     /**
      * Get image
@@ -157,7 +159,7 @@ interface ProductLabelInterface
     /**
      * Get display_on
      *
-     * @return array
+     * @return int[]
      */
     public function getDisplayOn(): array;
 
@@ -203,10 +205,10 @@ interface ProductLabelInterface
     /**
      * Set option Id.
      *
-     * @param int $value The option Id
+     * @param string $value The option Id
      * @return ProductLabelInterface
      */
-    public function setOptionId(int $value): ProductLabelInterface;
+    public function setOptionId(string $value): ProductLabelInterface;
 
     /**
      * Set Image.

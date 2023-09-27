@@ -20,31 +20,15 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
  */
 abstract class AbstractAction extends Action
 {
-    /**
-     * Authorization level.
-     */
+    /** Authorization level. */
     public const ADMIN_RESOURCE = 'Smile_ProductLabel::manage';
 
     protected ProductLabelFactory $modelFactory;
-
     protected ProductLabelRepository $modelRepository;
-
     protected Registry $coreRegistry;
-
     protected Filter $filter;
-
     protected CollectionFactory $collectionFactory;
 
-    /**
-     * AbstractAction constructor.
-     *
-     * @param Context $context UI Component context
-     * @param Registry $coreRegistry Core Registry
-     * @param ProductLabelFactory $modelFactory Product Label Factory
-     * @param ProductLabelRepository $modelRepository Product Label Repository
-     * @param Filter $filter ction Filter
-     * @param CollectionFactory $collectionFactory Product Label Collection Factory
-     */
     public function __construct(
         Context $context,
         Registry $coreRegistry,
@@ -53,19 +37,17 @@ abstract class AbstractAction extends Action
         Filter $filter,
         CollectionFactory $collectionFactory
     ) {
+        parent::__construct($context);
         $this->modelFactory = $modelFactory;
         $this->modelRepository = $modelRepository;
         $this->coreRegistry = $coreRegistry;
         $this->filter            = $filter;
         $this->collectionFactory = $collectionFactory;
-
-        parent::__construct($context);
     }
 
     /**
      * Init the current model.
      *
-     * @param int|null $labelId Product Label ID
      * @throws NotFoundException
      */
     protected function initModel(?int $labelId): ProductLabel

@@ -6,9 +6,8 @@ namespace Smile\ProductLabel\Model;
 
 use Magento\Catalog\Model\ImageUploader;
 use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\Collection\AbstractDb;
-use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\WriteInterface;
@@ -28,14 +27,12 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel as ProductLabelResource;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class ProductLabel extends AbstractModel implements IdentityInterface, ProductLabelInterface
+class ProductLabel extends AbstractModel implements ProductLabelInterface
 {
     public const CACHE_TAG = 'smile_productlabel';
 
     protected StoreManagerInterface $storeManager;
-
     private ?ImageUploader $imageUploader;
-
     protected FileInfo $fileInfo;
 
     /**
@@ -51,35 +48,30 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     /**
      * ProductLabel constructor.
      *
-     * @param Context $context Context
-     * @param Registry $registry Registry
-     * @param StoreManagerInterface $storeManager Store Manager
-     * @param Filesystem $filesystem FileSystem Helper
-     * @param AbstractResource|null $resource Resource
-     * @param AbstractDb|null $resourceCollection Resource Collection
-     * @param ImageUploader $imageUploader Image uploader
-     * @param array $data Object Data
+     * @throws FileSystemException
      */
     public function __construct(
         Context               $context,
         Registry              $registry,
         StoreManagerInterface $storeManager,
         Filesystem            $filesystem,
+        ImageUploader         $imageUploader,
         ?AbstractResource     $resource = null,
         ?AbstractDb           $resourceCollection = null,
-        ?ImageUploader        $imageUploader = null,
         array                 $data = []
     ) {
         $this->storeManager = $storeManager;
         $this->mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::MEDIA);
         $this->imageUploader = $imageUploader;
-        parent::__construct(
-            $context,
-            $registry,
-            $resource,
-            $resourceCollection,
-            $data
-        );
+        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _construct()
+    {
+        $this->_init(ProductLabelResource::class);
     }
 
     /**
@@ -119,6 +111,8 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
         if (is_numeric($stores)) {
             $stores = [$stores];
+        } elseif (is_string($stores)) {
+            $stores = explode(',', $stores);
         }
 
         return $stores ?? [];
@@ -143,9 +137,9 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     /**
      * Get field: option_id
      */
-    public function getOptionId(): int
+    public function getOptionId(): string
     {
-        return (int) $this->getData(self::OPTION_ID);
+        return (string) $this->getData(self::OPTION_ID);
     }
 
     /**
@@ -174,8 +168,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Get field: display_on
-     *
-     * @return array
      */
     public function getDisplayOn(): array
     {
@@ -184,7 +176,7 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
             $values = [$values];
         }
 
-        return $values ? $values : [];
+        return $values ?: [];
     }
 
     /**
@@ -197,8 +189,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set product label status
-     *
-     * @param bool $status The product label status
      */
     public function setIsActive(bool $status): ProductLabelInterface
     {
@@ -207,8 +197,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set product label Id
-     *
-     * @param int $value The value
      */
     public function setProductLabelId(int $value): ProductLabelInterface
     {
@@ -217,8 +205,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set Name
-     *
-     * @param string $value The value
      */
     public function setName(string $value): ProductLabelInterface
     {
@@ -227,8 +213,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set attribute Id.
-     *
-     * @param int $value The attribute Id
      */
     public function setAttributeId(int $value): ProductLabelInterface
     {
@@ -237,18 +221,14 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set option Id.
-     *
-     * @param int $value The option Id
      */
-    public function setOptionId(int $value): ProductLabelInterface
+    public function setOptionId(string $value): ProductLabelInterface
     {
         return $this->setData(self::OPTION_ID, $value);
     }
 
     /**
      * Set Image.
-     *
-     * @param string $value The product label Image
      */
     public function setImage(string $value): ProductLabelInterface
     {
@@ -257,8 +237,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set position_category_list.
-     *
-     * @param int $value The option Id
      */
     public function setPositionCategoryList(int $value): ProductLabelInterface
     {
@@ -267,9 +245,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set field: position_product_view.
-     *
-     * @param int $value The position product view
-     * @return $this
      */
     public function setPositionProductView(int $value): ProductLabelInterface
     {
@@ -278,8 +253,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set field: display_on.
-     *
-     * @param array $value Field value
      */
     public function setDisplayOn(array $value): ProductLabelInterface
     {
@@ -288,8 +261,6 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Set Alternative Caption
-     *
-     * @param string $value The value
      */
     public function setAlt(string $value): ProductLabelInterface
     {
@@ -298,15 +269,13 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
 
     /**
      * Populate from array
-     *
-     * @param array $values Form values
      */
     public function populateFromArray(array $values): void
     {
         $this->setData(self::IS_ACTIVE, (bool) $values['is_active']);
         $this->setData(self::PRODUCTLABEL_NAME, (string) $values['name']);
         $this->setData(self::ATTRIBUTE_ID, (int) $values['attribute_id']);
-        $this->setData(self::OPTION_ID, (int) $values['option_id']);
+        $this->setData(self::OPTION_ID, (string) $values['option_id']);
         $this->setData(self::PRODUCTLABEL_IMAGE, $values['image'][0]['name']);
         $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, (string) $values['position_category_list']);
         $this->setData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW, (string) $values['position_product_view']);
@@ -325,26 +294,14 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     {
         $url   = false;
         $image = $this->getData('image');
-        if ($image) {
-            if (is_string($image)) {
-                /** @var Store $store */
-                $store = $this->storeManager->getStore();
-
-                $isRelativeUrl = substr($image, 0, 1) === '/';
-
-                $mediaBaseUrl = $store->getBaseUrl(
-                    UrlInterface::URL_TYPE_MEDIA
-                );
-
-                $url = $mediaBaseUrl
-                    . ltrim(FileInfo::ENTITY_MEDIA_PATH, '/')
-                    . '/'
-                    . $image;
-
-                if ($isRelativeUrl) {
-                    $url = $image;
-                }
-            }
+        if ($image && is_string($image)) {
+            /** @var Store $store */
+            $store = $this->storeManager->getStore();
+            $isRelativeUrl = substr($image, 0, 1) === '/';
+            $mediaBaseUrl = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
+            $url = $isRelativeUrl
+                ? $image
+                : $mediaBaseUrl . ltrim(FileInfo::ENTITY_MEDIA_PATH, '/') . '/' . $image;
         }
 
         return $url;
@@ -353,43 +310,17 @@ class ProductLabel extends AbstractModel implements IdentityInterface, ProductLa
     /**
      * After save
      *
-     * @return $this
+     * @throws LocalizedException
      */
-    public function afterSave()
+    public function afterSave(): self
     {
         $imageName = $this->getData('image');
-        $path = $this->getImageUploader()->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
+        $path = $this->imageUploader->getFilePath($this->imageUploader->getBaseTmpPath(), $imageName);
 
         if ($this->mediaDirectory->isExist($path)) {
-            $this->getImageUploader()->moveFileFromTmp($imageName);
+            $this->imageUploader->moveFileFromTmp($imageName, true);
         }
 
         return parent::afterSave();
-    }
-
-    /**
-     * Construct.
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * @inheritdoc
-     */
-    protected function _construct()
-    {
-        $this->_init(ProductLabelResource::class);
-    }
-
-    /**
-     * Get image uploader
-     */
-    private function getImageUploader(): ImageUploader
-    {
-        if ($this->imageUploader === null) {
-            // @phpstan-ignore-next-line
-            $this->imageUploader = ObjectManager::getInstance()->get(
-                \Smile\ProductLabel\ProductLabelImageUpload::class
-            );
-        }
-
-        return $this->imageUploader;
     }
 }

@@ -8,6 +8,7 @@ use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
+use Magento\Store\Model\Store;
 use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Collection as SmileProductLabelCollection;
 
 /**
@@ -20,7 +21,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function setItems(?array $items = null)
+    public function setItems(?array $items = null): self
     {
         return $this;
     }
@@ -28,7 +29,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function getAggregations()
+    public function getAggregations(): AggregationInterface
     {
         return $this->aggregations;
     }
@@ -45,16 +46,15 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function getSearchCriteria()
+    public function getSearchCriteria(): ?SearchCriteriaInterface
     {
-        // @phpstan-ignore-next-line
         return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria): self
     {
         return $this;
     }
@@ -62,7 +62,7 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->getSize();
     }
@@ -70,15 +70,12 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     /**
      * @inheritdoc
      */
-    public function setTotalCount($totalCount)
+    public function setTotalCount($totalCount): self
     {
         return $this;
     }
 
     /**
-     * Construct.
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
     protected function _construct()
@@ -88,14 +85,12 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
     }
 
     /**
-     * Render filters before
-     *
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @inheritdoc
      */
     protected function _renderFiltersBefore()
     {
         parent::_renderFiltersBefore();
+        $storeCondition = Store::DEFAULT_STORE_ID;
 
         $this->getSelect()->joinInner(
             ['ea' => $this->getTable('eav_attribute')],
@@ -104,28 +99,31 @@ class Collection extends SmileProductLabelCollection implements SearchResultInte
         );
 
         $this->getSelect()->joinLeft(
-            ['eaov' => $this->getTable('eav_attribute_option_value')],
-            'eaov.option_id = main_table.option_id',
-            ['option_label' => 'value']
+            ['eao' => $this->getTable('eav_attribute_option')],
+            'eao.option_id = main_table.option_id and ea.attribute_id = eao.attribute_id',
+            []
         );
 
-        $storeCondition = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
+        $this->getSelect()->joinLeft(
+            ['eaov' => $this->getTable('eav_attribute_option_value')],
+            sprintf('eaov.option_id = eao.option_id and eaov.store_id = %s', $storeCondition),
+            ['option_label' => $this->getConnection()->getIfNullSql('eaov.value', 'main_table.option_id')]
+        );
 
         if ($this->getFilter('store')) {
             $storeId = current($this->getStoreIds());
 
             $this->getSelect()->joinLeft(
                 ['eaov_s' => $this->getTable('eav_attribute_option_value')],
-                sprintf('eaov_s.option_id = main_table.option_id AND eaov_s.store_id = %s', $storeId),
-                ['option_label' => 'value']
-            );
-
-            $storeCondition = $this->getConnection()->getIfNullSql(
-                "eaov_s.store_id",
-                \Magento\Store\Model\Store::DEFAULT_STORE_ID
+                sprintf('eaov_s.option_id = eao.option_id AND eaov_s.store_id = %s', $storeId),
+                [
+                    'option_label' =>
+                        $this->getConnection()->getIfNullSql(
+                            'eaov_s.value',
+                            (string) $this->getConnection()->getIfNullSql('eaov.value', 'main_table.option_id')
+                        ),
+                ]
             );
         }
-
-        $this->getSelect()->where('eaov.store_id = ?', $storeCondition);
     }
 }

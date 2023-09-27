@@ -15,11 +15,6 @@ class System implements ModifierInterface
 {
     private UrlInterface $urlBuilder;
 
-    /**
-     * Search Terms constructor.
-     *
-     * @param UrlInterface $urlBuilder URL Builder
-     */
     public function __construct(UrlInterface $urlBuilder)
     {
         $this->urlBuilder = $urlBuilder;
@@ -28,13 +23,9 @@ class System implements ModifierInterface
     /**
      * @inheritdoc
      */
-    public function modifyData(array $data)
+    public function modifyData(array $data): array
     {
-        $reloadParameters = [
-            'popup'         => 1,
-            'componentJson' => 1,
-        ];
-
+        $reloadParameters = ['popup' => 1, 'componentJson' => 1];
         $data['config']['reloadUrl'] = $this->urlBuilder->getUrl('*/*/reload', $reloadParameters);
 
         return $data;
@@ -43,7 +34,7 @@ class System implements ModifierInterface
     /**
      * @inheritdoc
      */
-    public function modifyMeta(array $meta)
+    public function modifyMeta(array $meta): array
     {
         return $meta;
     }

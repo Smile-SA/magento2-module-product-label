@@ -9,6 +9,8 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\HTTP\PhpEnvironment\Request;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\StoreManagerInterface;
@@ -22,43 +24,28 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory as Pro
 class ProductLabel extends Template implements IdentityInterface
 {
     protected Registry $registry;
-
     protected ProductLabelCollectionFactory $productLabelCollectionFactory;
-
     protected Image $imageHelper;
-
-    protected ProductInterface $product;
-
+    protected ?ProductInterface $product;
     private CacheInterface $cache;
-
     private StoreManagerInterface $storeManager;
 
-    /**
-     * ProductLabel constructor.
-     *
-     * @param Context $context Block context
-     * @param Registry $registry Registry
-     * @param Image $imageHelper Image Helper
-     * @param ProductLabelCollectionFactory $productLabelCollectionFactory Product Label Collection Factory
-     * @param CacheInterface $cache Cache Interface
-     * @param array $data Block data
-     */
     public function __construct(
-        Context                       $context,
-        Registry                      $registry,
-        Image                         $imageHelper,
+        Context $context,
+        Registry $registry,
+        Image $imageHelper,
         ProductLabelCollectionFactory $productLabelCollectionFactory,
-        CacheInterface                $cache,
-        ProductInterface              $product,
-        array                         $data = []
+        CacheInterface $cache,
+        ?ProductInterface $product,
+        array $data = []
     ) {
-        $this->registry                      = $registry;
-        $this->imageHelper                   = $imageHelper;
-        $this->productLabelCollectionFactory = $productLabelCollectionFactory;
-        $this->cache                         = $cache;
-        $this->storeManager                  = $context->getStoreManager();
-        $this->product                       = $product;
         parent::__construct($context, $data);
+        $this->registry = $registry;
+        $this->imageHelper = $imageHelper;
+        $this->productLabelCollectionFactory = $productLabelCollectionFactory;
+        $this->cache = $cache;
+        $this->storeManager = $context->getStoreManager();
+        $this->product = $product;
     }
 
     /**
@@ -68,10 +55,8 @@ class ProductLabel extends Template implements IdentityInterface
     {
         $view = ProductLabelInterface::PRODUCTLABEL_DISPLAY_LISTING;
 
-        /** @var \Magento\Framework\View\Element\AbstractBlock $request */
+        /** @var Request $request */
         $request = $this->getRequest();
-
-        /** @var \Magento\Framework\Webapi\Rest\Request\Proxy $request */
         $controller = $request->getControllerName();
 
         if ($controller == 'product') {
@@ -97,11 +82,8 @@ class ProductLabel extends Template implements IdentityInterface
 
     /**
      * Set Product
-     *
-     * @param ProductInterface $product The product
-     * @return $this
      */
-    public function setProduct(ProductInterface $product)
+    public function setProduct(ProductInterface $product): self
     {
         $this->product = $product;
 
@@ -125,27 +107,29 @@ class ProductLabel extends Template implements IdentityInterface
     /**
      * Get Attributes Of Current Product
      *
-     * @return array
+     * @throws LocalizedException
      */
     public function getAttributesOfCurrentProduct(): array
     {
         $attributesList = [];
         $attributeIds   = array_column($this->getProductLabelsList(), 'attribute_id');
-        $product = $this->getProduct();
 
-        // @phpstan-ignore-next-line
+        /** @var Product $product */
+        $product = $this->getProduct();
         $collection = $product->getResourceCollection();
         $productEntity  = $collection->getEntity();
 
         foreach ($attributeIds as $attributeId) {
             $attribute = $productEntity->getAttribute($attributeId);
             if ($attribute) {
-                $optionIds = $this->getProduct()->getCustomAttribute($attribute->getAttributeCode());
+                $optionIds = $product->getCustomAttribute($attribute->getAttributeCode());
 
                 $attributesList[$attribute->getId()] = [
                     'id'      => $attribute->getId(),
                     'label'   => $attribute->getFrontend()->getLabel(),
-                    'options' => $optionIds ? $optionIds->getValue() : '',
+                    'options' => $optionIds
+                        ? $optionIds->getValue()
+                        : $product->getData($attribute->getAttributeCode()),
                 ];
             }
         }
@@ -158,7 +142,7 @@ class ProductLabel extends Template implements IdentityInterface
      *
      * If it has, return an array of product labels
      *
-     * @return array
+     * @throws LocalizedException
      */
     public function getProductLabels(): array
     {
@@ -193,8 +177,6 @@ class ProductLabel extends Template implements IdentityInterface
 
     /**
      * Get Image URL of product label
-     *
-     * @param string $imageName Image Name
      */
     public function getImageUrl(string $imageName): string
     {
@@ -210,8 +192,12 @@ class ProductLabel extends Template implements IdentityInterface
     {
         $identities = [];
 
-        /** @var IdentityInterface $product */
+        /** @var IdentityInterface|null $product */
         $product = $this->getProduct();
+
+        if ($product === null) {
+            return [\Smile\ProductLabel\Model\ProductLabel::CACHE_TAG];
+        }
 
         return array_merge(
             $identities,
@@ -222,8 +208,6 @@ class ProductLabel extends Template implements IdentityInterface
 
     /**
      * Fetch proper css class according to current label and view.
-     *
-     * @param array $productLabel A product Label
      */
     private function getCssClass(array $productLabel): string
     {
@@ -244,8 +228,6 @@ class ProductLabel extends Template implements IdentityInterface
      * Fetch product labels list : the list of all enabled product labels.
      *
      * Fetched only once and put in cache.
-     *
-     * @return array
      */
     private function getProductLabelsList(): array
     {
@@ -258,10 +240,8 @@ class ProductLabel extends Template implements IdentityInterface
         }
 
         if ($productLabelList === false) {
-            /** @var \Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
 
-            // @phpstan-ignore-next-line
             $productLabelList = $productLabelsCollection
                 ->addStoreFilter($storeId)
                 ->addFieldToFilter('is_active', true)

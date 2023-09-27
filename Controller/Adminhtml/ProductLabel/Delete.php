@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
+use Exception;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\Result\Redirect as ResultRedirect;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Exception\NotFoundException;
 
 /**
  * Admin Action: productlabel/delete
@@ -20,8 +20,6 @@ class Delete extends AbstractAction implements HttpGetActionInterface
      * Execute action based on request and return result
      *
      * Note: Request will be added as operation argument in future
-     *
-     * @throws NotFoundException
      */
     public function execute(): ResultInterface
     {
@@ -38,7 +36,7 @@ class Delete extends AbstractAction implements HttpGetActionInterface
             );
         } catch (NoSuchEntityException $e) {
             $this->messageManager->addErrorMessage((string) __('The product label to delete does not exist.'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
 

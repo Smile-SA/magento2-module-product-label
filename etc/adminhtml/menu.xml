@@ -2,21 +2,21 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add
-                id="ProductLabel::attributes"
-                title="Smile Pictos/Labels"
-                translate="title"
-                module="Smile_ProductLabel"
-                sortOrder="200"
-                parent="Magento_Backend::marketing"
-                resource="Smile_ProductLabel::manage"/>
+            id="ProductLabel::attributes"
+            title="Smile Pictos/Labels"
+            translate="title"
+            module="Smile_ProductLabel"
+            sortOrder="200"
+            parent="Magento_Backend::marketing"
+            resource="Smile_ProductLabel::manage"/>
         <add
-                id="ProductLabel::products"
-                title="Attributes"
-                translate="title"
-                module="Smile_ProductLabel"
-                sortOrder="10"
-                parent="ProductLabel::attributes"
-                action="smile_productlabel/productlabel/index"
-                resource="Smile_ProductLabel::manage"/>
+            id="ProductLabel::products"
+            title="Attributes"
+            translate="title"
+            module="Smile_ProductLabel"
+            sortOrder="10"
+            parent="ProductLabel::attributes"
+            action="smile_productlabel/productlabel/index"
+            resource="Smile_ProductLabel::manage"/>
     </menu>
 </config>

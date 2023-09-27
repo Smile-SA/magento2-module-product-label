@@ -13,17 +13,8 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\Attributes\CollectionFac
 class Options implements OptionSourceInterface
 {
     private CollectionFactory $attributesCollectionFactory;
-
-    /**
-     * @var array|null
-     */
     private ?array $attributesList = null;
 
-    /**
-     * Options constructor.
-     *
-     * @param CollectionFactory $attributesCollectionFactory Attributes Collection Factory
-     */
     public function __construct(CollectionFactory $attributesCollectionFactory)
     {
         $this->attributesCollectionFactory = $attributesCollectionFactory;
@@ -39,8 +30,6 @@ class Options implements OptionSourceInterface
 
     /**
      * Retrieve list of attributes that can be used to define product labels.
-     *
-     * @return array
      */
     private function getAttributesList(): array
     {

@@ -9,15 +9,11 @@ namespace Smile\ProductLabel\Ui\Component\Source\Store;
  */
 class Options extends \Magento\Store\Ui\Component\Listing\Column\Store\Options
 {
-    /**
-     * All Store Views value
-     */
+    /** All Store Views value */
     protected const ALL_STORE_VIEWS = '0';
 
     /**
      * Get options
-     *
-     * @return array
      */
     public function toOptionArray(): array
     {

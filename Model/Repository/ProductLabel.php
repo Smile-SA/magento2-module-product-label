@@ -25,15 +25,6 @@ class ProductLabel implements ProductLabelRepositoryInterface
 {
     protected RepositoryManager $productLabelRepositoryManager;
 
-    /**
-     * ProductLabel constructor.
-     *
-     * @param ManagerFactory $repositoryManagerFactory Repository Manager
-     * @param ProductLabelInterfaceFactory $objectFactory Object Factory
-     * @param ProductLabelResourceModel $objectResource Object Resource
-     * @param ProductLabelCollectionFactory $objectCollectionFactory Object Collection Factory
-     * @param ProductLabelSearchResultsInterfaceFactory $objectSearchResultsFactory Object Search Result Factory
-     */
     public function __construct(
         RepositoryManagerFactory $repositoryManagerFactory,
         ProductLabelInterfaceFactory $objectFactory,
@@ -55,7 +46,6 @@ class ProductLabel implements ProductLabelRepositoryInterface
     /**
      * Retrieve a productLabel by its id
      *
-     * @param int $objectId Product Label identifier.
      * @throws NoSuchEntityException
      */
     public function getById(int $objectId): ProductLabelInterface
@@ -68,7 +58,6 @@ class ProductLabel implements ProductLabelRepositoryInterface
     /**
      * Retrieve a productLabel by its identifier.
      *
-     * @param string $objectIdentifier Product Label identifier.
      * @throws NoSuchEntityException
      */
     public function getByIdentifier(string $objectIdentifier): ProductLabelInterface
@@ -80,8 +69,6 @@ class ProductLabel implements ProductLabelRepositoryInterface
 
     /**
      * Retrieve productLabels which match a specified criteria.
-     *
-     * @param SearchCriteriaInterface|null $searchCriteria Search Criteria
      */
     public function getList(?SearchCriteriaInterface $searchCriteria = null): SearchResults
     {
@@ -91,7 +78,6 @@ class ProductLabel implements ProductLabelRepositoryInterface
     /**
      * Save a productLabel.
      *
-     * @param ProductLabelInterface $object Product Label
      * @throws CouldNotSaveException
      */
     public function save(ProductLabelInterface $object): ProductLabelInterface
@@ -105,7 +91,6 @@ class ProductLabel implements ProductLabelRepositoryInterface
     /**
      * Delete a productLabel by its id.
      *
-     * @param int $objectId The object Id
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
      */
@@ -117,7 +102,6 @@ class ProductLabel implements ProductLabelRepositoryInterface
     /**
      * Delete a productLabel by its identifier.
      *
-     * @param string $label Product Label
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
