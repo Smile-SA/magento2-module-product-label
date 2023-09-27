@@ -18,7 +18,7 @@ use Psr\Log\LoggerInterface;
  */
 class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection
 {
-    private array $defaultAvailableFrontendInputs = ['select', 'multiselect'];
+    private array $defaultAvailableFrontendInputs = ['select', 'multiselect', 'boolean'];
     private array $availableFrontendInputs;
 
     public function __construct(
