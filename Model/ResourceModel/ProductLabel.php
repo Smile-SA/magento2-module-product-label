@@ -22,7 +22,7 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
  */
 class ProductLabel extends AbstractDb
 {
-    protected Json $jsonSerializer;
+    protected Json $serializer;
     protected EntityManager $entityManager;
     protected MetadataPool $metadataPool;
     private StoreManagerInterface $storeManager;
