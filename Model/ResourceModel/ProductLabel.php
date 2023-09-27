@@ -86,14 +86,9 @@ class ProductLabel extends AbstractDb
     public function saveStoreRelation(AbstractModel $object): AbstractModel
     {
         $oldStores = $this->getStoreIds($object);
-        if (strpos($this->serializer->serialize($object->getStores()), ',') !== false) {
-            $newStores = explode(',', (string) $object->getStores());
-        } else {
-            $newStores = $object->getStores();
-        }
+        $newStores = $object->getStores();
 
         $this->checkUnicity($object, $newStores);
-
         $table = $this->getTable(ProductLabelInterface::STORE_TABLE_NAME);
 
         $delete = array_diff($oldStores, $newStores);

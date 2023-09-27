@@ -111,6 +111,8 @@ class ProductLabel extends AbstractModel implements ProductLabelInterface
 
         if (is_numeric($stores)) {
             $stores = [$stores];
+        } elseif (is_string($stores)) {
+            $stores = explode(',', $stores);
         }
 
         return $stores ?? [];
