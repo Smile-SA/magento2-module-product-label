@@ -137,9 +137,9 @@ class ProductLabel extends AbstractModel implements ProductLabelInterface
     /**
      * Get field: option_id
      */
-    public function getOptionId(): int
+    public function getOptionId(): string
     {
-        return (int) $this->getData(self::OPTION_ID);
+        return (string) $this->getData(self::OPTION_ID);
     }
 
     /**
@@ -222,7 +222,7 @@ class ProductLabel extends AbstractModel implements ProductLabelInterface
     /**
      * Set option Id.
      */
-    public function setOptionId(int $value): ProductLabelInterface
+    public function setOptionId(string $value): ProductLabelInterface
     {
         return $this->setData(self::OPTION_ID, $value);
     }
@@ -275,7 +275,7 @@ class ProductLabel extends AbstractModel implements ProductLabelInterface
         $this->setData(self::IS_ACTIVE, (bool) $values['is_active']);
         $this->setData(self::PRODUCTLABEL_NAME, (string) $values['name']);
         $this->setData(self::ATTRIBUTE_ID, (int) $values['attribute_id']);
-        $this->setData(self::OPTION_ID, (int) $values['option_id']);
+        $this->setData(self::OPTION_ID, (string) $values['option_id']);
         $this->setData(self::PRODUCTLABEL_IMAGE, $values['image'][0]['name']);
         $this->setData(self::PRODUCTLABEL_POSITION_CATEGORY_LIST, (string) $values['position_category_list']);
         $this->setData(self::PRODUCTLABEL_POSITION_PRODUCT_VIEW, (string) $values['position_product_view']);

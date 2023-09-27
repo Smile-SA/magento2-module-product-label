@@ -123,7 +123,7 @@ interface ProductLabelInterface extends IdentityInterface
     /**
      * Get option Id
      */
-    public function getOptionId(): int;
+    public function getOptionId(): string;
 
     /**
      * Get image
@@ -173,7 +173,7 @@ interface ProductLabelInterface extends IdentityInterface
     /**
      * Set option Id.
      */
-    public function setOptionId(int $value): ProductLabelInterface;
+    public function setOptionId(string $value): ProductLabelInterface;
 
     /**
      * Set Image.
