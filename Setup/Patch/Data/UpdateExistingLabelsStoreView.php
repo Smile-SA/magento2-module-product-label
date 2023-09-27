@@ -31,7 +31,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
 
         $connection = $this->moduleDataSetup->getConnection();
         $select     = $connection->select()->from(
-            ProductLabelInterface::TABLE_NAME,
+            $connection->getTableName(ProductLabelInterface::TABLE_NAME),
             [
                 ProductLabelInterface::PRODUCTLABEL_ID => ProductLabelInterface::PRODUCTLABEL_ID,
                 new Zend_Db_Expr(Store::DEFAULT_STORE_ID . ' as ' . ProductLabelInterface::STORE_ID),
@@ -40,7 +40,7 @@ class UpdateExistingLabelsStoreView implements DataPatchInterface
 
         $data = $connection->fetchAll($select);
         $connection->insertOnDuplicate(
-            ProductLabelInterface::STORE_TABLE_NAME,
+            $connection->getTableName(ProductLabelInterface::STORE_TABLE_NAME),
             $data,
             [ProductLabelInterface::PRODUCTLABEL_ID, ProductLabelInterface::STORE_ID]
         );

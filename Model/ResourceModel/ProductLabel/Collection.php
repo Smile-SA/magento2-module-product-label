@@ -150,7 +150,7 @@ class Collection extends AbstractCollection
         $this->_init(ProductLabel::class, \Smile\ProductLabel\Model\ResourceModel\ProductLabel::class);
 
         /* @see self::_renderFiltersBefore() */
-        $this->_map['fields']['store']        = ProductLabelInterface::STORE_TABLE_NAME . '.store_id';
+        $this->_map['fields']['store']        = $this->getTable(ProductLabelInterface::STORE_TABLE_NAME) . '.store_id';
         $this->_map['fields']['attribute_id'] = 'main_table.attribute_id';
     }
 
