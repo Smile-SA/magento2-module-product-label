@@ -122,12 +122,14 @@ class ProductLabel extends Template implements IdentityInterface
         foreach ($attributeIds as $attributeId) {
             $attribute = $productEntity->getAttribute($attributeId);
             if ($attribute) {
-                $optionIds = $this->getProduct()->getCustomAttribute($attribute->getAttributeCode());
+                $optionIds = $product->getCustomAttribute($attribute->getAttributeCode());
 
                 $attributesList[$attribute->getId()] = [
                     'id'      => $attribute->getId(),
                     'label'   => $attribute->getFrontend()->getLabel(),
-                    'options' => $optionIds ? $optionIds->getValue() : '',
+                    'options' => $optionIds
+                        ? $optionIds->getValue()
+                        : $product->getData($attribute->getAttributeCode()),
                 ];
             }
         }
