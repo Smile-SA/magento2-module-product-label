@@ -12,7 +12,7 @@ class SaveButton extends AbstractButton
     /**
      * @inheritdoc
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         return [
             'label' => __('Save Product Label'),

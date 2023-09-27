@@ -21,21 +21,14 @@ class EavPlugin
     private const TOOLTIP_TEMPLATE = 'Smile_ProductLabel/form/element/helper/tooltip';
 
     private ArrayManager $arrayManager;
+    private ProductLabelCollectionFactory $productLabelCollectionFactory;
 
-    private ProductLabelCollectionFactory $plabelCollectionFactory;
-
-    /**
-     * EavPlugin constructor.
-     *
-     * @param ArrayManager $arrayManager            Array Manager
-     * @param ProductLabelCollectionFactory          $plabelCollectionFactory Collection Factory
-     */
     public function __construct(
         ArrayManager $arrayManager,
-        ProductLabelCollectionFactory $plabelCollectionFactory
+        ProductLabelCollectionFactory $productLabelCollectionFactory
     ) {
-        $this->arrayManager          = $arrayManager;
-        $this->plabelCollectionFactory = $plabelCollectionFactory;
+        $this->arrayManager = $arrayManager;
+        $this->productLabelCollectionFactory = $productLabelCollectionFactory;
     }
 
     /**
@@ -86,7 +79,7 @@ class EavPlugin
         $result = false;
 
         if ($attribute->getAttributeId()) {
-            $productLabelCollection = $this->plabelCollectionFactory->create();
+            $productLabelCollection = $this->productLabelCollectionFactory->create();
             $productLabelCollection->addAttributeFilter($attribute);
 
             $result = $productLabelCollection->getSize() > 0;

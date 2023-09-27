@@ -15,29 +15,12 @@ use Smile\ProductLabel\Model\ResourceModel\ProductLabel\CollectionFactory;
  */
 class Config
 {
-    /**
-     * Product Attributes used in product listing
-     *
-     * @var array
-     */
+    /** Product Attributes used in product listing */
     private array $usedInProductListing;
-
-    /**
-     * Eav config
-     */
     private EavConfigModel $eavConfig;
-
     private Attribute $attributeFactory;
-
     private CollectionFactory $productLabelCollectionFactory;
 
-    /**
-     * Config constructor.
-     *
-     * @param EavConfigModel $eavConfig EAV Config
-     * @param Attribute $attributeFactory Attributes Factory
-     * @param CollectionFactory $productLabelCollectionFactory Product Label Factory
-     */
     public function __construct(
         EavConfigModel    $eavConfig,
         Attribute         $attributeFactory,
@@ -51,11 +34,6 @@ class Config
 
     /**
      * Add all attributes used for picto/labels into the list of attributes used in product listing.
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @param \Magento\Catalog\Model\Config $subject The Catalog config
-     * @param array                         $result  The result of $subject->getAttributesUsedInProductListing
-     * @return array
      */
     public function afterGetAttributesUsedInProductListing(\Magento\Catalog\Model\Config $subject, array $result): array
     {
@@ -63,11 +41,9 @@ class Config
             $this->usedInProductListing = $result;
             $entityType = Product::ENTITY;
 
-            /** @var CollectionFactory */
             $productLabelsCollection = $this->productLabelCollectionFactory->create();
             // Here you have all the attribute ids that are used to build product label rules.
 
-            // @phpstan-ignore-next-line
             $attributeIds = $productLabelsCollection->getAllAttributeIds();
 
             // Filter the collection on these attributes only.

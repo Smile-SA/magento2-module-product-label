@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Smile\ProductLabel\Ui\Component\ProductLabel\Form\Modifier;
 
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
 use Smile\ProductLabel\Api\Data\ProductLabelInterface;
+use Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface;
 
 /**
  * Smile Product Label edit form data provider modifier :
  * Used to set "attribute_id" field to disabled in case of already existing product label.
  */
-class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
+class Attribute implements ModifierInterface
 {
-    private \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator;
+    private LocatorInterface $locator;
 
     /**
      * Attribute constructor.
@@ -20,7 +22,7 @@ class Attribute implements \Magento\Ui\DataProvider\Modifier\ModifierInterface
      * @param \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator Label Locator
      */
     public function __construct(
-        \Smile\ProductLabel\Model\ProductLabel\Locator\LocatorInterface $locator
+        LocatorInterface $locator
     ) {
         $this->locator = $locator;
     }

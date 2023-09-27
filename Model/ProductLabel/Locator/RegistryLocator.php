@@ -14,17 +14,8 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
 class RegistryLocator implements LocatorInterface
 {
     private Registry $registry;
+    private ?ProductLabelInterface $productLabel = null;
 
-    /**
-     * @var null
-     */
-    private $productLabel = null;
-
-    /**
-     * RegistryLocator constructor.
-     *
-     * @param Registry $registry Registry
-     */
     public function __construct(Registry $registry)
     {
         $this->registry = $registry;

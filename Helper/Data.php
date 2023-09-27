@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Smile\ProductLabel\Helper;
 
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Model\Product;
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\SearchCriteria;
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -20,31 +21,19 @@ use Smile\ProductLabel\Api\ProductLabelRepositoryInterface;
  */
 class Data extends AbstractHelper
 {
-    protected ProductLabelRepositoryInterface $plabelRepository;
-
+    protected ProductLabelRepositoryInterface $productLabelRepository;
     protected FilterBuilder $filterBuilder;
-
     protected SortOrderBuilder $sortOrderBuilder;
-
     protected SearchCriteriaBuilder $searchCriteriaBuilder;
 
-    /**
-     * Data constructor.
-     *
-     * @param Context                         $context               Context
-     * @param ProductLabelRepositoryInterface $plabelRepository      Product Label Repository
-     * @param FilterBuilder                   $filterBuilder         Filter Builder
-     * @param SortOrderBuilder                $sortOrderBuilder      Sort Order Builder
-     * @param SearchCriteriaBuilder           $searchCriteriaBuilder Search Criteria Builder
-     */
     public function __construct(
         Context $context,
-        ProductLabelRepositoryInterface $plabelRepository,
+        ProductLabelRepositoryInterface $productLabelRepository,
         FilterBuilder $filterBuilder,
         SortOrderBuilder $sortOrderBuilder,
         SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
-        $this->plabelRepository      = $plabelRepository;
+        $this->productLabelRepository      = $productLabelRepository;
         $this->filterBuilder         = $filterBuilder;
         $this->sortOrderBuilder      = $sortOrderBuilder;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -55,36 +44,35 @@ class Data extends AbstractHelper
     /**
      * Get product label ids
      *
-     * @param ProductInterface $product The product
      * @return int[]
      */
     public function getProductLabelIds(ProductInterface $product): array
     {
-        // @phpstan-ignore-next-line
-        $plabelIds = $product->getSmileProductLabelIds();
-        if (!is_array($plabelIds)) {
-            $plabelIds = explode(',', (string) $plabelIds);
+        /** @var Product $product */
+        $productLabelIds = $product->getData('smile_product_label_ids');
+        if (!is_array($productLabelIds)) {
+            $productLabelIds = explode(',', (string) $productLabelIds);
         }
 
-        foreach ($plabelIds as $key => $value) {
-            $plabelIds[$key] = (int) $value;
+        foreach ($productLabelIds as $key => $value) {
+            $productLabelIds[$key] = (int) $value;
         }
 
-        return $plabelIds;
+        return $productLabelIds;
     }
 
     /**
      * Get search criteria on product label ids
      *
-     * @param int[] $plabelIds Product Label ids
+     * @param int[] $productLabelIds Product Label ids
      */
-    public function getSearchCriteriaOnProductLabelIds(array $plabelIds): SearchCriteria
+    public function getSearchCriteriaOnProductLabelIds(array $productLabelIds): SearchCriteria
     {
         $filters   = [];
         $filters[] = $this->filterBuilder
             ->setField(ProductLabelInterface::PRODUCTLABEL_ID)
             ->setConditionType('in')
-            ->setValue($plabelIds)
+            ->setValue($productLabelIds)
             ->create();
         $this->searchCriteriaBuilder->addFilters($filters);
 
@@ -101,14 +89,15 @@ class Data extends AbstractHelper
     /**
      * Get product labels
      *
-     * @param ProductInterface $product The Product
      * @return ProductLabelInterface[]
      */
     public function getProductLabels(ProductInterface $product): array
     {
-        $plabelIds = $this->getProductLabelIds($product);
-        $searchCriteria = $this->getSearchCriteriaOnProductLabelIds($plabelIds);
+        $productLabelIds = $this->getProductLabelIds($product);
+        $searchCriteria = $this->getSearchCriteriaOnProductLabelIds($productLabelIds);
 
-        return $this->plabelRepository->getList($searchCriteria)->getItems();
+        /** @var ProductLabelInterface[] $items */
+        $items =  $this->productLabelRepository->getList($searchCriteria)->getItems();
+        return $items;
     }
 }

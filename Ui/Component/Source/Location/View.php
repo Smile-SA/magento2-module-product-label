@@ -12,9 +12,6 @@ use Smile\ProductLabel\Api\Data\ProductLabelInterface;
  */
 class View implements OptionSourceInterface
 {
-    /**
-     * @var array|null
-     */
     private ?array $viewsList = null;
 
     /**
@@ -27,8 +24,6 @@ class View implements OptionSourceInterface
 
     /**
      * Retrieve list of attributes that can be used to define product labels.
-     *
-     * @return array
      */
     private function getViewsList(): array
     {

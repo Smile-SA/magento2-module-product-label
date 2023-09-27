@@ -6,7 +6,9 @@ namespace Smile\ProductLabel\Controller\Adminhtml\ProductLabel;
 
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\NotFoundException;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  *  Admin Action: productlabel/massDelete
@@ -18,7 +20,9 @@ class MassDelete extends AbstractAction implements HttpPostActionInterface
      *
      * Note: Request will be added as operation argument in future
      *
-     * @throws NotFoundException
+     * @throws CouldNotDeleteException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function execute(): ResultInterface
     {
