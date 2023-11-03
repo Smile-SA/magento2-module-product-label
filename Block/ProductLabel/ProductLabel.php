@@ -121,15 +121,18 @@ class ProductLabel extends Template implements IdentityInterface
 
         foreach ($attributeIds as $attributeId) {
             $attribute = $productEntity->getAttribute($attributeId);
-            if ($attribute) {
-                $optionIds = $product->getCustomAttribute($attribute->getAttributeCode());
-
+            if ($attribute) {            
+                if ($attribute->getAttributeCode() === 'quantity_and_stock_status') {
+                    $optionIds = $product->isSaleable() ? '1' : '0';
+                } else {
+                    $optionIds = $product->getCustomAttribute($attribute->getAttributeCode());
+                    $optionIds = $optionIds ? $optionIds->getValue() : $product->getData($attribute->getAttributeCode());
+                }
+                
                 $attributesList[$attribute->getId()] = [
                     'id'      => $attribute->getId(),
                     'label'   => $attribute->getFrontend()->getLabel(),
-                    'options' => $optionIds
-                        ? $optionIds->getValue()
-                        : $product->getData($attribute->getAttributeCode()),
+                    'options' => $optionIds,
                 ];
             }
         }
