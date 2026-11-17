@@ -50,7 +50,7 @@ class ProductLabel implements ProductLabelRepositoryInterface
      */
     public function getById(int $objectId): ProductLabelInterface
     {
-        /** @var ProductLabelInterface $productLabel */
+        /** @var \Smile\ProductLabel\Model\ProductLabel $productLabel */
         $productLabel = $this->productLabelRepositoryManager->getEntityById($objectId);
         return $productLabel;
     }
@@ -62,7 +62,7 @@ class ProductLabel implements ProductLabelRepositoryInterface
      */
     public function getByIdentifier(string $objectIdentifier): ProductLabelInterface
     {
-        /** @var ProductLabelInterface $productLabel */
+        /** @var \Smile\ProductLabel\Model\ProductLabel $productLabel */
         $productLabel = $this->productLabelRepositoryManager->getEntityByIdentifier($objectIdentifier);
         return $productLabel;
     }
@@ -82,8 +82,8 @@ class ProductLabel implements ProductLabelRepositoryInterface
      */
     public function save(ProductLabelInterface $object): ProductLabelInterface
     {
-        /** @var \Magento\Framework\Model\AbstractModel $object */
-        /** @var ProductLabelInterface $productLabel */
+        /** @var \Smile\ProductLabel\Model\ProductLabel $object */
+        /** @var \Smile\ProductLabel\Model\ProductLabel $productLabel */
         $productLabel = $this->productLabelRepositoryManager->saveEntity($object);
         return $productLabel;
     }

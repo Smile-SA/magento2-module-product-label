@@ -84,10 +84,6 @@ class Collection extends AbstractCollection
      */
     public function addAttributeSetIdFilter(array $attributeSetIds): self
     {
-        if (!is_array($attributeSetIds)) {
-            $attributeSetIds = [$attributeSetIds];
-        }
-
         $this->getSelect()->joinInner(
             ['ea' => $this->getTable('eav_attribute')],
             'ea.attribute_id = main_table.attribute_id'

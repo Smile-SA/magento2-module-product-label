@@ -32,7 +32,7 @@ class ProductLabel extends AbstractModel implements ProductLabelInterface
     public const CACHE_TAG = 'smile_productlabel';
 
     protected StoreManagerInterface $storeManager;
-    private ?ImageUploader $imageUploader;
+    private ImageUploader $imageUploader;
     protected FileInfo $fileInfo;
 
     /**
