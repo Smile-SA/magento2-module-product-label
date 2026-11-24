@@ -26,8 +26,8 @@
         }
     },
     "require": {
-        "php": "^7.4 || ^8.1",
-        "magento/framework": ">=103.0.0",
+        "php": "^8.3",
+        "magento/framework": ">=103.0.7",
         "magento/module-catalog": ">=104.0.0",
         "magento/module-eav": ">=102.0.0",
         "magento/module-media-storage": ">=100.4.0"
