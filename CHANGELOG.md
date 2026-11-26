@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - Unreleased
+[1.3.0]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.6...1.3.0
+
+- Supported platforms: Magento 2.4.6 and later, Mage-OS 1.0.0 and later (tested up to Magento 2.4.9 and Mage-OS 4.0), PHP 8.1 to 8.5
+- `composer.json` now states it: `php ^8.1` and `magento/framework >=103.0.6` (previously `php ^7.4 || ^8.1` and `magento/framework >=103.0.0`)
+- Magento 2.4.4 and 2.4.5 are supported by the 1.2.x line, from 1.2.7
+- CI: static analysis and `setup:di:compile` run on Mage-OS, without Magento credentials
+
 ## [1.2.5] - 2023-02-15
 [1.2.5]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.4...1.2.5
 
