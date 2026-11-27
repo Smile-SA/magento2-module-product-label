@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - `composer.json` now states it: `php ^8.1` and `magento/framework >=103.0.6` (previously `php ^7.4 || ^8.1` and `magento/framework >=103.0.0`)
 - Magento 2.4.4 and 2.4.5 are supported by the 1.2.x line, from 1.2.7
 - CI: static analysis and `setup:di:compile` run on Mage-OS, without Magento credentials
+- Fix `ProductLabel::getDisplayOn()` (fatal error with several values) and `setDisplayOn()` (the value was saved as `Array`)
 
 ## [1.2.6] - 2023-09-27
 [1.2.6]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.5...1.2.6
