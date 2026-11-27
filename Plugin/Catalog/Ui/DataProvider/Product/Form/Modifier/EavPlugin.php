@@ -39,7 +39,6 @@ class EavPlugin
      * @param ProductAttributeInterface $attribute Attribute.
      * @param string $groupCode Group code.
      * @param int $sortOrder Sort order.
-     * @return array
      */
     public function aroundSetupAttributeMeta(
         Eav $subject,

@@ -32,7 +32,7 @@ class ProductLabel extends AbstractModel implements ProductLabelInterface
     public const CACHE_TAG = 'smile_productlabel';
 
     protected StoreManagerInterface $storeManager;
-    private ?ImageUploader $imageUploader;
+    private ImageUploader $imageUploader;
     protected FileInfo $fileInfo;
 
     /**
@@ -171,12 +171,13 @@ class ProductLabel extends AbstractModel implements ProductLabelInterface
      */
     public function getDisplayOn(): array
     {
+        // Stored as a comma separated list ("1,2").
         $values = $this->getData(self::PRODUCTLABEL_DISPLAY_ON);
-        if (is_numeric($values)) {
-            $values = [$values];
+        if (!is_array($values)) {
+            $values = preg_split('/,/', (string) $values, -1, PREG_SPLIT_NO_EMPTY);
         }
 
-        return $values ?: [];
+        return array_map('intval', $values);
     }
 
     /**
@@ -256,7 +257,7 @@ class ProductLabel extends AbstractModel implements ProductLabelInterface
      */
     public function setDisplayOn(array $value): ProductLabelInterface
     {
-        return $this->setData(self::PRODUCTLABEL_DISPLAY_ON, $value);
+        return $this->setData(self::PRODUCTLABEL_DISPLAY_ON, implode(',', $value));
     }
 
     /**

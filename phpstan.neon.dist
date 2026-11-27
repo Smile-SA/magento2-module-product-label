@@ -1,7 +1,22 @@
 parameters:
     level: 6
-    phpVersion: 70400
-    checkMissingIterableValueType: false
+    phpVersion: 80100
+    # The static analysis runs with phpstan 1 on Magento 2.4.5, some ignored errors are only reported by phpstan 2
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        -
+            # phpstan 2.3 no longer parses PHPMD suppressions such as @SuppressWarnings(PHPMD.Xxx)
+            message: '#PHPDoc tag @SuppressWarnings has invalid value#'
+            identifier: phpDoc.parseError
+        -
+            identifier: missingType.iterableValue
+        -
+            # The native "mixed" type is not used: the code generator of Magento 2.4.4 and 2.4.5 cannot handle it
+            identifier: missingType.parameter
+            reportUnmatched: false
+        -
+            identifier: missingType.return
+            reportUnmatched: false
     paths:
         - .
     excludePaths:

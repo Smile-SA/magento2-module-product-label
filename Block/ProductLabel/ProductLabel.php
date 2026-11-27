@@ -235,6 +235,7 @@ class ProductLabel extends Template implements IdentityInterface
         $cacheKey         = 'smile_productlabel_frontend_' . $storeId;
         $productLabelList = $this->cache->load($cacheKey);
 
+        // @phpstan-ignore function.alreadyNarrowedType (Magento PHPDoc is wrong: load() returns false on cache miss)
         if (is_string($productLabelList)) {
             $productLabelList = json_decode($productLabelList, true);
         }
