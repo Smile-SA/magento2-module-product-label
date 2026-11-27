@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - Unreleased
+[1.3.0]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.6...1.3.0
+
+- Supported platforms: Magento 2.4.6 and later, Mage-OS 1.0.0 and later (tested up to Magento 2.4.9 and Mage-OS 4.0), PHP 8.1 to 8.5
+- `composer.json` now states it: `php ^8.1` and `magento/framework >=103.0.6` (previously `php ^7.4 || ^8.1` and `magento/framework >=103.0.0`)
+- Magento 2.4.4 and 2.4.5 are supported by the 1.2.x line, from 1.2.7
+- CI: static analysis and `setup:di:compile` run on Mage-OS, without Magento credentials
+- Fix `ProductLabel::getDisplayOn()` (fatal error with several values) and `setDisplayOn()` (the value was saved as `Array`)
+
+## [1.2.6] - 2023-09-27
+[1.2.6]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.5...1.2.6
+
+- Magento 2.4.6 compatibility
+- Fix serializer definition
+- Update API definition for REST and SOAP (#38)
+- Fix table name prefix (#50)
+- Manage non custom attributes (#28)
+- Manage boolean attribute label (#31)
+- Manage attributes with a specific source model (#29)
+- Fix multiple store selection (#62)
+
 ## [1.2.5] - 2023-02-15
 [1.2.5]: https://github.com/Smile-SA/magento2-module-product-label/compare/1.2.4...1.2.5
 

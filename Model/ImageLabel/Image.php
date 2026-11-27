@@ -38,6 +38,6 @@ class Image extends AbstractBackend
      */
     public function isTmpFileAvailable(array $value): bool
     {
-        return is_array($value) && isset($value[0]['tmp_name']);
+        return isset($value[0]['tmp_name']);
     }
 }

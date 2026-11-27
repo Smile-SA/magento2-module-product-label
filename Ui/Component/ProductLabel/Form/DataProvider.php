@@ -97,7 +97,6 @@ class DataProvider extends AbstractDataProvider
      *
      * @param ProductLabel $productLabel Product Label
      * @param array $data Product Label Data
-     * @return array
      */
     private function convertValues(ProductLabel $productLabel, array $data): array
     {

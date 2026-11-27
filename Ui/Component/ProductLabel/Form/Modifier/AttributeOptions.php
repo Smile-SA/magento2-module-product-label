@@ -69,7 +69,7 @@ class AttributeOptions implements ModifierInterface
      */
     private function getAttributeOptions(int $attributeId): array
     {
-        /** @var string $attributeId */
+        // @phpstan-ignore argument.type (Magento PHPDoc is too narrow, get() also accepts an attribute id)
         $attribute = $this->attributeRepository->get($attributeId);
         $options   = [];
 
